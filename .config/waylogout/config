@@ -1,0 +1,9 @@
+poweroff-command=poweroff
+reboot-command=reboot
+reload-command=swaymsg reload
+lock-command=swaylock
+suspend-command=systemctl suspend
+default-action=lock
+color=333333BB
+hide-cancel
+labels

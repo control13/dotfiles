@@ -1,0 +1,40 @@
+# Don't print a new line at the start of the prompt
+add_newline = false
+
+# format = "$all"
+
+format = """
+[┌](bold cyan)$fill[┐](bold cyan)
+[│](bold cyan)$directory$git_branch$git_state$git_status$hg_branch$cmake$java$julia$lua$rust$python$conda$package$jobs$cmd_duration$status
+[└](bold cyan)$time$character"""
+
+# Replace the "❯" symbol in the prompt with "➜"
+[character]                            # The name of the module we are configuring is "character"
+# success_symbol = "[➜](bold green)"     # The "success_symbol" segment is being set to "➜" with the color "bold green"
+error_symbol = "[✖](bold red)"     # The "success_symbol" segment is being set to "➜" with the color "bold green"
+
+[directory]
+truncation_length = 5
+truncation_symbol = "…/"
+
+[status]
+disabled = false
+format = "[\\(](bold cyan)[$status]($style)[\\)](bold cyan)"
+
+[hg_branch]
+symbol = "hg "
+disabled = false
+
+[time]
+format = "[$time]($style)"
+time_format = "%T"
+style = "bright-yellow"
+disabled = false
+
+[env_var]
+variable = "COLUMNS"
+default = 0
+
+[fill]
+symbol = "─"
+style = "bold cyan"

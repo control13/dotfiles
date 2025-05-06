@@ -1,0 +1,47 @@
+MenuBar=Disabled
+
+[General]
+BackgroundColorMode=DocumentView::Light
+FullScreenBackground=FullScreenBackground::Image
+LastUsedVersion=210800
+
+[ImageView]
+AlphaBackgroundMode=AbstractImageView::AlphaBackgroundCheckBoard
+AnimationMethod=DocumentView::NoAnimation
+
+[MainWindow]
+MenuBar=Disabled
+
+[Print]
+PrintHeight=11.25
+
+[Recent Files]
+File1[$e]=$HOME/Dropbox/Kamera-Uploads/2025-03-11 14.04.18.jpg
+File10[$e]=$HOME/Pictures/Dropbox/2024/2024-09-24 14.41.58.jpg
+File2[$e]=$HOME/Dropbox/Kamera-Uploads/2025-03-11 14.04.19.jpg
+File3[$e]=$HOME/Dropbox/Kamera-Uploads/2025-03-11 14.34.48.jpg
+File4[$e]=$HOME/Dropbox/Kamera-Uploads/2025-03-11 14.26.26.jpg
+File5[$e]=$HOME/Dropbox/Kamera-Uploads/2025-03-11 14.26.24.jpg
+File6[$e]=$HOME/Dropbox/Kamera-Uploads/2025-03-11 14.21.41.jpg
+File7[$e]=$HOME/Dropbox/Kamera-Uploads/2025-03-11 14.26.22.jpg
+File8[$e]=$HOME/Dropbox/Kamera-Uploads/2025-01-04 17.45.29.jpg
+File9[$e]=$HOME/Dropbox/Kamera-Uploads/2025-01-01 19.40.07.jpg
+Name1[$e]=2025-03-11 14.04.18.jpg
+Name10[$e]=2024-09-24 14.41.58.jpg
+Name2[$e]=2025-03-11 14.04.19.jpg
+Name3[$e]=2025-03-11 14.34.48.jpg
+Name4[$e]=2025-03-11 14.26.26.jpg
+Name5[$e]=2025-03-11 14.26.24.jpg
+Name6[$e]=2025-03-11 14.21.41.jpg
+Name7[$e]=2025-03-11 14.26.22.jpg
+Name8[$e]=2025-01-04 17.45.29.jpg
+Name9[$e]=2025-01-01 19.40.07.jpg
+
+[SideBar]
+InformationSplitterSizes=572,618
+IsVisible ViewMode=true
+PreferredMetaInfoKeyList=General.Name,General.Size,General.Created,General.ImageSize,Exif.Photo.ColorSpace,Exif.Photo.ApertureValue,Exif.Photo.ExposureTime,Exif.Photo.Flash
+SideBarSplitterSizes=191,2201
+
+[ThumbnailView]
+ThumbnailSize=204

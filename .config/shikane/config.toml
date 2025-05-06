@@ -1,0 +1,69 @@
+[[profile]]
+name = "standalone"
+exec = ["notify-send shikane \"Profile $SHIKANE_PROFILE_NAME has been applied\"", "nmcli radio wifi on", "~/.swayidle/restart.bash"]
+
+[[profile.output]]
+enable = true
+search = ["m=0x414B", "s=", "v=Lenovo Group Limited"]
+mode = "2880x1800@120Hz"
+position = "0,0"
+scale = 1.796875
+transform = "normal"
+adaptive_sync = false
+
+[[profile]]
+name = "HO426_lidClosed"
+exec = ["notify-send shikane \"Profile $SHIKANE_PROFILE_NAME has been applied\"", "nmcli radio wifi off", "~/.swayidle/restart.bash -C ~/.swayidle/dock-config", "pactl set-default-sink alsa_output.pci-0000_c4_00.1.HiFi__HDMI1__sink"]
+
+[[profile.output]]
+enable = true
+search = ["m=S27B80T", "s=HCJX800132", "v=Samsung Electric Company"]
+mode = "3840x2160@59.997Hz"
+position = "0,0"
+scale = 1.59765625
+transform = "normal"
+adaptive_sync = false
+
+[[profile.output]]
+enable = false
+search = ["m=0x414B", "s=", "v=Lenovo Group Limited"]
+
+[[profile]]
+name = "HO426_lidOpen"
+exec = ["notify-send shikane \"Profile $SHIKANE_PROFILE_NAME has been applied\"", "nmcli radio wifi off", "~/.swayidle/restart.bash", "pactl set-default-sink alsa_output.pci-0000_c4_00.1.HiFi__HDMI1__sink"]
+
+[[profile.output]]
+enable = true
+search = ["m=S27B80T", "s=HCJX800132", "v=Samsung Electric Company"]
+mode = "3840x2160@59.997Hz"
+position = "0,0"
+scale = 1.59765625
+transform = "normal"
+adaptive_sync = false
+
+[[profile.output]]
+enable = true
+search = ["m=0x414B", "s=", "v=Lenovo Group Limited"]
+mode = "2880x1800@120Hz"
+position = "2400,350"
+scale = 1.796875
+transform = "normal"
+adaptive_sync = false
+
+[[profile]]
+name = "HO426_noLid"
+exec = ["notify-send shikane \"Profile $SHIKANE_PROFILE_NAME has been applied\"", "nmcli radio wifi off", "~/.swayidle/restart.bash -C ~/.swayidle/dock-config", "pactl set-default-sink alsa_output.pci-0000_c4_00.1.HiFi__HDMI1__sink"]
+
+[[profile.output]]
+enable = false
+search = ["m=", "s=", "v="]
+
+[[profile.output]]
+enable = true
+search = ["m=S27B80T", "s=HCJX800132", "v=Samsung Electric Company"]
+mode = "3840x2160@59.997Hz"
+position = "0,0"
+scale = 1.59765625
+transform = "normal"
+adaptive_sync = false
+

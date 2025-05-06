@@ -1,0 +1,27 @@
+[[plugin.deps]]
+use = "boydaihungst/mediainfo"
+rev = "9629b1e"
+hash = "5204b4e2bd238c40fa66cf0a0191f084"
+
+[[plugin.deps]]
+use = "imsi32/yatline"
+rev = "90e0284"
+hash = "8d4cb2dfadcbda045ddaa5c274441f9c"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:mount"
+rev = "b12a9ab"
+hash = "dd97eede8e20e59cd2604e8006e470e2"
+
+[[plugin.deps]]
+use = "Reledia/miller"
+rev = "0a3d131"
+hash = "31dfa38f166ca954cfa898515964e291"
+
+[[plugin.deps]]
+use = "Reledia/glow"
+rev = "2da96e3"
+hash = "f9ee1436e3b853508d87f7d49dce56e6"
+
+[flavor]
+deps = []
