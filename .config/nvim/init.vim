@@ -3,20 +3,6 @@ set list
 lua << EOF
   return require('packer').startup(function(use)
     use 'patstockwell/vim-monokai-tasty'
-    use { "lowitea/aw-watcher.nvim",
-    config = function()
-      require("aw_watcher").setup({
-          -- required, but can be empty table: {}
-          -- add any options here
-          -- for example:
-          aw_server = {
-              host = "127.0.0.1",
-              port = 5600,
-              pulsetime = 20,
-          },
-      })
-    end,
-  }
   end)
 EOF
 colorscheme vim-monokai-tasty
