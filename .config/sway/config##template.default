@@ -24,12 +24,12 @@ set $menu fuzzel --show-actions
 
 ### system dependend stuff
 {% if yadm.hostname == "washburne" %}
-#set $laptop eDP-1
-#output $laptop scale 1.8
+set $laptop eDP-1
+output $laptop scale 1.8
 
-#exec shikane
-#exec aw-watcher-media-player
-#exec awatcher
+exec shikane
+exec aw-watcher-media-player
+exec awatcher
 {% endif %}
 
 
