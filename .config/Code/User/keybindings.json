@@ -1,0 +1,46 @@
+// Place your key bindings in this file to override the defaults
+[
+    {
+        "key": "ctrl+alt+s",
+        "command": "-vscode-neovim.send",
+        "when": "editorTextFocus && neovim.init && focusedView == 'workbench.panel.output' && neovim.mode != 'insert'"
+    },
+    {
+        "key": "ctrl+alt+s",
+        "command": "-list.find",
+        "when": "listFocus && listSupportsFind && !inputFocus"
+    },
+    {
+        "key": "ctrl+alt+s",
+        "command": "workbench.action.openSettings"
+    },
+    {
+        "key": "ctrl+,",
+        "command": "-workbench.action.openSettings"
+    },
+    {
+        "key": "ctrl+,",
+        "command": "editor.action.commentLine"
+    },
+    {
+        "key": "ctrl+d",
+        "command": "-editor.action.addSelectionToNextFindMatch",
+        "when": "editorFocus"
+    },
+    {
+        "key": "ctrl+[Minus]",
+        "command": "workbench.action.gotoSymbol"
+    },
+    {
+        "key": "ctrl+r",
+        "command": "-workbench.action.gotoSymbol"
+    },
+    {
+        "key": "ctrl+d",
+        "command": "editor.action.addSelectionToNextFindMatch"
+    },
+    {
+        "key": "ctrl+alt+d",
+        "command": "editor.action.addSelectionToPreviousFindMatch"
+    }
+]
