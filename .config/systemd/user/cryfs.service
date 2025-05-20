@@ -4,7 +4,7 @@ Description=Cryfs mounting
 [Service]
 Type=forking
 Environment=CRYFS_FRONTEND=noninteractive
-ExecStart=/bin/bash /home/tobias/programming/scripts/mount_cryfs.sh
+ExecStart=/bin/bash /home/tobias/programming/my_utils/mount_cryfs.sh
 
 [Install]
 WantedBy=default.target
