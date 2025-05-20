@@ -1,0 +1,27 @@
+[init]
+	defaultBranch = main
+
+[core]
+    pager = delta
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true  # use n and N to move between diff sections
+    dark = true      # or light = true, or omit for auto-detection
+    side-by-side = true
+    line-numbers = true
+    hyperlinks = true
+
+[merge]
+    conflictstyle = zdiff3
+	tool = meld
+[user]
+	email = tobias.jagla@htwk-leipzig.de
+	name = Tobias Jagla
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
