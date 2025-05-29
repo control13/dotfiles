@@ -4,7 +4,7 @@ end
 
 set fish_greeting
 
-set -gx EDITOR nvim
+set -gx EDITOR helix
 set -gx SSH_AUTH_SOCK $XDG_RUNTIME_DIR"/ssh-agent.socket"
 set -gx FZF_DEFAULT_COMMAND "fd --type f --no-ignore --follow --exclude .git"
 set -gx FZF_DEFAULT_OPTS "--no-mouse --height 60% --multi --layout=reverse --preview 'rgf_helper {}'"
