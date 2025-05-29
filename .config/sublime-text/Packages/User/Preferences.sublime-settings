@@ -2,7 +2,7 @@
 	"always_show_minimap_viewport": true,
 	"bold_folder_labels": true,
 	"caret_style": "phase",
-	"color_scheme": "Packages/Color Scheme - Default/Monokai.sublime-color-scheme",
+	"color_scheme": "Packages/Monokai Extended/Monokai Extended.tmTheme",
 	"draw_white_space": "all",
 	"ensure_newline_at_eof_on_save": true,
 	"font_face": "DejaVuSansM Nerd Font Mono",
@@ -17,8 +17,6 @@
 	"hot_exit": false,
 	"ignored_packages":
 	[
-		"BracketHighlighter",
-		"Pretty JSON",
 		"Vintage",
 	],
 	"margin": -4,

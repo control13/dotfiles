@@ -2,10 +2,12 @@ set listchars=tab:>·,trail:~,extends:>,precedes:<,space:·
 set list
 lua << EOF
   return require('packer').startup(function(use)
-    use 'patstockwell/vim-monokai-tasty'
+    --use 'patstockwell/vim-monokai-tasty'
+    use 'tanvirtin/monokai.nvim'
   end)
 EOF
-colorscheme vim-monokai-tasty
+" colorscheme vim-monokai-tasty
+colorscheme monokai
 highlight NonText guifg=#4a4a59
 highlight SpecialKey guifg=#4a4a59
 highlight Whitespace guifg=#4a4a59
