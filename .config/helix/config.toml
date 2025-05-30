@@ -1,5 +1,47 @@
 theme = "monokai"
+
+[editor]
+scrolloff = 5
+shell = ["fish", "-c"]
+cursorline = true
+bufferline = "multiple"
+
 [editor.cursor-shape]
 insert = "bar"
 normal = "block"
 select = "underline"
+
+[editor.statusline]
+right = [
+  "diagnostics",
+  "version-control",
+  "selections",
+  "register",
+  "file-type",
+  "file-encoding",
+  "position",
+  "position-percentage",
+  "file-line-ending"
+]
+
+[editor.indent-guides]
+render = true
+character = "┊"
+
+#[editor.whitespace]
+#render = "all"
+# or control each character
+[editor.whitespace.render]
+space = "all"
+tab = "all"
+nbsp = "none"
+nnbsp = "none"
+newline = "none"
+
+[editor.whitespace.characters]
+space = "·"
+nbsp = "⍽"
+nnbsp = "␣"
+tab = "→"
+newline = "⏎"
+tabpad = "·" # Tabs will look like "→···" (depending on tab width)
