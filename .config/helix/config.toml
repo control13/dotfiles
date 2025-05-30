@@ -24,6 +24,11 @@ right = [
   "file-line-ending"
 ]
 
+[keys.normal]
+C-A-r = ":set-option line-number relative"
+C-A-a = ":set-option line-number absolute"
+"C-," = "toggle_comments"
+
 [editor.indent-guides]
 render = true
 character = "┊"
