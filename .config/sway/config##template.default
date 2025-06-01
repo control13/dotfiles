@@ -80,7 +80,7 @@ for_window [app_id="nm-connection-editor"] floating enable
 for_window [app_id="mpv"] fullscreen enable
 for_window [app_id="imv"] fullscreen enable
 for_window [app_id="sonic-visualiser"] fullscreen enable
-for_window [app_id="libreoffice-calc"] fullscreen enable
+for_window [app_id="libreoffice-calc"] layout tabbed
 for_window [app_id="kitty" title="Filechooser"] floating enable
 for_window [app_id="qdirstat" title="Select Directory"] floating enable
 
