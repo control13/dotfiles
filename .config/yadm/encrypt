@@ -1,1 +1,3 @@
 .ssh/id_*
+/home/tobias/Documents/keyFiles/*.key
+/home/tobias/Documents/keyFiles/*.pfx
