@@ -43,7 +43,7 @@ prepend_previewers = [
 
 [opener]
 show = [
-    { run = 'handlr open -d "$@"', desc = "Simple open"},
+    { run = 'handlr open -e false "$@"', desc = "Simple open"},
     ]
 
 [open]
