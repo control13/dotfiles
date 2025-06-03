@@ -1,17 +1,17 @@
 [[plugin.deps]]
 use = "boydaihungst/mediainfo"
-rev = "9629b1e"
-hash = "5204b4e2bd238c40fa66cf0a0191f084"
+rev = "c6d0de7"
+hash = "7b024fc14b462235068400207cbe7bf0"
 
 [[plugin.deps]]
 use = "imsi32/yatline"
-rev = "90e0284"
-hash = "8d4cb2dfadcbda045ddaa5c274441f9c"
+rev = "4872af0"
+hash = "d32742ded0e73146a8ca590fdc4fb404"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:mount"
-rev = "b12a9ab"
-hash = "dd97eede8e20e59cd2604e8006e470e2"
+rev = "63f9650"
+hash = "c0b6cd7dc830b96e77e5c8a71eec7926"
 
 [[plugin.deps]]
 use = "Reledia/miller"
@@ -25,8 +25,8 @@ hash = "f9ee1436e3b853508d87f7d49dce56e6"
 
 [[plugin.deps]]
 use = "AnirudhG07/plugins-yazi:copy-file-contents"
-rev = "524c52c"
-hash = "27c50e6bc15c09096505b805b238ade0"
+rev = "907e292"
+hash = "a61930b827d8f1ef8fa016409de458ed"
 
 [flavor]
 deps = []
