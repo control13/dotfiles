@@ -93,3 +93,16 @@ scale = 1.0
 transform = "normal"
 adaptive_sync = false
 
+[[profile]]
+name = "Frye_singel"
+exec = ["notify-send shikane \"Profile $SHIKANE_PROFILE_NAME has been applied\"", "nmcli radio wifi on", "~/.swayidle/restart.bash"]
+
+[[profile.output]]
+enable = true
+search = ["m=0x054F", "s=", "v=LG Display"]
+mode = "1920x1080@60.02Hz"
+position = "0,0"
+scale = 1.0
+transform = "normal"
+adaptive_sync = false
+
