@@ -67,3 +67,29 @@ scale = 1.59765625
 transform = "normal"
 adaptive_sync = false
 
+[[profile]]
+name = "P621_noLid"
+exec = ["notify-send shikane \"Profile $SHIKANE_PROFILE_NAME has been applied\"", "nmcli radio wifi off", "nmcli con up \"Uni\"", "~/.swayidle/restart.bash -C ~/.swayidle/dock-config"]
+
+[[profile.output]]
+enable = true
+search = ["m=LEN P27h-10", "s=0x01010101", "v=Lenovo Group Limited"]
+mode = "2560x1440@59.951Hz"
+position = "2560,0"
+scale = 1.0
+transform = "normal"
+adaptive_sync = false
+
+[[profile.output]]
+enable = false
+search = ["m=0x054F", "s=", "v=LG Display"]
+
+[[profile.output]]
+enable = true
+search = ["m=LEN P27h-10", "s=0x01010101", "v=Lenovo Group Limited"]
+mode = "2560x1440@59.951Hz"
+position = "0,0"
+scale = 1.0
+transform = "normal"
+adaptive_sync = false
+

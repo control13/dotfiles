@@ -22,6 +22,8 @@ set $term kitty
 # Your preferred application launcher
 set $menu fuzzel --show-actions
 
+set $laptop eDP-1
+
 ### system dependend stuff
 {% if yadm.hostname == "frye" %}
 input type:touchpad {
@@ -30,14 +32,13 @@ input type:touchpad {
 bindsym XF86Tools input type:touchpad events toggle enabled disabled
 {% endif %}
 {% if yadm.hostname == "washburne" %}
-set $laptop eDP-1
 output $laptop scale 1.8
 
-exec shikane
 exec aw-watcher-media-player
 exec awatcher
 {% endif %}
 
+exec shikane
 
 ### Output configuration
 #
