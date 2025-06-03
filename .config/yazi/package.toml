@@ -16,17 +16,17 @@ hash = "c0b6cd7dc830b96e77e5c8a71eec7926"
 [[plugin.deps]]
 use = "Reledia/miller"
 rev = "0a3d131"
-hash = "31dfa38f166ca954cfa898515964e291"
-
-[[plugin.deps]]
-use = "Reledia/glow"
-rev = "2da96e3"
-hash = "f9ee1436e3b853508d87f7d49dce56e6"
+hash = "b25c2acb08d9ca5ff5cf71ea764fed8d"
 
 [[plugin.deps]]
 use = "AnirudhG07/plugins-yazi:copy-file-contents"
 rev = "907e292"
 hash = "a61930b827d8f1ef8fa016409de458ed"
+
+[[plugin.deps]]
+use = "Reledia/glow"
+rev = "2da96e3"
+hash = "f9ee1436e3b853508d87f7d49dce56e6"
 
 [flavor]
 deps = []
