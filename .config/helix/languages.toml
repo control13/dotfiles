@@ -22,9 +22,13 @@ file-types = ["md", "txt", "livemd", "markdown", "mdx", "mkd", "mkdn", "mdwn", "
 
 [language-server.ltex]
 command = "/usr/bin/ltex-ls-plus"
-config = { ltex.language = "de-DE" }
+config = { ltex.language = "auto" }
 
 [[language]]
 name = "latex"
 file-types = ["tex", "sty", "cls", "Rd", "bbx", "cbx"]
 language-servers = [ "texlab", "ltex" ]
+
+[[language]]
+name = "git-commit"
+language-servers = [ "ltex" ]
