@@ -14,3 +14,17 @@ args = ["up", "--method", "stdio"]
 [[language]]
 name = "sql"
 language-servers = [ "sql-language-server" ]
+
+[[language]]
+name = "markdown"
+language-servers = [ "ltex", "marksman", "markdown-oxide" ]
+file-types = ["md", "txt", "livemd", "markdown", "mdx", "mkd", "mkdn", "mdwn", "mdown", "markdn", "mdtxt", "mdtext", "workbook", { glob = "PULLREQ_EDITMSG" }]
+
+[language-server.ltex]
+command = "/usr/bin/ltex-ls-plus"
+config = { ltex.language = "de-DE" }
+
+[[language]]
+name = "latex"
+file-types = ["tex", "sty", "cls", "Rd", "bbx", "cbx"]
+language-servers = [ "texlab", "ltex" ]
