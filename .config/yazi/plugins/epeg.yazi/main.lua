@@ -8,7 +8,7 @@ function M:preload(job)
 	end
     local prev_size = math.min(rt.preview.max_width, rt.preview.max_height)
 	local output = Command("epeg")
-		:args({"-w", tostring(rt.preview.max_width), "-p", tostring(job.file.url), "/dev/stdout" })
+		:arg({"-w", tostring(rt.preview.max_width), "-p", tostring(job.file.url), "/dev/stdout" })
 		:stdout(Command.PIPED)
 		:stderr(Command.PIPED)
 		:output()

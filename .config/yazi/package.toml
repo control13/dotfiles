@@ -1,7 +1,7 @@
 [[plugin.deps]]
 use = "boydaihungst/mediainfo"
-rev = "c6d0de7"
-hash = "7b024fc14b462235068400207cbe7bf0"
+rev = "a7d1aa6"
+hash = "844133c7247cda086819d63a9ca5e457"
 
 [[plugin.deps]]
 use = "imsi32/yatline"
@@ -14,19 +14,19 @@ rev = "63f9650"
 hash = "c0b6cd7dc830b96e77e5c8a71eec7926"
 
 [[plugin.deps]]
-use = "Reledia/miller"
-rev = "0a3d131"
-hash = "b25c2acb08d9ca5ff5cf71ea764fed8d"
-
-[[plugin.deps]]
 use = "AnirudhG07/plugins-yazi:copy-file-contents"
 rev = "907e292"
 hash = "a61930b827d8f1ef8fa016409de458ed"
 
 [[plugin.deps]]
+use = "Reledia/miller"
+rev = "0a3d131"
+hash = "423eec819ee579e16efb565965605bcf"
+
+[[plugin.deps]]
 use = "Reledia/glow"
 rev = "2da96e3"
-hash = "f9ee1436e3b853508d87f7d49dce56e6"
+hash = "73e38336ff1a719eaf229d6a9c392c4e"
 
 [flavor]
 deps = []
