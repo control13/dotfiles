@@ -7,15 +7,15 @@ max_width = 1200
 max_height = 1800
 cache_dir = "~/.cache/yazi/"
 
-#[[plugin.prepend_fetchers]]
-#id   = "git"
-#name = "*"
-#run  = "git"
-#
-#[[plugin.prepend_fetchers]]
-#id   = "git"
-#name = "*/"
-#run  = "git"
+[[plugin.prepend_fetchers]]
+id   = "git"
+name = "*"
+run  = "git"
+
+[[plugin.prepend_fetchers]]
+id   = "git"
+name = "*/"
+run  = "git"
 
 [plugin]
 prepend_preloaders = [
@@ -25,6 +25,8 @@ prepend_preloaders = [
     { mime = "image/jpeg", run = "epeg"},
 ]
 prepend_previewers = [
+    # nbpreview.yazi
+    { name = "*.ipynb", run = "nbpreview" },
     # Markdown previwer
     { name = "*.md", run = "glow" },
     { name = "*.stl",                       run = "stl" },

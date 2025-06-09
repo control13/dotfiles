@@ -1,5 +1,6 @@
 require("folder-rules"):setup()
---require("git"):setup()
+require("archivemount"):setup()
+require("git"):setup()
 require("copy-file-contents"):setup({
 	append_char = "\n",
 	notification = true,

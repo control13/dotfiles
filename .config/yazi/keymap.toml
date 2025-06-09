@@ -3,6 +3,16 @@ on  = "<C-n>"
 run = 'shell -- dragon-drop -x -i -T "$@"'
 
 [[mgr.prepend_keymap]]
+on   = [ "m", "a" ]
+run  = "plugin archivemount mount"
+desc = "Mount selected archive"
+
+[[mgr.prepend_keymap]]
+on   = [ "m", "u" ]
+run  = "plugin archivemount unmount"
+desc = "Unmount and save changes to original archive"
+
+[[mgr.prepend_keymap]]
 on = "<A-y>"
 run = ["plugin copy-file-contents"]
 desc = "Copy contents of file"

@@ -28,5 +28,25 @@ use = "Reledia/glow"
 rev = "2da96e3"
 hash = "73e38336ff1a719eaf229d6a9c392c4e"
 
+[[plugin.deps]]
+use = "yazi-rs/plugins:git"
+rev = "63f9650"
+hash = "bf6f074cd41ee33c3360341d168f9733"
+
+[[plugin.deps]]
+use = "ndtoan96/ouch"
+rev = "10b4627"
+hash = "3ec6a973d506665f1570a9fe08343fd8"
+
+[[plugin.deps]]
+use = "AnirudhG07/archivemount"
+rev = "3d353c4"
+hash = "28caf2541e627582e75add7a9f98a32a"
+
+[[plugin.deps]]
+use = "AnirudhG07/nbpreview"
+rev = "7fb073f"
+hash = "a3e32d62ea3cc703e6bf677bdb18a544"
+
 [flavor]
 deps = []
