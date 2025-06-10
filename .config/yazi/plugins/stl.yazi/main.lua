@@ -28,7 +28,7 @@ function M:preload(job)
 	end
     local prev_size = math.min(rt.preview.max_width, rt.preview.max_height)
 	local output = Command("stl-thumb")
-		:args({"-s", tostring(prev_size), tostring(job.file.url), "-" })
+		:arg({"-s", tostring(prev_size), tostring(job.file.url), "-" })
 		:stdout(Command.PIPED)
 		:stderr(Command.PIPED)
 		:output()
