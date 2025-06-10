@@ -39,6 +39,7 @@ exec awatcher
 {% endif %}
 
 exec shikane
+exec sway-audio-idle-inhibit
 
 ### Output configuration
 #
