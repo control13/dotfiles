@@ -10,6 +10,8 @@ text/html=firefox.desktop;
 x-scheme-handler/chrome=firefox.desktop;
 x-scheme-handler/http=firefox.desktop;
 x-scheme-handler/https=firefox.desktop;
+image/jpeg=imv.desktop;
+
 [Default Applications]
 application/pdf=okularApplication_pdf.desktop;org.gnome.Evince.desktop;net.code-industry.masterpdfeditor5.desktop;
 application/x-extension-htm=firefox.desktop;
