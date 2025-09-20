@@ -106,3 +106,19 @@ scale = 1.0
 transform = "normal"
 adaptive_sync = false
 
+[[profile]]
+name = "Lab_Dell"
+
+[[profile.output]]
+enable = false
+search = ["m=0x414B", "s=", "v=Lenovo Group Limited"]
+
+[[profile.output]]
+enable = true
+search = ["m=DELL U2211H", "s=D1TPK12HA3RL", "v=Dell Inc."]
+mode = "1920x1080@60Hz"
+position = "0,0"
+scale = 1.0
+transform = "normal"
+adaptive_sync = false
+
