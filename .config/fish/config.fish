@@ -61,4 +61,4 @@ zoxide init fish | source
 # pyenv init - | source
 # source /opt/esp-idf/export.sh
 starship init fish | source
-navi widget fish | source
+# navi widget fish | source
