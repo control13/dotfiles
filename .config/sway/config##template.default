@@ -140,7 +140,7 @@ input * {
     bindsym $mod+b exec gwenview
     bindsym $mod+o exec dex /usr/share/applications/obsidian.desktop
     bindsym $mod+v exec code
-    bindsym $mod+s exec signal-desktop --enable-features=WaylandWindowDecorations --ozone-platform-hint=auto
+    bindsym $mod+s exec signal-desktop --enable-features=UseOzonePlatform --ozone-platform=wayland
     bindsym $mod+q exec qalculate-qt
     bindsym $mod+m exec dex /home/tobias/.local/share/applications/wine/Programs/reMarkable/reMarkable.desktop
 
