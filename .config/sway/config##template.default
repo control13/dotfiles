@@ -41,6 +41,10 @@ exec awatcher
 exec shikane
 exec sway-audio-idle-inhibit
 
+
+# No title bar
+default_border none
+
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
