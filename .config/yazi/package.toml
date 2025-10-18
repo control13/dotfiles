@@ -21,7 +21,7 @@ hash = "f8530ee84fee95dbcc26bb1d8d8019c7"
 [[plugin.deps]]
 use = "Reledia/miller"
 rev = "0a3d131"
-hash = "31dfa38f166ca954cfa898515964e291"
+hash = "85e65a8e085c2cf04463aea218634eb3"
 
 [[plugin.deps]]
 use = "Reledia/glow"
