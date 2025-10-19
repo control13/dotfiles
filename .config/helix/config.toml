@@ -5,6 +5,7 @@ scrolloff = 5
 shell = ["fish", "-c"]
 cursorline = true
 bufferline = "multiple"
+soft-wrap.enable = true
 
 [editor.cursor-shape]
 insert = "bar"
@@ -27,6 +28,11 @@ right = [
 [keys.normal]
 C-A-r = ":set-option line-number relative"
 C-A-a = ":set-option line-number absolute"
+C-c = ":clipboard-yank-join"
+"C-," = "toggle_comments"
+
+[keys.select]
+C-c = ":clipboard-yank-join"
 "C-," = "toggle_comments"
 
 [editor.indent-guides]
