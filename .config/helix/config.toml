@@ -6,6 +6,7 @@ shell = ["fish", "-c"]
 cursorline = true
 bufferline = "multiple"
 soft-wrap.enable = true
+rulers = [80]
 
 [editor.cursor-shape]
 insert = "bar"
