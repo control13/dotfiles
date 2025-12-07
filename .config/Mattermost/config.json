@@ -1,26 +1,10 @@
 {
-  "version": 3,
-  "teams": [
+  "version": 4,
+  "servers": [
     {
       "name": "GitLab FDIT Mattermost",
       "url": "https://mattermost.dit.htwk-leipzig.de/",
-      "order": 0,
-      "lastActiveTab": 0,
-      "tabs": [
-        {
-          "name": "TAB_MESSAGING",
-          "order": 0,
-          "isOpen": true
-        },
-        {
-          "name": "TAB_FOCALBOARD",
-          "order": 1
-        },
-        {
-          "name": "TAB_PLAYBOOKS",
-          "order": 2
-        }
-      ]
+      "order": 0
     }
   ],
   "showTrayIcon": true,
@@ -40,11 +24,13 @@
     "de-DE"
   ],
   "darkMode": true,
-  "lastActiveTeam": 0,
+  "lastActiveServer": 0,
   "downloadLocation": "/home/tobias/Downloads",
   "startInFullscreen": false,
   "logLevel": "info",
   "enableMetrics": false,
+  "viewLimit": 15,
+  "themeSyncing": true,
   "alwaysClose": false,
   "alwaysMinimize": true,
   "autoCheckForUpdates": true
