@@ -12,7 +12,7 @@ x-scheme-handler/chrome=firefox.desktop;
 x-scheme-handler/http=firefox.desktop;
 x-scheme-handler/https=firefox.desktop;
 [Default Applications]
-application/pdf=okularApplication_pdf.desktop;org.gnome.Evince.desktop;net.code-industry.masterpdfeditor5.desktop;
+application/pdf=okularApplication_pdf.desktop;org.gnome.Evince.desktop;net.code-industry.masterpdfeditor5.desktop;gimp.desktop;
 application/x-extension-htm=firefox.desktop;
 application/x-extension-html=firefox.desktop;
 application/x-extension-shtml=firefox.desktop;
