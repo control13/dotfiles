@@ -20,16 +20,29 @@ run  = "git"
 [plugin]
 prepend_preloaders = [
     # Replace magick, image, video with mediainfo
-    #{ mime = "{audio,video,image}/*", run = "mediainfo" },
-    #{ mime = "application/subrip", run = "mediainfo" },
+    { mime = "{audio,video,image}/*", run = "mediainfo" },
+    { mime = "application/subrip", run = "mediainfo" },
+    { mime = "application/postscript", run = "mediainfo" },
+    # load jpegs fast (my own loader)
     { mime = "image/jpeg", run = "epeg"},
+    # Office Documents
+    { mime = "application/openxmlformats-officedocument.*", run = "office" },
+    { mime = "application/oasis.opendocument.*", run = "office" },
+    { mime = "application/ms-*", run = "office" },
+    { mime = "application/msword", run = "office" },
+    { url = "*.docx", run = "office" },
+    # 3d objects
+    { url = "*.3mf", run = "f3d-preview" },
+    { url = "*.obj", run = "f3d-preview" },
+    { url = "*.pts", run = "f3d-preview" },
+    { url = "*.ply", run = "f3d-preview" },
+    { url = "*.stl", run = "f3d-preview" },
+    { url = "*.step", run = "f3d-preview" },
+    { url = "*.stp", run = "f3d-preview" },
 ]
 prepend_previewers = [
-    # nbpreview.yazi
-    { name = "*.ipynb", run = "nbpreview" },
     # Markdown previwer
-    { name = "*.md", run = "glow" },
-    { name = "*.stl",                       run = "stl" },
+    { url = "*.md", run = "glow" },
     # Archive previewer
     { mime = "application/*zip",            run = "ouch"      },
     { mime = "application/x-tar",           run = "ouch"      },
@@ -37,10 +50,25 @@ prepend_previewers = [
     { mime = "application/x-7z-compressed", run = "ouch"      },
     { mime = "application/x-rar",           run = "ouch"      },
     { mime = "application/x-xz",            run = "ouch"      },
-    { mime = "text/csv",                    run = "miller"    },
+    # { mime = "text/csv",                    run = "miller"    },
     # Replace magick, image, video with mediainfo
     { mime = "{audio,video,image}/*",       run = "mediainfo" },
     { mime = "application/subrip",          run = "mediainfo" },
+    { mime = "application/postscript", run = "mediainfo" },
+    # Office Documents
+    { mime = "application/openxmlformats-officedocument.*", run = "office" },
+    { mime = "application/oasis.opendocument.*", run = "office" },
+    { mime = "application/ms-*", run = "office" },
+    { mime = "application/msword", run = "office" },
+    { url = "*.docx", run = "office" },
+    # 3d objects
+    { url = "*.3mf", run = "f3d-preview" },
+    { url = "*.obj", run = "f3d-preview" },
+    { url = "*.pts", run = "f3d-preview" },
+    { url = "*.ply", run = "f3d-preview" },
+    { url = "*.stl", run = "f3d-preview" },
+    { url = "*.step", run = "f3d-preview" },
+    { url = "*.stp", run = "f3d-preview" },
 ]
 
 [opener]
