@@ -2,6 +2,10 @@
 name = "fish"
 language-servers = [ "fish-lsp" ]
 
+[language-server.tinymist]
+command = "tinymist"
+config.exportPdf = "onSave"
+
 [language-server.fish-lsp]
 command = "fish-lsp"
 args= ["start"]
@@ -28,6 +32,11 @@ config = { ltex.language = "auto" }
 name = "latex"
 file-types = ["tex", "sty", "cls", "Rd", "bbx", "cbx"]
 language-servers = [ "texlab", "ltex" ]
+
+[[language]]
+name = "typst"
+file-types = ["typ"]
+language-servers = [ "tinymist", "ltex" ]
 
 [[language]]
 name = "git-commit"
