@@ -122,3 +122,24 @@ scale = 1.0
 transform = "normal"
 adaptive_sync = false
 
+[[profile]]
+name = "HO009"
+
+[[profile.output]]
+enable = true
+search = ["m=VP-4XX", "s=0x00000030", "v=Kramer Electronics Ltd. International"]
+mode = "1920x1080@60Hz"
+position = "0,0"
+scale = 1.0
+transform = "normal"
+adaptive_sync = false
+
+[[profile.output]]
+enable = true
+search = ["m=0x414B", "s=", "v=Lenovo Group Limited"]
+mode = "1920x1080@120Hz"
+position = "0,0"
+scale = 1.0
+transform = "normal"
+adaptive_sync = false
+
