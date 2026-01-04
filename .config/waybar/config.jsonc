@@ -134,7 +134,7 @@
   "clock": {
     // "timezone": "America/New_York",
     "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-    "format": "{:%Y-%m-%d %H:%M}",
+    "format": "{:%a %Y-%m-%d %H:%M}",
     //"format-alt": "{:%Y-%m-%d}"
     "on-click": "date -I | tr -d '\n' | wl-copy"
   },
