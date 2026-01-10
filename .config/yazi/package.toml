@@ -5,7 +5,7 @@ hash = "7a83bfab51d1d2ba6558cc56bd52539a"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:mount"
-rev = "80cd5b5"
+rev = "03cdd4b"
 hash = "e2d4bfccf31e5ab05f46fee4797c5215"
 
 [[plugin.deps]]
