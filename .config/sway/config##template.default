@@ -324,4 +324,4 @@ exec swaync
 exec dropbox
 exec mattermost-desktop --enable-features=WaylandWindowDecorations --ozone-platform-hint=auto
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-#exec env SSH_AUTH_SOCK=/run/user/1000/ssh-agent.socket keepassxc
+exec env SSH_AUTH_SOCK=/run/user/1000/ssh-agent.socket keepassxc
