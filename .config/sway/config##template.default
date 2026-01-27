@@ -142,7 +142,8 @@ input * {
     bindsym $mod+v exec code
     bindsym $mod+s exec signal-desktop --enable-features=UseOzonePlatform --ozone-platform=wayland
     bindsym $mod+q exec qalculate-qt
-    bindsym $mod+m exec dex /home/tobias/.local/share/applications/wine/Programs/reMarkable/reMarkable.desktop
+    bindsym $mod+odiaeresis exec dex /home/tobias/.local/share/applications/wine/Programs/reMarkable/reMarkable.desktop
+    bindsym $mod+m exec mattermost-desktop
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
