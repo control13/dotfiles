@@ -51,23 +51,6 @@ transform = "normal"
 adaptive_sync = false
 
 [[profile]]
-name = "HO426_noLid"
-exec = ["notify-send shikane \"Profile $SHIKANE_PROFILE_NAME has been applied\"", "nmcli radio wifi off", "~/.swayidle/restart.bash -C ~/.swayidle/dock-config", "pactl set-default-sink alsa_output.pci-0000_c4_00.1.HiFi__HDMI1__sink"]
-
-[[profile.output]]
-enable = false
-search = ["m=", "s=", "v="]
-
-[[profile.output]]
-enable = true
-search = ["m=S27B80T", "s=HCJX800132", "v=Samsung Electric Company"]
-mode = "3840x2160@59.997Hz"
-position = "0,0"
-scale = 1.59765625
-transform = "normal"
-adaptive_sync = false
-
-[[profile]]
 name = "P621_noLid"
 exec = ["notify-send shikane \"Profile $SHIKANE_PROFILE_NAME has been applied\"", "nmcli radio wifi off", "nmcli con up \"Uni\"", "~/.swayidle/restart.bash -C ~/.swayidle/dock-config"]
 
@@ -94,7 +77,7 @@ transform = "normal"
 adaptive_sync = false
 
 [[profile]]
-name = "Frye_singel"
+name = "Frye_single"
 exec = ["notify-send shikane \"Profile $SHIKANE_PROFILE_NAME has been applied\"", "nmcli radio wifi on", "~/.swayidle/restart.bash"]
 
 [[profile.output]]

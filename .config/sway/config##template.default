@@ -151,6 +151,7 @@ input * {
     # Change normal to inverse to use left mouse button for resizing and right
     # mouse button for dragging.
     floating_modifier $mod normal
+    mouse_warping none
 
     # Reload the configuration file
     bindsym $mod+Shift+c reload; exec shikanectl reload
@@ -212,6 +213,8 @@ input * {
     # Note: workspaces can have any name you want, not just numbers.
 #    bindsym --no-repeat $mod+Tab exec "echo 1 > /tmp/sovpipe"
 #    bindsym --release $mod+Tab exec "echo 0 > /tmp/sovpipe"
+    bindsym $mod+Tab workspace next_on_output
+    bindsym $mod+Shift+Tab workspace prev_on_output
     # We just use 1-10 as the default.
 #
 # Layout stuff:
