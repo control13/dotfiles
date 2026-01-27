@@ -20,17 +20,17 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, Gdk, Pango
 
 
-def get_bindings(mode):
-    config = os.path.join(os.getenv('HOME'), '.config/{}/config'.format(mode))
+def get_bindings(config, keywords=['bindsym', 'bindcode']):
     if os.path.isfile(config):
         with open(config) as f:
             content = f.readlines()
         bindings = []
         for line in content:
             line = line.strip()
-            if line.startswith('bindsym') or line.startswith('bindcode'):
+            if any(line.startswith(k) for k in keywords):
                 words = line.split()
-                bindings.append(' '.join(words[1:]))
+                if len(words) > 1:
+                    bindings.append(' '.join(words[1:]))
 
         return sorted(bindings)
     else:
@@ -41,7 +41,7 @@ def get_bindings(mode):
 class GUI:
     def __init__(self, mode):
         config = os.path.join(os.getenv('HOME'), '.config/{}/config'.format(mode))
-        lines = get_bindings(mode)
+        lines = get_bindings(config)
 
         screen = Gdk.Screen.get_default()
         h = screen.get_height()
