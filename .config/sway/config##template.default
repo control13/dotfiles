@@ -293,7 +293,7 @@ bindsym $mod+r mode "resize"
     bindsym Ctrl+$alt+c exec cliphist list | fuzzel --dmenu | cliphist decode | wl-copy
     bindsym Ctrl+$alt+v exec cliphist list | fuzzel --dmenu | cliphist decode | wl-paste
 
-    bindsym $mod+F1 exec ~/.config/sway/cheatsheet
+    bindsym $mod+F1 exec ~/.config/sway/open_cheatsheet.bash
     bindsym $mod+Shift+w exec killall -SIGUSR1 waybar
 #
 # Status Bar:
