@@ -206,6 +206,7 @@ input * {
     bindsym $mod+9 workspace number 9
     bindsym $mod+0 workspace number 10
     bindsym $mod+p workspace number $ws_pres
+    bindsym $mod+Ctrl+Tab exec ~/.local/bin/sway-next-free-ws.fish
     # Move focused container to workspace
     bindsym $mod+Shift+1 move container to workspace number 1
     bindsym $mod+Shift+2 move container to workspace number 2
