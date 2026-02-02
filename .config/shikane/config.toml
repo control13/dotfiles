@@ -13,7 +13,7 @@ adaptive_sync = false
 
 [[profile]]
 name = "HO426_lidClosed"
-exec = ["notify-send shikane \"Profile $SHIKANE_PROFILE_NAME has been applied\"", "nmcli radio wifi off", "~/.swayidle/restart.bash -C ~/.swayidle/dock-config", "pactl set-default-sink alsa_output.pci-0000_c4_00.1.HiFi__HDMI1__sink"]
+exec = ["notify-send shikane \"Profile $SHIKANE_PROFILE_NAME has been applied\"", "nmcli radio wifi off", "~/.swayidle/restart.bash -C ~/.swayidle/dock-config", "pactl set-default-sink $(pactl list short sinks | awk '$2 ~ /HDMI1/ {print $2; exit}')"]
 
 [[profile.output]]
 enable = true
@@ -30,7 +30,7 @@ search = ["m=0x414B", "s=", "v=Lenovo Group Limited"]
 
 [[profile]]
 name = "HO426_lidOpen"
-exec = ["notify-send shikane \"Profile $SHIKANE_PROFILE_NAME has been applied\"", "nmcli radio wifi off", "~/.swayidle/restart.bash", "pactl set-default-sink alsa_output.pci-0000_c4_00.1.HiFi__HDMI1__sink"]
+exec = ["notify-send shikane \"Profile $SHIKANE_PROFILE_NAME has been applied\"", "nmcli radio wifi off", "~/.swayidle/restart.bash", "pactl set-default-sink $(pactl list short sinks | awk '$2 ~ /HDMI1/ {print $2; exit}')"]
 
 [[profile.output]]
 enable = true
