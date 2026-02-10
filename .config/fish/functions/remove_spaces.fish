@@ -8,9 +8,9 @@
 #   -n, --dry-run   Nur anzeigen, was geändert wird, ohne die Dateien tatsächlich umzubenennen.
 #   -h, --help      Zeige diese Hilfemeldung an.
 #
-function remove_spaces -d "Ersetzt Leerzeichen in Dateinamen und entfernt Leerzeichen um Bindestriche (z. B. ' - ' wird zu '-')." 
+function remove_spaces -d "Ersetzt Leerzeichen in Dateinamen und entfernt Leerzeichen um Bindestriche (z. B. ' - ' wird zu '-')."
     # Parse die Kommandozeilenoptionen mit argparse.
-    argparse 'n/dry-run' 'h/help' -- $argv
+    argparse n/dry-run h/help -- $argv
     # Falls Hilfe angefordert wurde, gib eine kurze Beschreibung aus und beende die Funktion.
     if set -q _flag_help
         echo "Usage: rename_spaces [-n|--dry-run] file1 [file2 ...]"
@@ -57,7 +57,6 @@ function remove_spaces -d "Ersetzt Leerzeichen in Dateinamen und entfernt Leerze
 
         # Ausgabe des alten und neuen Dateinamens.
         if test "$base" != "$newbase"
-            echo "here"
             echo "$file -> $newbase"
         else
             echo "$file -> (keine Änderung)"
