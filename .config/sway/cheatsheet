@@ -24,6 +24,7 @@ configs = {
     'sway': (os.path.join(os.getenv('HOME'), '.config/sway/config'), ['bindsym --locked', 'bindsym', 'bindcode'], False, [("$mod", "Super"), ("$alt", "Alt")]),
     'kitty': (os.path.join(os.getenv('HOME'), '.config/kitty/kitty.conf'), ['map', '# map'], False, [("kitty_mod", "ctrl+shift")]),
     'helix': (os.path.join(os.getenv('HOME'), '.config/helix/config.toml'), ['C-', '"C-'], True, []),
+    'notificationcenter': (os.path.join(os.getenv('HOME'), '.config/swaync/shortcuts.txt'), ['*'], False, []),
 }
 
 
@@ -33,6 +34,7 @@ def get_bindings(config, keywords, keep_keyword, mappings):
             content = f.readlines()
         bindings = []
         for line in content:
+            print(line)
             line = line.strip()
             for k in keywords:
                 if line.startswith(k):
