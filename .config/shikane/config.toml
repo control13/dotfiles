@@ -91,6 +91,7 @@ adaptive_sync = false
 
 [[profile]]
 name = "Lab_Dell"
+exec = ["notify-send shikane \"Profile $SHIKANE_PROFILE_NAME has been applied\"", "nmcli radio wifi off", "~/.swayidle/restart.bash", "~/.swayidle/restart.bash"]
 
 [[profile.output]]
 enable = false
@@ -104,3 +105,26 @@ position = "0,0"
 scale = 1.0
 transform = "normal"
 adaptive_sync = false
+
+[[profile]]
+name = "Lab_Dell_DP-9"
+exec = ["notify-send shikane \"Profile $SHIKANE_PROFILE_NAME has been applied\"", "nmcli radio wifi off", "~/.swayidle/restart.bash", "~/.swayidle/restart.bash"]
+
+[[profile.output]]
+enable = true
+search = ["m=0x414B", "s=", "v=Lenovo Group Limited"]
+mode = "2880x1800@120Hz"
+position = "0,0"
+scale = 1.80078125
+transform = "normal"
+adaptive_sync = false
+
+[[profile.output]]
+enable = true
+search = ["m=DELL U2311H", "s=HV8XP05B00VL", "v=Dell Inc."]
+mode = "1920x1080@60Hz"
+position = "1900,0"
+scale = 1.0
+transform = "normal"
+adaptive_sync = false
+
