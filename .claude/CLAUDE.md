@@ -13,7 +13,7 @@
 - State assumptions explicitly when uncertain
 
 ## Workflow: Unclear Requirements
-1. Ask focused clarifying questions (max 3) before doing anything
+1. Ask focused clarifying questions (try 3, but more if necessary) before doing anything
 2. Propose a short plan and wait for confirmation
 3. Implement only after explicit approval
 
@@ -28,15 +28,12 @@ Do not change any code. Only describe the solution and list files to be changed.
 - Prefer minimal diffs; no drive-by refactors
 
 ## Python Defaults
-- Python 3.10+
-- Type hints everywhere (PEP 484)
+- Python 3.14+
 - Docstrings in NumPy style
-- pytest for tests; mock external I/O and hardware interfaces
 - argparse for CLI tools (no click unless already in project)
 - Standard stack: PyTorch / Lightning, NumPy / SciPy / OpenCV, matplotlib, soundfile
 - Always use `.venv` for virtual environments (`python -m venv .venv`)
 - Always maintain a `requirements.txt`; pin versions explicitly
-- Docker / Compose for reproducible environments
 
 ## ROS / ROS2
 - Do NOT suggest, use, or assume ROS/ROS2 unless I explicitly ask for it
@@ -102,6 +99,7 @@ Always:
 - No raw owning pointers; prefer `std::unique_ptr` / `std::shared_ptr`
 - No `using namespace std;` in headers
 - Error handling: prefer return values / `std::optional` / exceptions consistently within the project; do not mix styles
+- use cxxopts for command line argument parsing
 - Do not add dependencies beyond Eigen unless explicitly requested
 
 ## README (only when explicitly asked)
