@@ -40,7 +40,7 @@ applyTo: '**'
 - Build: CMake; use `cmake -B build -G Ninja` if Ninja is available.
 - CMakeLists.txt: `cmake_minimum_required(VERSION 3.16)`, `CMAKE_CXX_STANDARD 17`, separate targets with `target_include_directories` / `target_link_libraries`.
 - Linear algebra: Eigen3 (`find_package(Eigen3 REQUIRED)`).
-- CLI argument parsing: cxxopts.
+- CLI argument parsing: cxxopts (https://github.com/jarro2783/cxxopts).
 - Code style: clang-format and clang-tidy; respect existing `.clang-format` / `.clang-tidy`.
 - No raw owning pointers; prefer `std::unique_ptr` / `std::shared_ptr`.
 - No `using namespace std;` in headers.

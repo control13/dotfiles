@@ -55,7 +55,7 @@ Do not change any code. Only describe the solution and list files to be changed.
 - No raw owning pointers; prefer `std::unique_ptr` / `std::shared_ptr`
 - No `using namespace std;` in headers
 - Error handling: prefer return values / `std::optional` / exceptions consistently within the project; do not mix styles
-- use cxxopts for command line argument parsing
+- use cxxopts for command line argument parsing (https://github.com/jarro2783/cxxopts)
 - Do not add dependencies beyond Eigen unless explicitly requested
 
 ## Shell & Tooling
