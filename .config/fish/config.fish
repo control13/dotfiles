@@ -55,10 +55,12 @@ bind -M insert \cr _atuin_search
 bind \ce _atuin_bind_up
 bind -M insert \ce _atuin_bind_up
 
+set -gx VIRTUAL_ENV_DISABLE_PROMPT 1 # stops venv doing stuff to my prompt
+
+starship init fish | source
 auto_activate_venv
 zoxide init fish | source
 # status is-interactive; and pyenv init --path | source
 # pyenv init - | source
 # source /opt/esp-idf/export.sh
-starship init fish | source
 # navi widget fish | source

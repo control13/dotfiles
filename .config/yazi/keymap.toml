@@ -24,3 +24,13 @@ run = "plugin mount"
 [[mgr.prepend_keymap]]
 on = "o"
 run = "shell 'handlr open \"$@\"'"
+
+[[mgr.prepend_keymap]]
+on   = "z"
+run  = "plugin zoxide"
+desc = "Cd to a directory via zoxide"
+
+[[mgr.prepend_keymap]]
+on   = "Z"
+run  = "plugin fzf"
+desc = "Cd to a directory or reveal a file via fzf"
