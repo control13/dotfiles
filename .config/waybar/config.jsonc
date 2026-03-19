@@ -29,6 +29,7 @@
     "custom/screenrecorder",
     "custom/notification",
     "custom/wlsunset",
+    "custom/theme",
     "battery#draw",
     "battery",
     "clock",
@@ -72,6 +73,15 @@
     //        "focused": "",
     //        "default": ""
     //    }
+  },
+  "custom/theme": {
+    "format": "{text}",
+    "return-type": "json",
+    "exec": "~/.local/bin/theme-toggle status",
+    "interval": "once",
+    "exec-on-event": true,
+    "on-click": "~/.local/bin/theme-toggle toggle",
+    "tooltip": true
   },
   "sway/language": {
     "format": "{}",
