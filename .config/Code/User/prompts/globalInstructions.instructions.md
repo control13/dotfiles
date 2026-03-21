@@ -21,7 +21,8 @@ applyTo: '**'
 - Preserve public APIs and file structure unless a refactor is explicitly requested.
 - Prefer: reproducibility, testability, explicit error handling, clear naming, small focused functions.
 - Mention version-sensitive assumptions for libraries, tools, and APIs.
-- Do not add dependencies unless clearly needed; justify before adding.
+- Do not add dependencies or libraries unless clearly needed; justify before adding.
+- A new library or dependency might be ok if it saves a big amount of code, very complex functions or is very common in its area
 
 ## Python
 - Python 3.14+.

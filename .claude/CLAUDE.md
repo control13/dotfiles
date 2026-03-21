@@ -52,8 +52,9 @@ Do not change any code. Only describe the solution and list files to be changed.
 - Keep commits small and review-friendly
 
 ## Dependency Management
-- Do not add new dependencies unless explicitly required
+- Do not add new dependencies or libraries unless explicitly required
 - If a new dependency is needed, justify it before adding
+- A new library or dependency might be ok if it saves a big amount of code, very complex functions or is very common in its area
 
 ## Safety & Change Management
 - Before destructive actions (rm, overwrite, mass edit, schema changes):

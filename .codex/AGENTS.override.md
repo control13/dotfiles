@@ -56,7 +56,8 @@ Do not change any code. Only describe the solution and list files to be changed.
 - No `using namespace std;` in headers
 - Error handling: prefer return values / `std::optional` / exceptions consistently within the project; do not mix styles
 - use cxxopts for command line argument parsing (https://github.com/jarro2783/cxxopts)
-- Do not add dependencies beyond Eigen unless explicitly requested
+- Do not add dependencies or libraries beyond Eigen unless explicitly requested
+- A new library or dependency might be ok if it saves a big amount of code, very complex functions or is very common in its area
 
 ## Shell & Tooling
 - fish for interactive commands
@@ -74,6 +75,7 @@ Do not change any code. Only describe the solution and list files to be changed.
 - Do not add new dependencies unless explicitly required
 - If a new dependency is needed, justify it before adding
 - Python: prefer stdlib and the standard stack above; no new packages without justification
+- A new library or dependency might be ok if it saves a big amount of code, very complex functions or is very common in its area
 - C++: no new libs beyond Eigen unless explicitly requested
 
 ## Safety & Change Management
