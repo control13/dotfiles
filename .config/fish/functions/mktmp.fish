@@ -1,4 +1,4 @@
-function mktmp --wraps='cd (mktemp -d)' --description 'alias mktmp=cd (mktemp -d)'
-  cd (mktemp -d) $argv
-        
+function mktmp --description 'Create a temporary directory and change into it.'
+    set -l tmpdir (mktemp -d $argv); or return
+    cd -- "$tmpdir"
 end

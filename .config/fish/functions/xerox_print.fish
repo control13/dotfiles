@@ -25,6 +25,8 @@ function xerox_print --description 'Flatten PDFs (render annotations), force A4,
         set max_jobs $_flag_jobs
     end
 
+    set -l printer ""
+
     # Select printer upfront so we fail early if none is available
     if set --query _flag_print
         set -l printer_list (lpstat -p 2>/dev/null | grep enabled | awk '{print $2}')
@@ -32,7 +34,7 @@ function xerox_print --description 'Flatten PDFs (render annotations), force A4,
             echo "Error: No enabled printers found." >&2
             return 1
         end
-        set -g printer (printf '%s\n' $printer_list | fzf --prompt="Select printer: ")
+        set printer (printf '%s\n' $printer_list | fzf --prompt="Select printer: ")
         if test -z "$printer"
             echo "No printer selected, aborting." >&2
             return 1
@@ -102,7 +104,7 @@ function xerox_print --description 'Flatten PDFs (render annotations), force A4,
 
     echo "Done: "(count $output_files)" file(s) in $newfolder/"
 
-    if set --query printer
+    if test -n "$printer"
         for f in $output_files
             echo "Printing: $f -> $printer"
             lp -d "$printer" "$newfolder/$f"

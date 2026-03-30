@@ -6,8 +6,11 @@ function _fzf_search_directory --description "Search the current directory. Repl
     set fd_opts --color=always $fzf_fd_opts
     set fzf_arguments --multi --ansi $fzf_dir_opts
     set token (commandline --current-token)
-    # expand any variables or leading tilde (~) in the token
-    set expanded_token (eval echo -- $token)
+    # expand any variables or leading tilde (~) in the token without evaluating command substitutions
+    set expanded_token (commandline --current-token --tokens-expanded 2>/dev/null | string collect -N)
+    if test $status -ne 0
+        set expanded_token (string unescape -- $token)
+    end
     # unescape token because it's already quoted so backslashes will mess up the path
     set unescaped_exp_token (string unescape -- $expanded_token)
 

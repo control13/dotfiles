@@ -1,3 +1,3 @@
-function clip --wraps='kitten clipboard' --description 'alias clip=kitten clipboard'
-  tr -d '\n' | kitten clipboard $argv
+function clip --description 'Copy stdin to the Kitty clipboard without trailing newlines.'
+    tr -d '\n' | kitten clipboard $argv
 end

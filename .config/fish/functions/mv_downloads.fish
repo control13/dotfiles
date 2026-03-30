@@ -11,10 +11,9 @@ function mv_downloads --description 'move downloaded things to its folders'
         return 0
     end
 
-    if set --query $argv[1]
+    set -l source_folder /home/tobias/Downloads/
+    if test (count $argv) -ge 1
         set source_folder $argv[1]
-    else
-        set source_folder /home/tobias/Downloads/
     end
 
     # echo $source_folder
@@ -55,23 +54,24 @@ function mv_downloads --description 'move downloaded things to its folders'
         set _flag_dryrun no
     end
 
-    function my_print
+    function __mv_downloads_print
         if test -n "$argv[3]"
             printf "to ""$argv[2]""\n"
             printf \t%s\n $argv[3..]
             if string match -q $argv[1] no
-                mv $argv[3..] "$argv[2]"
+                command mv -i -- $argv[3..] "$argv[2]"
                 remove_spaces "$argv[2]"/$argv[3..]
             end
         end
     end
 
     pushd $source_folder
-    my_print $_flag_dryrun "$congstar_dir" $congstar
-    my_print $_flag_dryrun "$deka_dir" $deka
-    my_print $_flag_dryrun "$kontoauszug_dir" $kontoauszug
-    my_print $_flag_dryrun "$hanseatic_dir" $hanseatic
-    my_print $_flag_dryrun "$simon_dir" $simon
+    __mv_downloads_print $_flag_dryrun "$congstar_dir" $congstar
+    __mv_downloads_print $_flag_dryrun "$deka_dir" $deka
+    __mv_downloads_print $_flag_dryrun "$kontoauszug_dir" $kontoauszug
+    __mv_downloads_print $_flag_dryrun "$hanseatic_dir" $hanseatic
+    __mv_downloads_print $_flag_dryrun "$simon_dir" $simon
     popd
+    functions --erase __mv_downloads_print
 
 end

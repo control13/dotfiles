@@ -3,20 +3,25 @@
 # - nimmt Pfade als Argumente ODER von stdin (pipe)
 # - optional -0/--null für NUL-getrennte Eingabe von stdin
 
-function print_status
+function __git_backup_check_print_status
     set path "$argv[1]"
+    set -l git_probe_path "$path"
 
     if not test -e "$path"
         echo "$path, not-found"
         return
     end
 
+    if not test -d "$git_probe_path"
+        set git_probe_path (dirname -- "$git_probe_path")
+    end
+
     # Git-Root (auch wenn Unterordner übergeben wird)
-    set root (git -C "$path" rev-parse --show-toplevel 2>/dev/null)
+    set root (git -C "$git_probe_path" rev-parse --show-toplevel 2>/dev/null)
     if test -z "$root"
         # evtl. bare repo?
-        if git -C "$path" rev-parse --git-dir 2>/dev/null >/dev/null
-            set root (realpath "$path")
+        if git -C "$git_probe_path" rev-parse --git-dir 2>/dev/null >/dev/null
+            set root (realpath "$git_probe_path")
         else
             echo "$path, not-a-git-repo"
             return
@@ -138,7 +143,7 @@ function git-backup-check --description 'Check Git-Repos für Backup-Bedarf'
     # (1) Pfade als Argumente?
     if test (count $paths) -gt 0
         for p in $paths
-            print_status "$p"
+            __git_backup_check_print_status "$p"
         end
         return
     end
@@ -148,13 +153,13 @@ function git-backup-check --description 'Check Git-Repos für Backup-Bedarf'
         if test $use_null -eq 1
             while read -z p
                 if test -n "$p"
-                    print_status "$p"
+                    __git_backup_check_print_status "$p"
                 end
             end
         else
             while read -l p
                 if test -n "$p"
-                    print_status "$p"
+                    __git_backup_check_print_status "$p"
                 end
             end
         end

@@ -51,7 +51,7 @@ function remove_spaces -d "Ersetzt Leerzeichen in Dateinamen und entfernt Leerze
 
         # Schritt 1: Falls exakt " - " vorkommt, entferne die Leerzeichen (ersetze durch "-").
         set newbase (string replace -ar "\s*-\s*" "-" "$base")
-        set newbase (string replace -ar "\s*_\s*" "_" "$base")
+        set newbase (string replace -ar "\s*_\s*" "_" "$newbase")
         # Schritt 2: Ersetze alle (eine oder mehrere) Leerzeichen durch einen Unterstrich.
         set newbase (string replace -ar '\s+' '_' "$newbase")
 
@@ -65,7 +65,7 @@ function remove_spaces -d "Ersetzt Leerzeichen in Dateinamen und entfernt Leerze
         # Falls nicht im Dry-Run-Modus, führe die Umbenennung durch.
         if test $dryrun -eq 0
             set newfile "$dir/$newbase"
-            mv -- "$file" "$newfile"
+            command mv -i -- "$file" "$newfile"
         end
     end
 end

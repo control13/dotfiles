@@ -1,3 +1,3 @@
-function foldersize --wraps='du -ch | grep total' --description 'alias foldersize=du -ch | grep total'
-  du -ch | grep total $argv; 
+function foldersize --description 'Print the total size reported by du for the given paths.'
+    du -ch $argv | grep total
 end
