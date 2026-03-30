@@ -67,11 +67,10 @@ function xerox_print --description 'Flatten PDFs (render annotations), force A4,
             set -l tmp (mktemp --suffix=.pdf)
             gs -dNOPAUSE -dBATCH -dQUIET \
                 -sDEVICE=pdfwrite \
-                -dCompatibilityLevel=1.4 \
-                -dPDFSETTINGS=/prepress \
-                -dPreserveAnnots=true \
+                -dPrinted \
+                -dPreserveAnnots=false \
                 -sOutputFile="$tmp" \
-                "$f" 2>/dev/null
+                -- "$f" 2>/dev/null
 
             if test $status -ne 0
                 echo "Error: Ghostscript failed on '$f'" >&2
