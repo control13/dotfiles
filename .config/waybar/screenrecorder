@@ -7,15 +7,14 @@
 
 SIGNAL=2
 pidf="/tmp/waybar-screenrecorder"
-WF_RECORDER_OPTS=""
+declare -a wf_recorder_opts=()
 # Insert `--audio` if you want to record audio
 # Specify video codec
 # find available video codecs with `ffmpeg -encoders`
-WF_RECORDER_OPTS="$WF_RECORDER_OPTS --audio --codec h264_vaapi"
+wf_recorder_opts+=(--audio --codec h264_vaapi)
 # Specify audio codec
 # find available audio codecs with `ffmpeg -codecs`
-# WF_RECORDER_OPTS="$WF_RECORDER_OPTS --audio --codec opus"
-# printf "WF_RECORDER_OPTS=%s\n" "$WF_RECORDER_OPTS"
+# wf_recorder_opts+=(--audio --codec opus)
 VIDEOEXT="mkv"
 
 if [ "$1" == "status" ]; then
@@ -39,10 +38,10 @@ elif [ "$1" == "toggle" ]; then
 		vidf="$bf.$VIDEOEXT"
 		logf="$bf.log"
 		if [ "$2" == "fullscreen" ]; then
-			wf-recorder $WF_RECORDER_OPTS --file "$vidf" 1>"$logf" 2>&1 &
+			wf-recorder "${wf_recorder_opts[@]}" --file "$vidf" 1>"$logf" 2>&1 &
 		elif [ "$2" == "region" ]; then
 			sleep 1
-			wf-recorder $WF_RECORDER_OPTS --geometry "$(slurp)" --file "$vidf" 1>"$logf" 2>&1 &
+			wf-recorder "${wf_recorder_opts[@]}" --geometry "$(slurp)" --file "$vidf" 1>"$logf" 2>&1 &
 		else
 			printf "Argument \$2='%s' not valid (fullscreen/region)" "$2"
 			exit
@@ -51,9 +50,8 @@ elif [ "$1" == "toggle" ]; then
 		printf "%d\n%s\n%s" "$pid" "$vidf" "$logf" > "$pidf"
 		disown "$pid"
 	fi
-	pkill -RTMIN+$SIGNAL waybar
+	pkill -RTMIN+"$SIGNAL" waybar
 
 else
 	printf "ERROR: Argument %s not valid\n" "$1"
 fi
-

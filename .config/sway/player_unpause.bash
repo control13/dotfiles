@@ -7,5 +7,5 @@ fi
 
 PLAYER=$(playerctl --list-all | fuzzel --dmenu)
 if [[ -n "$PLAYER" ]]; then
-  playerctl --player=$PLAYER play-pause
+  playerctl --player="$PLAYER" play-pause
 fi

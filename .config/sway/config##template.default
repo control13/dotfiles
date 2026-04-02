@@ -65,8 +65,8 @@ exec sway-audio-idle-inhibit
 #
 exec swayidle
 exec playerctld daemon
-exec wl-clip-persist --clipboard regular --all-mime-type-regex '^(?!x-kde-passwordManagerHint).+'
-exec wl-paste --watch cliphist store
+exec wl-clip-persist --clipboard regular --ignore-event-on-error --selection-size-limit 1048576 --all-mime-type-regex '^(?!x-kde-passwordManagerHint).+'
+exec wl-paste --type text --watch sh -c 'if [ "$CLIPBOARD_STATE" = data ]; then cliphist store; fi'
 exec sworkstyle &> /tmp/sworkstyle.log
 #exec rm -f /tmp/sovpipe && mkfifo /tmp/sovpipe && tail -f /tmp/sovpipe | sov
 
@@ -303,8 +303,7 @@ bindsym $mod+r mode "resize"
     bindsym Print exec grim
     bindsym XF86SelectiveScreenshot exec grimshot --notify save area
 
-    bindsym Ctrl+$alt+c exec cliphist list | fuzzel --dmenu | cliphist decode | wl-copy
-    bindsym Ctrl+$alt+v exec cliphist list | fuzzel --dmenu | cliphist decode | wl-paste
+    bindsym Ctrl+$alt+v exec cliphist list | fuzzel --dmenu | cliphist decode | wl-copy
 
     bindsym $mod+F1 exec ~/.config/sway/open_cheatsheet.bash
     bindsym $mod+Shift+w exec killall -SIGUSR1 waybar
@@ -326,10 +325,9 @@ bindsym $mod+r mode "resize"
 #    }
 #}
 
-bar swaybar_command waybar
-
 include /etc/sway/config.d/*
 
+bar swaybar_command waybar
 exec nm-applet
 #exec wlsunset -t 4500 -l 51.3 -L 12.3
 exec sh /home/tobias/.config/waybar/wlsunset.sh
