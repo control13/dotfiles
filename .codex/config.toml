@@ -1,0 +1,19 @@
+model = "gpt-5.4"
+model_reasoning_effort = "xhigh"
+personality = "pragmatic"
+
+[projects."/home/tobias/Downloads/whistle_test"]
+trust_level = "trusted"
+
+[projects."/home/tobias/.config/fish/functions"]
+trust_level = "trusted"
+
+[projects."/home/tobias/.config"]
+trust_level = "trusted"
+
+[notice.model_migrations]
+"gpt-5.3-codex" = "gpt-5.4"
+
+[tui]
+theme = "monokai-extended"
+status_line = ["model-with-reasoning", "current-dir", "git-branch", "five-hour-limit", "weekly-limit", "context-window-size", "used-tokens", "total-output-tokens", "context-remaining"]
