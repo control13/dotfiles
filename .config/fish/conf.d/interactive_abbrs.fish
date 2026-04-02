@@ -28,7 +28,7 @@ if status is-interactive
     __ensure_abbr s 'kitten ssh'
     __ensure_abbr su 'su --shell=/usr/bin/fish'
     __ensure_abbr grip 'grep --color=auto -i'
-    __ensure_abbr updateall 'yay -Syu --devel --timeupdate --sudoloop --noredownload --norebuild --removemake --answerclean'
+    __ensure_abbr updateall 'yay -Syu --devel --timeupdate'
     __ensure_abbr remove 'yay -Rsun'
     __ensure_abbr bap 'bat -p'
 
