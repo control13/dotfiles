@@ -34,3 +34,13 @@ desc = "Cd to a directory via zoxide"
 on   = "Z"
 run  = "plugin fzf"
 desc = "Cd to a directory or reveal a file via fzf"
+
+[[mgr.prepend_keymap]]
+on   = [ "g", "a" ]
+run  = "cd ~/work/htwk/FDIT/Auslagen/2026"
+desc = "Cd to FDIT/Auslagen"
+
+[[mgr.prepend_keymap]]
+on   = [ "g", "r" ]
+run  = "cd ~/Cryfs"
+desc = "Cd to Cryfs"
