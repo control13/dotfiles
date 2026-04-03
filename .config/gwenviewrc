@@ -38,10 +38,10 @@ Name8[$e]=2025-01-04 17.45.29.jpg
 Name9[$e]=2025-01-01 19.40.07.jpg
 
 [SideBar]
-InformationSplitterSizes=573,617
+InformationSplitterSizes=404,436
 IsVisible ViewMode=true
 PreferredMetaInfoKeyList=General.Name,General.Size,General.Created,General.ImageSize,Exif.Photo.ColorSpace,Exif.Photo.ApertureValue,Exif.Photo.ExposureTime,Exif.Photo.Flash
-SideBarSplitterSizes=191,2201
+SideBarSplitterSizes=191,1401
 
 [ThumbnailView]
 ThumbnailSize=204
