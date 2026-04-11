@@ -68,13 +68,11 @@ exec playerctld daemon
 exec wl-clip-persist --clipboard regular --ignore-event-on-error --selection-size-limit 1048576 --all-mime-type-regex '^(?!x-kde-passwordManagerHint).+'
 exec wl-paste --type text --watch sh -c 'if [ "$CLIPBOARD_STATE" = data ]; then cliphist store; fi'
 exec sworkstyle &> /tmp/sworkstyle.log
-#exec rm -f /tmp/sovpipe && mkfifo /tmp/sovpipe && tail -f /tmp/sovpipe | sov
 
 for_window [shell="xwayland"] title_format "[XWayland] %title"
 assign [app_id="at.yrlf.wl_mirror"] output $beamer
 
 for_window [app_id="io.github.Qalculate.qalculate-qt"] floating enable
-#for_window [class="KeePass2"] floating enable
 for_window [app_id="org.keepassxc.KeePassXC"] floating enable
 for_window [class="vlc"] fullscreen enable
 for_window [class="gimp-3\.0"] fullscreen enable
@@ -91,15 +89,6 @@ for_window [app_id="libreoffice-calc"] layout tabbed
 for_window [app_id="kitty" title="Filechooser"] floating enable
 for_window [app_id="qdirstat" title="Select Directory"] floating enable
 for_window [app_id="at.yrlf.wl_mirror"] floating enable, sticky enable, fullscreen enable
-
-# exec swayidle -w \
-#          timeout 300 'swaylock -f -c 000000' \
-#          timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
-#          before-sleep 'swaylock -f -c 000000'
-#
-# This will lock your screen after 300 seconds of inactivity, then turn off
-# your displays after another 300 seconds, and turn your screens back on when
-# resumed. It will also lock your screen before your computer goes to sleep.
 
 ### Input configuration
 #
@@ -307,32 +296,13 @@ bindsym $mod+r mode "resize"
 
     bindsym $mod+F1 exec ~/.config/sway/open_cheatsheet.bash
     bindsym $mod+Shift+w exec killall -SIGUSR1 waybar
-#
-# Status Bar:
-#
-# Read `man 5 sway-bar` for more information about this section.
-#bar {
-#    position top
-#
-#    # When the status_command prints a new line to stdout, swaybar updates.
-#    # The default just shows the current date and time.
-#    status_command while date +'%Y-%m-%d %X'; do sleep 1; done
-#
-#    colors {
-#statusline #ffffff
-#        background #323232
-#        inactive_workspace #32323200 #32323200 #5c5c5c
-#    }
-#}
 
 include /etc/sway/config.d/*
 
-bar swaybar_command waybar
+exec ~/.config/waybar/waybar-supervise.sh
 exec nm-applet
-#exec wlsunset -t 4500 -l 51.3 -L 12.3
 exec sh /home/tobias/.config/waybar/wlsunset.sh
 exec udiskie
-exec swaync
 exec dropbox
 exec mattermost-desktop --enable-features=WaylandWindowDecorations --ozone-platform-hint=auto
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
