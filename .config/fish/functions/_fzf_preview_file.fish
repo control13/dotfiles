@@ -24,6 +24,15 @@ function _fzf_preview_file --description "Print a preview for the given file bas
         else if set --query fzf_preview_file_cmd
             # Escape the path as a single Fish argument before passing it to eval.
             eval $fzf_preview_file_cmd (string escape -- $file_path)
+        else if string match -q "application/pdf*" "$mimetype"
+            set dim "$FZF_PREVIEW_COLUMNS"x"$FZF_PREVIEW_LINES"
+            if test "$dim" = "x"
+                set dim (stty size < /dev/tty | awk '{print $2 "x" $1}')
+            end
+            set tmp (mktemp)
+            pdftoppm -r 150 -f 1 -l 1 -png -singlefile "$file_path" $tmp
+            kitty icat --clear --transfer-mode=memory --unicode-placeholder --stdin=no --place="$dim@0x0" $tmp.png | sed '$d' | sed '$s/\$/\e[m/'
+            rm -f $tmp $tmp.png
         else
             bat --style=numbers --color=always "$file_path"
         end
