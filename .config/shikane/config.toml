@@ -1,4 +1,4 @@
-timeout = 1500
+# timeout = 1500
 [[profile]]
 name = "standalone"
 exec = ["notify-send shikane \"Profile $SHIKANE_PROFILE_NAME has been applied\"", "nmcli radio wifi on", "~/.swayidle/restart.bash"]
