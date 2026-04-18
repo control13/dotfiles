@@ -44,7 +44,8 @@ def get_bindings(config, keywords, keep_keyword, mappings):
                         line = line[len(k):].strip()
                     for old, new in mappings:
                         line = line.replace(old, new)
-                    bindings.append(line)
+                    if line and 'cmd' not in line.split()[0].lower():
+                        bindings.append(line)
                     break
         return sorted(bindings)
     else:
