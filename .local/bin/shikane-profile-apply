@@ -1,0 +1,81 @@
+#!/bin/sh
+set -u
+
+profile_name="${SHIKANE_PROFILE_NAME:-unknown}"
+state_dir="$HOME/.local/state/shikane"
+log_file="$state_dir/profile-apply.log"
+
+wifi_state=""
+audio_target=""
+swayidle_mode="default"
+network_connection=""
+
+mkdir -p "$state_dir"
+
+log() {
+  printf '%s [%s] %s\n' "$(date --iso-8601=seconds)" "$profile_name" "$*" >> "$log_file"
+}
+
+run_step() {
+  step_name="$1"
+  shift
+
+  if "$@"; then
+    log "ok: $step_name"
+  else
+    status=$?
+    log "failed ($status): $step_name"
+  fi
+}
+
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    --wifi)
+      wifi_state="$2"
+      shift 2
+      ;;
+    --audio)
+      audio_target="$2"
+      shift 2
+      ;;
+    --swayidle)
+      swayidle_mode="$2"
+      shift 2
+      ;;
+    --connection)
+      network_connection="$2"
+      shift 2
+      ;;
+    *)
+      echo "Unknown argument: $1" >&2
+      exit 2
+      ;;
+  esac
+done
+log "applying profile hook"
+
+if [ -n "$wifi_state" ]; then
+  run_step "wifi $wifi_state" nmcli radio wifi "$wifi_state"
+fi
+
+if [ -n "$network_connection" ]; then
+  run_step "connection $network_connection" nmcli con up "$network_connection"
+fi
+
+case "$swayidle_mode" in
+  dock)
+    run_step "restart swayidle dock" "$HOME/.swayidle/restart.bash" -C "$HOME/.swayidle/dock-config"
+    ;;
+  default)
+    run_step "restart swayidle default" "$HOME/.swayidle/restart.bash"
+    ;;
+  *)
+    log "failed: unknown swayidle mode '$swayidle_mode'"
+    ;;
+esac
+
+if [ -n "$audio_target" ]; then
+  run_step "audio $audio_target" "$HOME/.local/bin/select-default-audio-sink" "$audio_target"
+fi
+
+run_step "notify" notify-send shikane "Profile $profile_name has been applied"

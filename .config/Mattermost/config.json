@@ -33,5 +33,7 @@
   "themeSyncing": true,
   "alwaysClose": false,
   "alwaysMinimize": true,
-  "autoCheckForUpdates": true
+  "autoCheckForUpdates": true,
+  "enableSentry": true,
+  "skippedVersions": []
 }

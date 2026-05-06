@@ -1,7 +1,7 @@
-# timeout = 1500
+timeout = 2500
 [[profile]]
 name = "standalone"
-exec = ["notify-send shikane \"Profile $SHIKANE_PROFILE_NAME has been applied\"", "nmcli radio wifi on", "~/.swayidle/restart.bash"]
+exec = ["~/.local/bin/shikane-profile-apply --wifi on --swayidle default --audio internal"]
 
 [[profile.output]]
 enable = true
@@ -14,7 +14,7 @@ adaptive_sync = false
 
 [[profile]]
 name = "HO426_lidClosed"
-exec = ["notify-send shikane \"Profile $SHIKANE_PROFILE_NAME has been applied\"", "nmcli radio wifi off", "~/.swayidle/restart.bash -C ~/.swayidle/dock-config", "pactl set-default-sink $(pactl list short sinks | awk '$2 ~ /HDMI1/ {print $2; exit}')"]
+exec = ["~/.local/bin/shikane-profile-apply --wifi off --swayidle dock --audio external"]
 
 [[profile.output]]
 enable = true
@@ -31,7 +31,7 @@ search = ["m=0x414B", "s=", "v=Lenovo Group Limited"]
 
 [[profile]]
 name = "HO426_lidOpen"
-exec = ["notify-send shikane \"Profile $SHIKANE_PROFILE_NAME has been applied\"", "nmcli radio wifi off", "~/.swayidle/restart.bash", "pactl set-default-sink $(pactl list short sinks | awk '$2 ~ /HDMI1/ {print $2; exit}')"]
+exec = ["~/.local/bin/shikane-profile-apply --wifi off --swayidle default --audio external"]
 
 [[profile.output]]
 enable = true
@@ -53,7 +53,7 @@ adaptive_sync = false
 
 [[profile]]
 name = "P621_noLid"
-exec = ["notify-send shikane \"Profile $SHIKANE_PROFILE_NAME has been applied\"", "nmcli radio wifi off", "nmcli con up \"Uni\"", "~/.swayidle/restart.bash -C ~/.swayidle/dock-config"]
+exec = ["~/.local/bin/shikane-profile-apply --wifi off --connection Uni --swayidle dock --audio external"]
 
 [[profile.output]]
 enable = true
@@ -79,7 +79,7 @@ adaptive_sync = false
 
 [[profile]]
 name = "Frye_single"
-exec = ["notify-send shikane \"Profile $SHIKANE_PROFILE_NAME has been applied\"", "nmcli radio wifi on", "~/.swayidle/restart.bash"]
+exec = ["~/.local/bin/shikane-profile-apply --wifi on --swayidle default --audio internal"]
 
 [[profile.output]]
 enable = true
@@ -92,7 +92,7 @@ adaptive_sync = false
 
 [[profile]]
 name = "Lab_Dell"
-exec = ["notify-send shikane \"Profile $SHIKANE_PROFILE_NAME has been applied\"", "nmcli radio wifi off", "~/.swayidle/restart.bash"]
+exec = ["~/.local/bin/shikane-profile-apply --wifi off --swayidle default --audio external"]
 
 [[profile.output]]
 enable = false
@@ -109,7 +109,7 @@ adaptive_sync = false
 
 [[profile]]
 name = "Lab_Dell_DP-9"
-exec = ["notify-send shikane \"Profile $SHIKANE_PROFILE_NAME has been applied\"", "nmcli radio wifi off", "~/.swayidle/restart.bash"]
+exec = ["~/.local/bin/shikane-profile-apply --wifi off --swayidle default --audio external"]
 
 [[profile.output]]
 enable = true
@@ -131,7 +131,7 @@ adaptive_sync = false
 
 [[profile]]
 name = "Lab_Acer_DP-9"
-exec = ["notify-send shikane \"Profile $SHIKANE_PROFILE_NAME has been applied\"", "nmcli radio wifi off", "~/.swayidle/restart.bash"]
+exec = ["~/.local/bin/shikane-profile-apply --wifi off --swayidle default --audio external"]
 
 [[profile.output]]
 enable = true
@@ -150,4 +150,3 @@ position = "1700,0"
 scale = 1.0
 transform = "normal"
 adaptive_sync = false
-

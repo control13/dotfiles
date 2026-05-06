@@ -1,0 +1,102 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+mode="${1:-}"
+attempts="${AUDIO_SINK_SELECT_ATTEMPTS:-10}"
+delay_seconds="${AUDIO_SINK_SELECT_DELAY_SECONDS:-0.5}"
+
+if ! command -v jq >/dev/null 2>&1; then
+    echo "jq is required" >&2
+    exit 1
+fi
+
+pick_external_sink() {
+    jq -cer '
+        def external_priority:
+            ((.ports // [])
+                | map(select(.type == "HDMI" and .availability == "available") | .priority)
+                | max) // -1;
+
+        map(select(external_priority >= 0))
+        | if length == 0 then empty else max_by(external_priority) end
+    ' <<<"$1" 2>/dev/null || true
+}
+
+pick_internal_sink() {
+    jq -cer '
+        def is_internal_speaker:
+            ((.ports // []) | any(.type == "Speaker"))
+            or (.properties["device.icon_name"] // "" == "audio-speakers")
+            or (.description | endswith("Speaker"));
+
+        map(select(is_internal_speaker))
+        | if length == 0 then empty else max_by((.properties["priority.session"] // "0" | tonumber)) end
+    ' <<<"$1" 2>/dev/null || true
+}
+
+select_sink() {
+    local sinks_json="$1"
+    local external_sink=""
+    local internal_sink=""
+
+    external_sink="$(pick_external_sink "$sinks_json")"
+    internal_sink="$(pick_internal_sink "$sinks_json")"
+
+    case "$mode" in
+        external)
+            if [[ -n "$external_sink" ]]; then
+                printf '%s\n' "$external_sink"
+            fi
+            ;;
+        internal)
+            if [[ -n "$internal_sink" ]]; then
+                printf '%s\n' "$internal_sink"
+            fi
+            ;;
+        *)
+            echo "unsupported mode: ${mode:-<empty>}" >&2
+            exit 2
+            ;;
+    esac
+}
+
+selected_sink=""
+
+for ((attempt = 1; attempt <= attempts; attempt++)); do
+    sinks_json="$(pactl -f json list sinks)"
+    selected_sink="$(select_sink "$sinks_json")"
+
+    if [[ -n "$selected_sink" ]]; then
+        break
+    fi
+
+    sleep "$delay_seconds"
+done
+
+if [[ -z "$selected_sink" ]]; then
+    if [[ "$mode" == "external" ]]; then
+        selected_sink="$(pick_internal_sink "$sinks_json")"
+    elif [[ "$mode" == "internal" ]]; then
+        selected_sink="$(pick_external_sink "$sinks_json")"
+    fi
+fi
+
+if [[ -z "$selected_sink" ]]; then
+    echo "no suitable sink found" >&2
+    exit 1
+fi
+
+sink_name="$(jq -r '.name' <<<"$selected_sink")"
+current_default_sink="$(pactl info | awk -F': ' '/^Default Sink: / {print $2}')"
+
+if [[ "$current_default_sink" == "$sink_name" ]]; then
+    exit 0
+fi
+
+pactl set-default-sink "$sink_name"
+
+while read -r sink_input_id; do
+    [[ -n "$sink_input_id" ]] || continue
+    pactl move-sink-input "$sink_input_id" "$sink_name"
+done < <(pactl list short sink-inputs | awk '{print $1}')

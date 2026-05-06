@@ -302,9 +302,10 @@ bindsym $mod+r mode "resize"
 
 include /etc/sway/config.d/*
 
+exec waybar
 exec ~/.config/waybar/waybar-supervise.sh
-exec nm-applet
 exec sh /home/tobias/.config/waybar/wlsunset.sh
+exec nm-applet
 exec udiskie
 exec dropbox
 exec mattermost-desktop --enable-features=WaylandWindowDecorations --ozone-platform-hint=auto
