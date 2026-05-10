@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Start mirroring eDP-1 to the beamer using wl-present
+# The window placement is handled by Sway configuration rules.
+wl-present --fullscreen mirror eDP-1

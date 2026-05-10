@@ -70,7 +70,7 @@ exec wl-paste --type text --watch sh -c 'if [ "$CLIPBOARD_STATE" = data ]; then 
 exec sworkstyle &> /tmp/sworkstyle.log
 
 for_window [shell="xwayland"] title_format "[XWayland] %title"
-assign [app_id="at.yrlf.wl_mirror"] output $beamer
+assign [app_id="at.yrlf.wl_mirror"] workspace $ws_pres
 
 for_window [app_id="io.github.Qalculate.qalculate-qt"] floating enable
 for_window [app_id="org.keepassxc.KeePassXC"] floating enable
@@ -199,6 +199,7 @@ input * {
     bindsym $mod+9 workspace number 9
     bindsym $mod+0 workspace number 10
     bindsym $mod+p workspace number $ws_pres
+    bindsym $mod+Ctrl+p exec ~/.local/bin/present-to-beamer
     bindsym $mod+Ctrl+Tab exec ~/.local/bin/sway-next-free-ws.fish
     # Move focused container to workspace
     bindsym $mod+Shift+1 move container to workspace number 1
