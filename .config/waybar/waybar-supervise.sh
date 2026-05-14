@@ -5,7 +5,7 @@ log_dir="$HOME/.local/state/waybar"
 log_file="$log_dir/supervise.log"
 output_event_file="$log_dir/last-output-event-ms"
 quiet_period_ms="${WAYBAR_OUTPUT_QUIET_PERIOD_MS:-1500}"
-boot_window_ms="${WAYBAR_BOOT_RECOVERY_WINDOW_MS:-30000}"
+boot_window_ms="${WAYBAR_BOOT_RECOVERY_WINDOW_MS:-120000}"
 poll_interval_s="${WAYBAR_BOOT_RECOVERY_POLL_INTERVAL_S:-0.2}"
 mkdir -p "$log_dir"
 
