@@ -54,6 +54,9 @@ while [ "$#" -gt 0 ]; do
 done
 log "applying profile hook"
 
+# Kill waybar immediately to prevent crashes during monitor reconfiguration
+pkill -x waybar || true
+
 if [ -n "$wifi_state" ]; then
   run_step "wifi $wifi_state" nmcli radio wifi "$wifi_state"
 fi
