@@ -11,11 +11,13 @@ cache_dir = "~/.cache/yazi/"
 id   = "git"
 url = "*"
 run  = "git"
+group = "git"
 
 [[plugin.prepend_fetchers]]
 id   = "git"
 url = "*/"
 run  = "git"
+group = "git"
 
 [plugin]
 prepend_preloaders = [
@@ -26,19 +28,10 @@ prepend_preloaders = [
     # load jpegs fast (my own loader)
     { mime = "image/jpeg", run = "epeg"},
     # Office Documents
-    { mime = "application/openxmlformats-officedocument.*", run = "office" },
-    { mime = "application/oasis.opendocument.*", run = "office" },
-    { mime = "application/ms-*", run = "office" },
-    { mime = "application/msword", run = "office" },
+    { mime = "application/{openxmlformats-officedocument.*,oasis.opendocument.*,ms-*,msword}", run = "office" },
     { url = "*.docx", run = "office" },
     # 3d objects
-    { url = "*.3mf", run = "f3d-preview" },
-    { url = "*.obj", run = "f3d-preview" },
-    { url = "*.pts", run = "f3d-preview" },
-    { url = "*.ply", run = "f3d-preview" },
-    { url = "*.stl", run = "f3d-preview" },
-    { url = "*.step", run = "f3d-preview" },
-    { url = "*.stp", run = "f3d-preview" },
+    { url = "*.{3mf,obj,pts,ply,stl,step,stp}", run = "f3d-preview" },
 ]
 prepend_previewers = [
     # Markdown previwer
