@@ -1,4 +1,14 @@
 [[mgr.prepend_keymap]]
+on  = "t"
+run = "tab_create --current"
+desc = "Create a new tab"
+
+[[mgr.prepend_keymap]]
+on   = [ "g", "t" ]
+run  = "tab_rename"
+desc = "Rename tab"
+
+[[mgr.prepend_keymap]]
 on  = "<C-n>"
 run = 'shell -- dragon-drop -x -i -T "$@"'
 
