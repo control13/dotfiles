@@ -20,6 +20,9 @@ trust_level = "trusted"
 [projects."/home/tobias"]
 trust_level = "trusted"
 
+[projects."/home/tobias/programming/fdit_utils"]
+trust_level = "trusted"
+
 [notice.model_migrations]
 "gpt-5.3-codex" = "gpt-5.4"
 

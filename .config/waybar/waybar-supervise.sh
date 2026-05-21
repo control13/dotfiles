@@ -5,7 +5,7 @@ log_dir="$HOME/.local/state/waybar"
 log_file="$log_dir/supervise.log"
 output_event_file="$log_dir/last-output-event-ms"
 quiet_period_ms="${WAYBAR_OUTPUT_QUIET_PERIOD_MS:-2000}"
-boot_window_ms="${WAYBAR_BOOT_RECOVERY_WINDOW_MS:-30000}"
+boot_window_ms="${WAYBAR_BOOT_RECOVERY_WINDOW_MS:-300000}"
 poll_interval_s="${WAYBAR_BOOT_RECOVERY_POLL_INTERVAL_S:-0.2}"
 mkdir -p "$log_dir"
 
@@ -57,7 +57,6 @@ end_ms=$(( start_ms + boot_window_ms ))
 last_handled_event_ms=0
 last_recovery_attempt_ms=0
 
-write_output_event_ms "$start_ms"
 echo "=== $(date --iso-8601=seconds) boot recovery start ===" >> "$log_file"
 
 while [ "$(now_ms)" -lt "$end_ms" ]; do
@@ -89,4 +88,4 @@ while [ "$(now_ms)" -lt "$end_ms" ]; do
   sleep "$poll_interval_s"
 done
 
-echo "--- $(date --iso-8601=seconds) boot recovery window ended ---" >> "$log_file"
+echo "--- $(date --iso-8601=seconds) boot recovery window ended (limit: $((boot_window_ms/1000))s) ---" >> "$log_file"

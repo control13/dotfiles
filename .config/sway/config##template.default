@@ -42,6 +42,8 @@ exec aw-watcher-media-player
 exec awatcher
 {% endif %}
 
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP SWAYSOCK DISPLAY
+exec systemctl --user start sway-session.target
 exec shikane
 exec sway-audio-idle-inhibit
 
@@ -303,8 +305,8 @@ bindsym $mod+r mode "resize"
 
 include /etc/sway/config.d/*
 
-exec waybar
-exec ~/.config/waybar/waybar-supervise.sh
+# exec waybar
+# exec ~/.config/waybar/waybar-supervise.sh
 exec sh /home/tobias/.config/waybar/wlsunset.sh
 exec nm-applet
 exec udiskie

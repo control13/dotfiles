@@ -54,8 +54,8 @@ while [ "$#" -gt 0 ]; do
 done
 log "applying profile hook"
 
-# Kill waybar immediately to prevent crashes during monitor reconfiguration
-pkill -x waybar || true
+# # Kill waybar immediately to prevent crashes during monitor reconfiguration
+# systemctl --user stop waybar.service || true
 
 if [ -n "$wifi_state" ]; then
   run_step "wifi $wifi_state" nmcli radio wifi "$wifi_state"
@@ -81,10 +81,11 @@ if [ -n "$audio_target" ]; then
   run_step "audio $audio_target" "$HOME/.local/bin/select-default-audio-sink" "$audio_target"
 fi
 
-# Signal waybar supervisor that an output change happened
-output_event_file="$HOME/.local/state/waybar/last-output-event-ms"
-if [ -f "$output_event_file" ]; then
-  printf '%s\n' "$(date +%s%3N)" > "$output_event_file"
-fi
+# # Signal waybar supervisor that an output change happened
+# output_event_file="$HOME/.local/state/waybar/last-output-event-ms"
+# if [ -f "$output_event_file" ]; then
+#   printf '%s\n' "$(date +%s%3N)" > "$output_event_file"
+# fi
 
+# run_step "start waybar" systemctl --user start waybar.service
 run_step "notify" notify-send shikane "Profile $profile_name has been applied"
