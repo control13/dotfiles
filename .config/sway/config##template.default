@@ -305,8 +305,6 @@ bindsym $mod+r mode "resize"
 
 include /etc/sway/config.d/*
 
-# exec waybar
-# exec ~/.config/waybar/waybar-supervise.sh
 exec sh /home/tobias/.config/waybar/wlsunset.sh
 exec nm-applet
 exec udiskie
