@@ -4,6 +4,7 @@
     {
       "name": "GitLab FDIT Mattermost",
       "url": "https://mattermost.dit.htwk-leipzig.de/",
+      "isPredefined": false,
       "order": 0
     }
   ],
@@ -35,5 +36,6 @@
   "alwaysMinimize": true,
   "autoCheckForUpdates": true,
   "enableSentry": true,
-  "skippedVersions": []
+  "skippedVersions": [],
+  "useNativeTitleBar": false
 }
