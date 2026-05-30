@@ -1,5 +1,5 @@
-model = "gpt-5.4"
-model_reasoning_effort = "xhigh"
+model = "gpt-5.5"
+model_reasoning_effort = "high"
 personality = "pragmatic"
 
 [projects."/home/tobias/Downloads/whistle_test"]
@@ -21,6 +21,9 @@ trust_level = "trusted"
 trust_level = "trusted"
 
 [projects."/home/tobias/programming/fdit_utils"]
+trust_level = "trusted"
+
+[projects."/home/tobias/work/htwk/FDIT/llms_in_der_lehre_Impulsvortrag"]
 trust_level = "trusted"
 
 [notice.model_migrations]
