@@ -34,7 +34,7 @@ function xerox_print --description 'Flatten PDFs (render annotations), force A4,
             echo "Error: No enabled printers found." >&2
             return 1
         end
-        set printer (printf '%s\n' $printer_list | fzf --prompt="Select printer: ")
+        set printer (printf '%s\n' $printer_list | fzf --tac --prompt="Select printer: ")
         if test -z "$printer"
             echo "No printer selected, aborting." >&2
             return 1
