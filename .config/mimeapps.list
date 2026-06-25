@@ -36,3 +36,4 @@ x-scheme-handler/https=firefox.desktop;
 x-scheme-handler/readest=readest-handler.desktop
 x-scheme-handler/sgnl=signal.desktop;
 x-scheme-handler/signalcaptcha=signal.desktop;
+x-scheme-handler/antigravity=antigravity.desktop

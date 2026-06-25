@@ -29,6 +29,9 @@ trust_level = "trusted"
 [projects."/home/tobias/programming/my_utils"]
 trust_level = "trusted"
 
+[projects."/home/tobias/Uni/paper-followingexperiment"]
+trust_level = "trusted"
+
 [notice.model_migrations]
 "gpt-5.3-codex" = "gpt-5.4"
 
