@@ -23,6 +23,10 @@ function M:peek(job)
 	return mediainfo.peek(mediainfo, job)
 end
 
+function M:seek(job)
+	return mediainfo.seek(mediainfo, job)
+end
+
 function M:entry(job)
 	return mediainfo.entry(mediainfo, job)
 end
