@@ -41,6 +41,10 @@ prepend_previewers = [
     # EPS/PostScript via Ghostscript (epsmeta wrapper); keeps mediainfo overlay
     { mime = "application/postscript", run = "epsmeta" },
     { url = "*.{eps,epsf,epsi}", run = "epsmeta" },
+    # Text previews via CLI tools (html2text / jq / sqlite3); fall back to raw text on error
+    { mime = "text/html", run = "cmdpreview html" },
+    { url = "*.ipynb", run = "cmdpreview ipynb" },
+    { url = "*.{sqlite,sqlite3,db}", run = "cmdpreview sqlite" },
     # Markdown previwer
     { url = "*.md", run = "glow" },
     # Archive previewer
