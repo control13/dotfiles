@@ -13,9 +13,11 @@ function M:preload(job)
 		:arg({
 			"thumbnail",
 			tostring(job.file.url),
-			-- Leading dot = write JPEG to stdout. libvips auto-flattens alpha on jpegsave.
+			-- Leading dot = write JPEG to stdout. libvips flattens alpha on jpegsave;
+			-- `background=255` flattens transparency onto white (default is black, which
+			-- is invisible on a dark terminal — matters for transparent SVGs).
 			-- No `strip` so ICC/color profile survives (matters for wide-gamut heic).
-			".jpg[Q=" .. tostring(rt.preview.image_quality) .. "]",
+			".jpg[Q=" .. tostring(rt.preview.image_quality) .. ",background=255]",
 			-- Fit within max_width x max_height, keep aspect ratio.
 			tostring(rt.preview.max_width) .. "x" .. tostring(rt.preview.max_height),
 		})

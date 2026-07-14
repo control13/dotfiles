@@ -21,8 +21,8 @@ group = "git"
 
 [plugin]
 prepend_preloaders = [
-    # libvips (via vipsmeta wrapper) for heic/avif/jxl + camera RAW; keeps mediainfo overlay
-    { mime = "image/{avif,hei?,jxl}", run = "vipsmeta" },
+    # libvips (via vipsmeta wrapper) for heic/avif/jxl + svg + camera RAW; keeps mediainfo overlay
+    { mime = "image/{avif,hei?,jxl,svg+xml}", run = "vipsmeta" },
     { url = "*.{crw,cr2,cr3,nef,nrw,arw,srf,sr2,raf,orf,rw2,raw,pef,ptx,dng,rwl,srw,x3f}", run = "vipsmeta" },
     # Replace magick, image, video with mediainfo
     { mime = "{audio,video,image}/*", run = "mediainfo" },
@@ -35,8 +35,8 @@ prepend_preloaders = [
     { url = "*.{3mf,obj,pts,ply,stl,step,stp}", run = "f3d-preview" },
 ]
 prepend_previewers = [
-    # libvips (via vipsmeta wrapper) for heic/avif/jxl + camera RAW; keeps mediainfo overlay
-    { mime = "image/{avif,hei?,jxl}", run = "vipsmeta" },
+    # libvips (via vipsmeta wrapper) for heic/avif/jxl + svg + camera RAW; keeps mediainfo overlay
+    { mime = "image/{avif,hei?,jxl,svg+xml}", run = "vipsmeta" },
     { url = "*.{crw,cr2,cr3,nef,nrw,arw,srf,sr2,raf,orf,rw2,raw,pef,ptx,dng,rwl,srw,x3f}", run = "vipsmeta" },
     # Markdown previwer
     { url = "*.md", run = "glow" },
