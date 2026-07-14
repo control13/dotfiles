@@ -22,7 +22,7 @@ group = "git"
 [plugin]
 prepend_preloaders = [
     # libvips (via vipsmeta wrapper) for heic/avif/jxl + svg + camera RAW; keeps mediainfo overlay
-    { mime = "image/{avif,hei?,jxl,svg+xml}", run = "vipsmeta" },
+    { mime = "image/{avif,hei?,jxl,svg+xml,png}", run = "vipsmeta" },
     { url = "*.{crw,cr2,cr3,nef,nrw,arw,srf,sr2,raf,orf,rw2,raw,pef,ptx,dng,rwl,srw,x3f}", run = "vipsmeta" },
     # NOTE: EPS has no preloader (yazi caps preloaders at 16); epsmeta previews it on demand.
     # Replace magick, image, video with mediainfo
@@ -36,7 +36,7 @@ prepend_preloaders = [
 ]
 prepend_previewers = [
     # libvips (via vipsmeta wrapper) for heic/avif/jxl + svg + camera RAW; keeps mediainfo overlay
-    { mime = "image/{avif,hei?,jxl,svg+xml}", run = "vipsmeta" },
+    { mime = "image/{avif,hei?,jxl,svg+xml,png}", run = "vipsmeta" },
     { url = "*.{crw,cr2,cr3,nef,nrw,arw,srf,sr2,raf,orf,rw2,raw,pef,ptx,dng,rwl,srw,x3f}", run = "vipsmeta" },
     # EPS/PostScript via Ghostscript (epsmeta wrapper); keeps mediainfo overlay
     { mime = "application/postscript", run = "epsmeta" },
