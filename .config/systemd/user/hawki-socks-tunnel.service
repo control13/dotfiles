@@ -1,0 +1,81 @@
+[Unit]
+Description=SSH SOCKS tunnel for HAWKI (VPN access)
+Documentation=file:%h/.local/share/hawki-openai-proxy/README.md
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=exec
+# -D 127.0.0.1:1080  bind the SOCKS listener to loopback only, never the LAN.
+#                    (ssh defaults to loopback, but this makes it explicit and
+#                     immune to a GatewayPorts setting in ~/.ssh/config.)
+# -N                 no remote command, tunnel only.
+# BatchMode=yes      never prompt; the key must be in the ssh-agent.
+# ExitOnForwardFailure=yes  fail loudly if :1080 cannot be bound, instead of
+#                    running a tunnel that forwards nothing.
+# StrictHostKeyChecking=yes  never trust a new host key unattended. The host key
+#                    for mol is already in ~/.ssh/known_hosts.
+ExecStart=/usr/bin/ssh -N -D 127.0.0.1:1080 \
+    -o BatchMode=yes \
+    -o ExitOnForwardFailure=yes \
+    -o StrictHostKeyChecking=yes \
+    -o ServerAliveInterval=30 \
+    -o ServerAliveCountMax=3 \
+    -o ConnectTimeout=10 \
+    mol
+
+# The ssh key is passphrase-protected, so ssh needs the agent. systemd --user
+# does not import SSH_AUTH_SOCK by default, hence the explicit value.
+# %t expands to $XDG_RUNTIME_DIR (/run/user/<uid>).
+Environment=SSH_AUTH_SOCK=%t/ssh-agent.socket
+
+# Keep retrying: at login the agent may not hold the key yet, and the VPN/route
+# may come and go. The proxy stays up regardless and answers 504 while the
+# tunnel is down.
+Restart=always
+RestartSec=10
+
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+# read-only is enough: ssh only reads ~/.ssh. With StrictHostKeyChecking=yes it
+# never writes known_hosts.
+ProtectHome=read-only
+
+# Required, and the reason this unit works at all.
+#
+# systemd --user builds mount namespaces on top of UNPRIVILEGED user
+# namespaces, which map every foreign uid to nobody. root-owned files therefore
+# appear un-owned inside the sandbox, and ssh refuses to read a config file it
+# considers wrongly owned:
+#
+#   Bad owner or permissions on /etc/ssh/ssh_config.d/20-systemd-ssh-proxy.conf
+#   → exit 255
+#
+# Every namespace-based option (PrivateTmp, ProtectSystem, ProtectHome,
+# ProtectKernelTunables, ProtectControlGroups, ProtectClock) triggers this.
+# Hiding /etc/ssh sidesteps the check: ssh silently skips the system-wide
+# config and still reads ~/.ssh/config, which is user-owned and maps correctly.
+# The `Host mol` alias therefore keeps working; only system-wide ssh defaults
+# are ignored, and OpenSSH's built-in defaults cover this connection.
+InaccessiblePaths=/etc/ssh
+
+# AF_UNIX is required for the ssh-agent socket.
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+RestrictNamespaces=true
+RestrictRealtime=true
+RestrictSUIDSGID=true
+LockPersonality=true
+MemoryDenyWriteExecute=true
+ProtectKernelTunables=true
+ProtectControlGroups=true
+ProtectClock=true
+ProtectHostname=true
+SystemCallFilter=@system-service
+SystemCallErrorNumber=EPERM
+SystemCallArchitectures=native
+CapabilityBoundingSet=
+
+[Install]
+WantedBy=default.target

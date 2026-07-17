@@ -1,0 +1,48 @@
+# HAWKI OpenAI-compatible proxy — non-secret configuration.
+#
+# The HAWKI token is NOT stored here. It lives in KeePassXC and is read through
+# the Freedesktop Secret Service on every request.
+
+hawki_base_url = "https://hawki2.htwk-leipzig.de"
+models = ["mistral-large-3-675b-instruct-2512", "devstral-2-123b-instruct-2512", "gpt-5"]
+default_model = "devstral-2-123b-instruct-2512"
+host = "127.0.0.1"
+port = 11435
+
+# HAWKI is only reachable from inside the university network. The
+# hawki-socks-tunnel.service unit runs `ssh -N -D 127.0.0.1:1080 mol` and this
+# routes HAWKI requests through it.
+#
+# socks5h:// (not socks5://) is REQUIRED: the "h" makes the SSH endpoint resolve
+# the hostname. hawki2.htwk-leipzig.de does not resolve outside the network, so
+# socks5:// fails to connect (verified). Comment out to contact HAWKI directly.
+#
+# NOTE: this key must stay ABOVE the [secret_service] header, otherwise TOML
+# makes it part of that table and it is ignored.
+socks_proxy = "socks5h://127.0.0.1:1080"
+
+[secret_service]
+service = "hawki-openai-proxy"
+account = "default"
+
+# ---------------------------------------------------------------------------
+# Optional settings; the defaults below are what the proxy uses if omitted.
+# ---------------------------------------------------------------------------
+
+# ThunderAI 4.1.0 always sends "stream": true and offers no way to turn it off.
+# HAWKI's /api/ai-req is not a streaming endpoint, so "emulate" fetches the full
+# answer and re-emits it as a single SSE delta. Set to "reject" to answer
+# streaming requests with HTTP 400 instead (this breaks the ThunderAI chat).
+# stream_mode = "emulate"
+
+# connect_timeout = 10.0
+# request_timeout = 120.0
+# secret_lookup_timeout = 10.0
+# max_body_bytes = 1048576
+# max_retries = 2
+
+# [cors]
+# Allow any moz-extension:// origin (Thunderbird add-ons). Credentials are never
+# allowed, so this cannot be used to ride an authenticated session.
+# allow_extension_origins = true
+# extra_origins = []
