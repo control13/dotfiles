@@ -25,3 +25,7 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+[credential]
+	helper = /usr/lib/git-core/git-credential-libsecret
+[credential "https://gitea.naoserv.imn.htwk-leipzig.de"]
+	username = tobias.jagla
