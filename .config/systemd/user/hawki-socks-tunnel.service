@@ -13,15 +13,22 @@ Type=exec
 # BatchMode=yes      never prompt; the key must be in the ssh-agent.
 # ExitOnForwardFailure=yes  fail loudly if :1080 cannot be bound, instead of
 #                    running a tunnel that forwards nothing.
+# ServerAlive*       ssh keeps :1080 bound while the session is already dead
+#                    (e.g. right after a VPN or Wi-Fi change), so requests fall
+#                    into a black hole until ssh notices. 15s x 2 detects that
+#                    in ~30s instead of the ~90s that 30s x 3 needed; systemd
+#                    then restarts within RestartSec. The proxy answers 504 with
+#                    a clear message meanwhile, it never hides the breakage.
 # StrictHostKeyChecking=yes  never trust a new host key unattended. The host key
 #                    for mol is already in ~/.ssh/known_hosts.
 ExecStart=/usr/bin/ssh -N -D 127.0.0.1:1080 \
     -o BatchMode=yes \
     -o ExitOnForwardFailure=yes \
     -o StrictHostKeyChecking=yes \
-    -o ServerAliveInterval=30 \
-    -o ServerAliveCountMax=3 \
+    -o ServerAliveInterval=15 \
+    -o ServerAliveCountMax=2 \
     -o ConnectTimeout=10 \
+    -o TCPKeepAlive=yes \
     mol
 
 # The ssh key is passphrase-protected, so ssh needs the agent. systemd --user
