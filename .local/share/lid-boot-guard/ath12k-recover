@@ -1,0 +1,43 @@
+#!/bin/sh
+set -u
+
+# The ath12k driver (wcn7850) fails to register a wiphy if the system suspends while its
+# firmware is still booting over QMI. The module stays loaded and the PCI device stays bound,
+# but no wireless device ever appears and NetworkManager reports WIFI-HW as missing.
+# Reloading the driver retries the firmware handshake.
+
+# A wireless device exists: nothing to do. This is the normal path on a healthy boot.
+if [ -n "$(ls -A /sys/class/ieee80211 2>/dev/null)" ]; then
+    exit 0
+fi
+
+# No driver installed at all: nothing this script can fix.
+if ! modinfo -n ath12k_wifi7 >/dev/null 2>&1; then
+    exit 0
+fi
+
+logger -t ath12k-recover "no wiphy registered, reloading ath12k"
+
+# Tolerate the module already being unloaded; the goal is to end up with it loaded and bound,
+# whatever state it started in.
+modprobe -r ath12k_wifi7 ath12k 2>/dev/null || true
+
+if ! modprobe ath12k_wifi7; then
+    logger -t ath12k-recover "failed to load ath12k_wifi7"
+    exit 1
+fi
+
+# The firmware handshake takes a couple of seconds. Wait for the result rather than claiming
+# success the moment modprobe returns.
+i=0
+while [ "$i" -lt 20 ]; do
+    if [ -n "$(ls -A /sys/class/ieee80211 2>/dev/null)" ]; then
+        logger -t ath12k-recover "ath12k reloaded, wiphy back"
+        exit 0
+    fi
+    sleep 1
+    i=$((i + 1))
+done
+
+logger -t ath12k-recover "reloaded but no wiphy appeared within 20s"
+exit 1

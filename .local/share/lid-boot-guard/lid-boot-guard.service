@@ -1,0 +1,13 @@
+[Unit]
+Description=Hand the lid switch to systemd-logind once external displays are modeset
+After=multi-user.target
+ConditionPathExists=!/run/lid-boot-guard-done
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+TimeoutStartSec=90
+ExecStart=/usr/local/bin/lid-boot-guard-release
+
+[Install]
+WantedBy=multi-user.target

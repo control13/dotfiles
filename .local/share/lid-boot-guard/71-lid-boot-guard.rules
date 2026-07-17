@@ -1,0 +1,13 @@
+# systemd-logind evaluates the lid switch the moment it starts watching the device. At boot
+# that happens before anything has modeset the dock's DP link, so logind's docked check counts
+# no external display, misreads a docked machine as undocked and suspends it ~1s into boot --
+# which also kills the in-flight ath12k firmware probe. Withhold the tag until
+# lid-boot-guard-release clears the flag and re-triggers this device; logind then evaluates the
+# lid with the external display visible. /run is empty on every boot, so this re-arms itself.
+#
+# Must sort after 70-power-switch.rules, which adds the tag via ID_INPUT_SWITCH. The power
+# button gets the same tag from that file's separate ID_INPUT_KEY line and is untouched here.
+
+ACTION=="remove", GOTO="lid_boot_guard_end"
+SUBSYSTEM=="input", KERNEL=="event*", ENV{ID_INPUT_SWITCH}=="1", ATTRS{name}=="Lid Switch", TEST!="/run/lid-boot-guard-done", TAG-="power-switch"
+LABEL="lid_boot_guard_end"

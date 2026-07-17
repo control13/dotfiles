@@ -1,0 +1,12 @@
+[Unit]
+Description=Reload ath12k if its probe failed to register a wiphy
+After=multi-user.target suspend.target
+
+[Service]
+Type=oneshot
+# Give a slow but healthy probe time to finish before declaring it failed.
+ExecStartPre=/usr/bin/sleep 8
+ExecStart=/usr/local/bin/ath12k-recover
+
+[Install]
+WantedBy=multi-user.target suspend.target
