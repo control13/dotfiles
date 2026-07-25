@@ -7,9 +7,9 @@ function py_init --description 'Initialize a Python virtual environment and inst
     end
 
     source .venv/bin/activate.fish; or return
-    python -m pip install -U pip; or return
+    uv pip install -U pip; or return
 
     if test -f requirements.txt
-        python -m pip install -r requirements.txt; or return
+        uv pip install -r requirements.txt; or return
     end
 end

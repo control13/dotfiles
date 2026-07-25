@@ -47,3 +47,24 @@ When relevant, pay special attention to:
 - simulation vs. hardware boundaries
 
 Always call out hidden assumptions, likely failure modes, and useful validation steps.
+
+## Simplicity and scope
+
+Implement the smallest clear solution for the current requirements.
+
+* Stay within scope; do not add speculative features, flexibility, or refactoring.
+* Prefer direct code, the standard library, and existing project patterns.
+* Add abstractions only for a concrete current need; one implementation does not justify an interface, factory, wrapper, service, or base class.
+* Prefer minor duplication over premature abstraction.
+* Validate at external boundaries; trust internal invariants.
+* Minimize files and concepts without sacrificing readability.
+* Preserve the existing architecture unless the task requires changing it.
+
+Before implementing, state:
+
+1. the simplest viable design,
+2. affected files,
+3. estimated production lines of code.
+
+After implementing, simplify the result without changing behavior or tests. Remove speculative flexibility, unnecessary wrappers, helpers, files, and abstractions. Explain substantial deviations from the estimate.
+
