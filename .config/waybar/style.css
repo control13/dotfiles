@@ -1,6 +1,9 @@
 * {
-    /* `otf-font-awesome` is required to be installed for icons */
-    font-family: FontAwesome, Roboto, Helvetica, Arial, sans-serif;
+    /* Icon glyphs come from `ttf-nerd-fonts-symbols`, with `otf-font-awesome`
+       covering the few codepoints the Nerd Fonts do not ship. Pinning real,
+       installed families here keeps glyph selection deterministic instead of
+       leaving it to the fontconfig fallback chain. */
+    font-family: "Noto Sans", "Symbols Nerd Font", "Font Awesome 7 Free", "Font Awesome 7 Brands", sans-serif;
     font-size: 13px;
     padding: 0 0px;
 }
@@ -334,7 +337,7 @@ label:focus {
 }
 #custom-notification {
     padding: 0 3px;
-    font-family: "NotoSansMono Nerd Font";
+    font-family: "DejaVuSansM Nerd Font Mono", "Symbols Nerd Font", monospace;
     background-color: #C39331;
 }
 #custom-screenrecorder {
