@@ -1,17 +1,17 @@
 [[plugin.deps]]
 use = "boydaihungst/mediainfo"
-rev = "e079a00"
-hash = "8dd8bc3484547390ba50dfa58d7436b0"
+rev = "77825c4"
+hash = "69c73e72d949a0619511247117ee679c"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:mount"
-rev = "bb758e2"
-hash = "e3260d0b1feded8c8e3ae3afa1169e30"
+rev = "72f9e3c"
+hash = "46cbdc05596a3ecd730b288e28c7079d"
 
 [[plugin.deps]]
 use = "AnirudhG07/plugins-yazi:copy-file-contents"
-rev = "71545f4"
-hash = "f8530ee84fee95dbcc26bb1d8d8019c7"
+rev = "3f4f1a3"
+hash = "421263a8558fbd2fdb07a75f074cc6e3"
 
 [[plugin.deps]]
 use = "Reledia/glow"
@@ -20,18 +20,18 @@ hash = "92b5c58159a51c567f82b618cee2b78"
 
 [[plugin.deps]]
 use = "ndtoan96/ouch"
-rev = "406ce6c"
-hash = "f5afc904d5106ee368c8aa2ded43bd74"
+rev = "cfe4f50"
+hash = "eff5702573b6cfba61e4ac8b1969629a"
 
 [[plugin.deps]]
 use = "AnirudhG07/archivemount"
-rev = "3d353c4"
-hash = "28caf2541e627582e75add7a9f98a32a"
+rev = "f5c5c5c"
+hash = "89487f3b53bdf605e990a9575ec244d5"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:git"
-rev = "bb758e2"
-hash = "88e56a64b7ce7c4314427452343fef17"
+rev = "72f9e3c"
+hash = "5bb0bfab901d3601c370eafdd66edd31"
 
 [[plugin.deps]]
 use = "carlosedp/yatline"
@@ -45,8 +45,8 @@ hash = "5805affd3ae8adcb3c72b6997d21c0a6"
 
 [[plugin.deps]]
 use = "ruudjhuu/f3d-preview"
-rev = "713e8d0"
-hash = "248ffdf21c7006cf32960624db2db586"
+rev = "33ce345"
+hash = "5368a9f95ebeb613d9a2614d594a185c"
 
 [[plugin.deps]]
 use = "imsi32/yatline-githead"
