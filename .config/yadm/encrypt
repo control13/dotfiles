@@ -1,3 +1,4 @@
+.config/fish/conf.d/secrets.fish
 .ssh/id_*
 Documents/keyFiles/*.key
 Documents/keyFiles/*.pfx
