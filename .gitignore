@@ -1,0 +1,6 @@
+# Runtime state, rewritten by the caveman plugin on every mode switch.
+.config/opencode/.caveman-active
+
+# Symlinks into ~/.miyo/skills, which the Miyo app provisions itself.
+# Tracking them would restore dangling links on a fresh machine.
+.config/opencode/skills/miyo-*
