@@ -76,6 +76,56 @@
             "temperature": 0.6,
             "top_p": 0.95
           }
+        },
+        "deepseek-v4-flash-0731": {
+          "name": "DeepSeek V4 Flash",
+          "limit": {
+            "context": 128000,
+            "output": 16384
+          }
+        },
+        "gemma-4-31b-it": {
+          "name": "Gemma 4 31B",
+          "limit": {
+            "context": 128000,
+            "output": 16384
+          }
+        },
+        "qwen3.5-122b-a10b": {
+          "name": "Qwen3.5 122B A10B",
+          "limit": {
+            "context": 200000,
+            "output": 16384
+          },
+          "options": {
+            "temperature": 0.6,
+            "top_p": 0.95
+          }
+        },
+        "qwen3.6-27b": {
+          "name": "Qwen3.6 27B",
+          "limit": {
+            "context": 200000,
+            "output": 16384
+          },
+          "options": {
+            "temperature": 1.0,
+            "top_p": 0.95
+          }
+        },
+        "apertus-70b-instruct-2509": {
+          "name": "Apertus 70B Instruct",
+          "limit": {
+            "context": 64000,
+            "output": 8192
+          }
+        },
+        "openai-gpt-oss-120b": {
+          "name": "GPT-OSS 120B",
+          "limit": {
+            "context": 128000,
+            "output": 16384
+          }
         }
       }
     }
