@@ -21,9 +21,9 @@ if status is-interactive
     __ensure_abbr df 'df -Th'
     __ensure_abbr ip 'ip --color'
     __ensure_abbr less 'less -S -M'
-    __ensure_abbr ls 'eza --icons --group-directories-first --hyperlink'
-    __ensure_abbr lah 'eza --icons --group-directories-first --hyperlink -algh --git'
-    __ensure_abbr tree 'eza --icons --group-directories-first --hyperlink -algh --git -T'
+    __ensure_abbr ls 'eza --icons --group-directories-first'
+    __ensure_abbr lah 'eza --icons --group-directories-first -algh --git'
+    __ensure_abbr tree 'eza --icons --group-directories-first -algh --git -T'
     __ensure_abbr hx helix
     __ensure_abbr s 'kitten ssh'
     __ensure_abbr su 'su --shell=/usr/bin/fish'
