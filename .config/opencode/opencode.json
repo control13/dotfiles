@@ -1,0 +1,85 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugin": [
+    "./plugins/caveman/plugin.js"
+  ],
+  "provider": {
+    "gwdg": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "GWDG Academic Cloud",
+      "options": {
+        "baseURL": "http://127.0.0.1:4000/v1",
+        "apiKey": "{env:LITELLM_MASTER_KEY}"
+      },
+      "models": {
+        "glm-4.7": {
+          "name": "GLM 4.7",
+          "limit": {
+            "context": 180000,
+            "output": 16384
+          },
+          "options": {
+            "temperature": 1.0,
+            "top_p": 0.95
+          }
+        },
+        "devstral-2-123b-instruct-2512": {
+          "name": "Devstral 2 123B",
+          "limit": {
+            "context": 230000,
+            "output": 16384
+          }
+        },
+        "qwen3-coder-next": {
+          "name": "Qwen3 Coder Next",
+          "limit": {
+            "context": 230000,
+            "output": 16384
+          }
+        },
+        "qwen3.5-397b-a17b": {
+          "name": "Qwen3.5 397B A17B",
+          "limit": {
+            "context": 230000,
+            "output": 16384
+          },
+          "options": {
+            "temperature": 0.6,
+            "top_p": 0.95
+          }
+        },
+        "qwen3.6-35b-a3b": {
+          "name": "Qwen3.6 35B A3B",
+          "limit": {
+            "context": 235000,
+            "output": 16384
+          },
+          "options": {
+            "temperature": 1.0,
+            "top_p": 0.95
+          }
+        },
+        "mistral-medium-3.5-128b": {
+          "name": "Mistral Medium 3.5",
+          "limit": {
+            "context": 230000,
+            "output": 16384
+          }
+        },
+        "qwen3-30b-a3b-instruct-2507": {
+          "name": "Qwen3 30B A3B",
+          "limit": {
+            "context": 200000,
+            "output": 8192
+          },
+          "options": {
+            "temperature": 0.6,
+            "top_p": 0.95
+          }
+        }
+      }
+    }
+  },
+  "model": "gwdg/glm-4.7",
+  "small_model": "gwdg/qwen3-30b-a3b-instruct-2507"
+}
