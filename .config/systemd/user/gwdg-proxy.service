@@ -1,0 +1,20 @@
+[Unit]
+Description=LiteLLM proxy for GWDG SAIA (message-array normalization)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=%h/programming/my_utils/gwdg-proxy
+Environment=PYTHONPATH=%h/programming/my_utils/gwdg-proxy
+# Contains GWDG_API_KEY and LITELLM_MASTER_KEY, mode 600, outside the repo.
+EnvironmentFile=%h/.config/gwdg-proxy/proxy.env
+ExecStart=%h/programming/my_utils/gwdg-proxy/.venv/bin/litellm \
+    --config %h/programming/my_utils/gwdg-proxy/config.yaml \
+    --host 127.0.0.1 \
+    --port 4000
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target
