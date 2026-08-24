@@ -10,7 +10,7 @@ desc = "Rename tab"
 
 [[mgr.prepend_keymap]]
 on  = "<C-n>"
-run = 'shell -- dragon-drop -x -i -T "$@"'
+run = 'shell -- dragon-drop -x -i -T %s'
 
 [[mgr.prepend_keymap]]
 on   = [ "m", "a" ]
@@ -32,8 +32,9 @@ on  = "M"
 run = "plugin mount"
 
 [[mgr.prepend_keymap]]
-on = "o"
-run = "shell 'handlr open \"$@\"'"
+on   = "o"
+run  = "shell -- handlr open %s"
+desc = "Open with handlr (app selector)"
 
 [[mgr.prepend_keymap]]
 on   = "z"
