@@ -102,17 +102,6 @@
             "top_p": 0.95
           }
         },
-        "qwen3.6-27b": {
-          "name": "Qwen3.6 27B",
-          "limit": {
-            "context": 200000,
-            "output": 16384
-          },
-          "options": {
-            "temperature": 1.0,
-            "top_p": 0.95
-          }
-        },
         "apertus-70b-instruct-2509": {
           "name": "Apertus 70B Instruct",
           "limit": {
@@ -126,10 +115,24 @@
             "context": 128000,
             "output": 16384
           }
+        },
+        "meta-llama-3.1-8b-instruct": {
+          "name": "Llama 3.1 8B",
+          "limit": {
+            "context": 128000,
+            "output": 8192
+          }
+        },
+        "qwen3.8-27b": {
+          "name": "qwen3.8-27b",
+          "limit": {
+            "context": 200000,
+            "output": 16384
+          }
         }
       }
     }
   },
-  "model": "gwdg/glm-4.7",
+  "model": "qwen3.8-27b",
   "small_model": "gwdg/qwen3-30b-a3b-instruct-2507"
 }
