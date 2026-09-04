@@ -1,6 +1,7 @@
 model = "gpt-5.6-sol"
-model_reasoning_effort = "medium"
+model_reasoning_effort = "xhigh"
 personality = "pragmatic"
+plan_mode_reasoning_effort = "xhigh"
 
 [projects."/home/tobias/Downloads/whistle_test"]
 trust_level = "trusted"
@@ -30,6 +31,12 @@ trust_level = "trusted"
 trust_level = "trusted"
 
 [projects."/home/tobias/Uni/paper-followingexperiment"]
+trust_level = "trusted"
+
+[projects."/home/tobias/Dropbox/wichtig/Events/obsidian/Generell/organization"]
+trust_level = "trusted"
+
+[projects."/home/tobias/Dropbox/wichtig/Events/obsidian/Generell/woman"]
 trust_level = "trusted"
 
 [notice.model_migrations]
