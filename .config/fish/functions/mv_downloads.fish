@@ -44,6 +44,10 @@ function mv_downloads --description 'move downloaded things to its folders'
     set simon (fd -i --base-directory $source_folder "Rechnung vom ")
     set simon_dir /home/tobias/Documents/SimON/
 
+    # Einzelverbindungsnachweis vom 01.09.2026.pdf
+    set simon_evn (fd -i --base-directory $source_folder "Einzelverbindungsnachweis vom ")
+    set simon_evn_dir /home/tobias/Documents/SimON/EVN/
+
     # # trade Republic
 
     # # finanzen dot net zero
@@ -71,6 +75,7 @@ function mv_downloads --description 'move downloaded things to its folders'
     __mv_downloads_print $_flag_dryrun "$kontoauszug_dir" $kontoauszug
     __mv_downloads_print $_flag_dryrun "$hanseatic_dir" $hanseatic
     __mv_downloads_print $_flag_dryrun "$simon_dir" $simon
+    __mv_downloads_print $_flag_dryrun "$simon_evn_dir" $simon_evn
     popd
     functions --erase __mv_downloads_print
 
