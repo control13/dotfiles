@@ -4,3 +4,8 @@
 # Symlinks into ~/.miyo/skills, which the Miyo app provisions itself.
 # Tracking them would restore dangling links on a fresh machine.
 .config/opencode/skills/miyo-*
+
+# Obsidian vault "Generell": settings are tracked, volatile state is not.
+Dropbox/wichtig/Events/obsidian/Generell/.obsidian/workspace.json
+Dropbox/wichtig/Events/obsidian/Generell/.obsidian/copilot-index-*.json
+Dropbox/wichtig/Events/obsidian/Generell/.obsidian/plugins/

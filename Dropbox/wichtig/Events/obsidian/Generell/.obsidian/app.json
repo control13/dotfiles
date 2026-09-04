@@ -1,0 +1,20 @@
+{
+  "newFileLocation": "current",
+  "attachmentFolderPath": "./",
+  "alwaysUpdateLinks": true,
+  "pdfExportSettings": {
+    "includeName": true,
+    "pageSize": "A4",
+    "landscape": true,
+    "margin": "2",
+    "downscalePercent": 80
+  },
+  "readableLineLength": true,
+  "strictLineBreaks": true,
+  "settingsPopoutWindow": false,
+  "openBehavior": "",
+  "useMarkdownLinks": true,
+  "userIgnoreFilters": [
+    "daily/"
+  ]
+}
