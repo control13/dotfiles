@@ -26,8 +26,8 @@ MIC_HIGHPASS=20
 # Low storage mode: 1 = record at reduced resolution and framerate, and encode
 # audio with LOWRES_AUDIO_CODEC. Scaling runs on the GPU inside the VAAPI
 # encoder, so the video side of this costs no CPU.
-LOWRES=0
-LOWRES_WIDTH=1280
+LOWRES=1
+LOWRES_WIDTH=1920
 LOWRES_FPS=15
 # FLAC does not compress room noise, so every microphone track costs about
 # 4 MB/min and the audio outgrows the reduced video. Opus brings that down to
@@ -193,7 +193,7 @@ elif [ "$1" == "toggle" ]; then
 		printf "" > "$pidf"
 	else
 		mkdir -p "$HOME/Videos/Screencasts"
-		bf="$HOME/Videos/Screencasts/$(date +'%Y%m%dT%H%M%S')"
+		bf="$HOME/Videos/Screencasts/$(date +'%Y-%m-%d_%H-%M-%S')"
 		vidf="$bf.$VIDEOEXT"
 		rawvid="$bf.video.$VIDEOEXT"
 		audf="$bf.$AUDIOEXT"
