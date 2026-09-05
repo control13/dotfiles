@@ -19,18 +19,23 @@ AUDIO_CODEC="flac"
 # 1 = record every microphone, each into its own track, so the recording does
 # not depend on which one happens to be the default. 0 = default source only.
 RECORD_ALL_MICS=1
-# Low storage mode: 1 = record at reduced resolution and framerate.
-# Scaling runs on the GPU inside the VAAPI encoder, so this shrinks the file
-# without adding CPU load. Audio settings are not affected.
+# Low storage mode: 1 = record at reduced resolution and framerate, and encode
+# audio with LOWRES_AUDIO_CODEC. Scaling runs on the GPU inside the VAAPI
+# encoder, so the video side of this costs no CPU.
 LOWRES=0
 LOWRES_WIDTH=1280
 LOWRES_FPS=15
+# FLAC does not compress room noise, so every microphone track costs about
+# 4 MB/min and the audio outgrows the reduced video. Opus brings that down to
+# roughly 0.7 MB/min per track.
+LOWRES_AUDIO_CODEC="libopus"
 
 if [ "$LOWRES" == "1" ]; then
 	# --filter replaces wf-recorder's default filter string, so format and
 	# range have to be repeated here. min() avoids upscaling small regions.
 	wf_recorder_opts+=(--framerate "$LOWRES_FPS")
 	wf_recorder_opts+=(--filter "scale_vaapi=format=nv12:w=min(iw\,$LOWRES_WIDTH):h=-2:out_range=full")
+	AUDIO_CODEC="$LOWRES_AUDIO_CODEC"
 fi
 
 # Print "name<TAB>description<TAB>mute" for every real input source, monitors
