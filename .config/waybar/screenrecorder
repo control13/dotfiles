@@ -16,6 +16,9 @@ VIDEOEXT="mkv"
 # find available audio codecs with `ffmpeg -codecs`
 AUDIOEXT="mka"
 AUDIO_CODEC="flac"
+# 1 = record every microphone, each into its own track, so the recording does
+# not depend on which one happens to be the default. 0 = default source only.
+RECORD_ALL_MICS=1
 # Low storage mode: 1 = record at reduced resolution and framerate.
 # Scaling runs on the GPU inside the VAAPI encoder, so this shrinks the file
 # without adding CPU load. Audio settings are not affected.
@@ -30,33 +33,66 @@ if [ "$LOWRES" == "1" ]; then
 	wf_recorder_opts+=(--filter "scale_vaapi=format=nv12:w=min(iw\,$LOWRES_WIDTH):h=-2:out_range=full")
 fi
 
-# Record the default sink monitor and the default source into two separate
-# stereo tracks. Sets audio_pid, or leaves it empty if no device was found.
+# Print "name<TAB>description<TAB>mute" for every real input source, monitors
+# excluded. The default source comes first so its track is always the one right
+# after System, whatever else is plugged in.
+list_mic_sources() {
+	local default_src
+	default_src=$(pactl get-default-source 2>/dev/null)
+	pactl list sources 2>/dev/null | awk -v def="$default_src" '
+		/^Source #/ { name = ""; desc = ""; mute = "" }
+		/^\tName: / { name = $2 }
+		/^\tDescription: / { sub(/^\tDescription: /, ""); desc = $0 }
+		/^\tMute: / { mute = $2 }
+		/^\tMonitor of Sink: n\/a$/ {
+			line = name "\t" desc "\t" mute
+			if (name == def) print line; else rest[++n] = line
+		}
+		END { for (i = 1; i <= n; i++) print rest[i] }
+	'
+}
+
+# Record the default sink monitor plus the microphones, each into its own
+# stereo track. Sets audio_pid, or leaves it empty if no device was found, and
+# audio_warning to whatever the user should know about the inputs.
 start_audio() {
 	local audf="$1" logf="$2"
-	local sink src
+	local sink name desc mute
+	local -a args=() maps=()
+	local i=0
+
 	audio_pid=""
+	audio_warning=""
 	sink=$(pactl get-default-sink 2>/dev/null)
-	src=$(pactl get-default-source 2>/dev/null)
-	if [ -z "$sink" ] || [ -z "$src" ]; then
-		printf "WARNING: no default sink/source, recording without audio\n" >>"$logf"
+	if [ -z "$sink" ]; then
+		printf "WARNING: no default sink, recording without audio\n" >>"$logf"
+		audio_warning="no default sink, recording without audio"
 		return
 	fi
-	ffmpeg -hide_banner -nostdin -y \
-		-thread_queue_size 1024 -f pulse -i "$sink.monitor" \
-		-thread_queue_size 1024 -f pulse -i "$src" \
-		-map 0:a -map 1:a -c:a "$AUDIO_CODEC" \
-		-metadata:s:a:0 title=System -metadata:s:a:1 title=Microphone \
+	args+=(-thread_queue_size 1024 -f pulse -i "$sink.monitor")
+	maps+=(-map "$i:a" "-metadata:s:a:$i" "title=System")
+	i=$((i + 1))
+
+	while IFS=$'\t' read -r name desc mute; do
+		[ -n "$name" ] || continue
+		args+=(-thread_queue_size 1024 -f pulse -i "$name")
+		maps+=(-map "$i:a" "-metadata:s:a:$i" "title=$desc")
+		i=$((i + 1))
+		if [ "$mute" == "yes" ]; then
+			audio_warning="${audio_warning:+$audio_warning; }$desc is muted"
+		fi
+		[ "$RECORD_ALL_MICS" == "1" ] || break
+	done < <(list_mic_sources)
+
+	if [ "$i" == "1" ]; then
+		audio_warning="${audio_warning:+$audio_warning; }no microphone found"
+	fi
+	printf "recording %d audio tracks\n" "$i" >>"$logf"
+	ffmpeg -hide_banner -nostdin -y "${args[@]}" \
+		"${maps[@]}" -c:a "$AUDIO_CODEC" \
 		-cluster_time_limit 1000 -flush_packets 1 \
 		"$audf" >>"$logf" 2>&1 &
 	audio_pid=$!
-}
-
-# Print a warning if the source we are about to record from is muted.
-mic_warning() {
-	if wpctl get-volume @DEFAULT_AUDIO_SOURCE@ 2>/dev/null | grep -q MUTED; then
-		printf "Microphone is muted, its track will be silent"
-	fi
 }
 
 # Mux the raw video and the audio file of one recording into its final file.
@@ -77,10 +113,10 @@ mux_recording() {
 		mv "$rawvid" "$vidf"
 		return 0
 	fi
-	# -map is required, without it the microphone track would be dropped
+	# -map 1:a takes every audio track, however many were recorded; without it
+	# ffmpeg would keep only one of them. Stream titles survive the copy.
 	if ffmpeg -hide_banner -nostdin -y -i "$rawvid" -i "$audf" \
-		-map 0:v -map 1:a:0 -map 1:a:1 -c copy \
-		-metadata:s:a:0 title=System -metadata:s:a:1 title=Microphone \
+		-map 0:v -map 1:a -c copy \
 		"$vidf" >>"$logf" 2>&1; then
 		rm -f "$rawvid" "$audf"
 		return 0
@@ -150,9 +186,8 @@ elif [ "$1" == "toggle" ]; then
 		disown "$vpid"
 		start_audio "$audf" "$logf"
 		[ -n "$audio_pid" ] && disown "$audio_pid"
-		warn=$(mic_warning)
-		[ -n "$warn" ] && printf "WARNING: %s\n" "$warn" >>"$logf"
-		printf "%s\n%s\n%s\n%s\n%s" "$vpid" "$audio_pid" "$vidf" "$logf" "$warn" > "$pidf"
+		[ -n "$audio_warning" ] && printf "WARNING: %s\n" "$audio_warning" >>"$logf"
+		printf "%s\n%s\n%s\n%s\n%s" "$vpid" "$audio_pid" "$vidf" "$logf" "$audio_warning" > "$pidf"
 	fi
 	pkill -RTMIN+"$SIGNAL" waybar
 
