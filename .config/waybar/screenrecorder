@@ -59,12 +59,39 @@ mic_warning() {
 	fi
 }
 
-# Stop both encoders and mux their output into a single file.
-stop_recording() {
-	local vpid="$1" apid="$2" vidf="$3" logf="$4"
+# Mux the raw video and the audio file of one recording into its final file.
+# Both are read even when they carry no trailer, which is what is left behind
+# after a crash. Returns non-zero if the recording could not be assembled.
+mux_recording() {
+	local vidf="$1" logf="$2"
 	local bf="${vidf%."$VIDEOEXT"}"
 	local rawvid="$bf.video.$VIDEOEXT"
 	local audf="$bf.$AUDIOEXT"
+
+	if [ ! -s "$rawvid" ]; then
+		printf "ERROR: %s is missing or empty\n" "$rawvid" >>"$logf"
+		return 1
+	fi
+	if [ ! -s "$audf" ]; then
+		printf "WARNING: no audio file, keeping video only\n" >>"$logf"
+		mv "$rawvid" "$vidf"
+		return 0
+	fi
+	# -map is required, without it the microphone track would be dropped
+	if ffmpeg -hide_banner -nostdin -y -i "$rawvid" -i "$audf" \
+		-map 0:v -map 1:a:0 -map 1:a:1 -c copy \
+		-metadata:s:a:0 title=System -metadata:s:a:1 title=Microphone \
+		"$vidf" >>"$logf" 2>&1; then
+		rm -f "$rawvid" "$audf"
+		return 0
+	fi
+	printf "ERROR: muxing failed, keeping %s and %s\n" "$rawvid" "$audf" >>"$logf"
+	return 1
+}
+
+# Stop both encoders and mux their output into a single file.
+stop_recording() {
+	local vpid="$1" apid="$2" vidf="$3" logf="$4"
 	local i
 
 	kill -INT "$vpid" 2>/dev/null
@@ -79,20 +106,7 @@ stop_recording() {
 		sleep 0.1
 	done
 
-	if [ -z "$apid" ] || [ ! -s "$audf" ]; then
-		printf "WARNING: no audio file, keeping video only\n" >>"$logf"
-		mv "$rawvid" "$vidf"
-		return
-	fi
-
-	if ffmpeg -hide_banner -nostdin -y -i "$rawvid" -i "$audf" \
-		-map 0:v -map 1:a:0 -map 1:a:1 -c copy \
-		-metadata:s:a:0 title=System -metadata:s:a:1 title=Microphone \
-		"$vidf" >>"$logf" 2>&1; then
-		rm -f "$rawvid" "$audf"
-	else
-		printf "ERROR: muxing failed, keeping %s and %s\n" "$rawvid" "$audf" >>"$logf"
-	fi
+	mux_recording "$vidf" "$logf"
 }
 
 if [ "$1" == "status" ]; then
@@ -142,6 +156,31 @@ elif [ "$1" == "toggle" ]; then
 	fi
 	pkill -RTMIN+"$SIGNAL" waybar
 
+elif [ "$1" == "--fix" ]; then
+	# Assemble recordings whose muxing step never ran, for example because the
+	# machine crashed. Run by hand, never automatically.
+	if [ -s "$pidf" ]; then
+		printf "ERROR: a recording is running, stop it first\n"
+		exit 1
+	fi
+	shopt -s nullglob
+	found=0
+	for rawvid in "$HOME/Videos/Screencasts"/*.video."$VIDEOEXT"; do
+		found=1
+		bf="${rawvid%.video."$VIDEOEXT"}"
+		vidf="$bf.$VIDEOEXT"
+		if [ -e "$vidf" ]; then
+			printf "SKIP    %s (%s already exists)\n" "$rawvid" "$vidf"
+		elif mux_recording "$vidf" "$bf.log"; then
+			printf "FIXED   %s\n" "$vidf"
+		else
+			printf "FAILED  %s (see %s.log)\n" "$rawvid" "$bf"
+		fi
+	done
+	if [ "$found" == "0" ]; then
+		printf "nothing to fix\n"
+	fi
+
 else
-	printf "ERROR: Argument %s not valid\n" "$1"
+	printf "ERROR: Argument %s not valid (status/toggle/--fix)\n" "$1"
 fi
