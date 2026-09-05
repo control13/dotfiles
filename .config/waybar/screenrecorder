@@ -8,47 +8,123 @@
 SIGNAL=2
 pidf="/tmp/waybar-screenrecorder"
 declare -a wf_recorder_opts=()
-# Insert `--audio` if you want to record audio
 # Specify video codec
 # find available video codecs with `ffmpeg -encoders`
-wf_recorder_opts+=(--audio --codec h264_vaapi)
-# Specify audio codec
-# find available audio codecs with `ffmpeg -codecs`
-# wf_recorder_opts+=(--audio --codec opus)
+wf_recorder_opts+=(--codec h264_vaapi)
 VIDEOEXT="mkv"
+# Audio is captured by a separate ffmpeg process, see start_audio()
+# find available audio codecs with `ffmpeg -codecs`
+AUDIOEXT="mka"
+AUDIO_CODEC="flac"
+
+# Record the default sink monitor and the default source into two separate
+# stereo tracks. Sets audio_pid, or leaves it empty if no device was found.
+start_audio() {
+	local audf="$1" logf="$2"
+	local sink src
+	audio_pid=""
+	sink=$(pactl get-default-sink 2>/dev/null)
+	src=$(pactl get-default-source 2>/dev/null)
+	if [ -z "$sink" ] || [ -z "$src" ]; then
+		printf "WARNING: no default sink/source, recording without audio\n" >>"$logf"
+		return
+	fi
+	ffmpeg -hide_banner -nostdin -y \
+		-thread_queue_size 1024 -f pulse -i "$sink.monitor" \
+		-thread_queue_size 1024 -f pulse -i "$src" \
+		-map 0:a -map 1:a -c:a "$AUDIO_CODEC" \
+		-metadata:s:a:0 title=System -metadata:s:a:1 title=Microphone \
+		"$audf" >>"$logf" 2>&1 &
+	audio_pid=$!
+}
+
+# Print a warning if the source we are about to record from is muted.
+mic_warning() {
+	if wpctl get-volume @DEFAULT_AUDIO_SOURCE@ 2>/dev/null | grep -q MUTED; then
+		printf "Microphone is muted, its track will be silent"
+	fi
+}
+
+# Stop both encoders and mux their output into a single file.
+stop_recording() {
+	local vpid="$1" apid="$2" vidf="$3" logf="$4"
+	local bf="${vidf%."$VIDEOEXT"}"
+	local rawvid="$bf.video.$VIDEOEXT"
+	local audf="$bf.$AUDIOEXT"
+	local i
+
+	kill -INT "$vpid" 2>/dev/null
+	[ -n "$apid" ] && kill -INT "$apid" 2>/dev/null
+
+	# Wait for both encoders to write their trailers before muxing
+	for ((i = 0; i < 100; i++)); do
+		if ! kill -0 "$vpid" 2>/dev/null &&
+			{ [ -z "$apid" ] || ! kill -0 "$apid" 2>/dev/null; }; then
+			break
+		fi
+		sleep 0.1
+	done
+
+	if [ -z "$apid" ] || [ ! -s "$audf" ]; then
+		printf "WARNING: no audio file, keeping video only\n" >>"$logf"
+		mv "$rawvid" "$vidf"
+		return
+	fi
+
+	if ffmpeg -hide_banner -nostdin -y -i "$rawvid" -i "$audf" \
+		-map 0:v -map 1:a:0 -map 1:a:1 -c copy \
+		-metadata:s:a:0 title=System -metadata:s:a:1 title=Microphone \
+		"$vidf" >>"$logf" 2>&1; then
+		rm -f "$rawvid" "$audf"
+	else
+		printf "ERROR: muxing failed, keeping %s and %s\n" "$rawvid" "$audf" >>"$logf"
+	fi
+}
 
 if [ "$1" == "status" ]; then
 	if [ -s "$pidf" ]; then
 		awk 'BEGIN{printf "{\"text\":\"\", \"tooltip\":\"Recording\\n"}
-		NR==1{printf "PID: %s\\n", $0}
-		NR==2{printf "Save to: %s\\n", $0}
-		NR==3{printf "Log to: %s\"}\n", $0}' "$pidf"
+		NR==1{printf "Video PID: %s\\n", $0}
+		NR==2{printf "Audio PID: %s\\n", ($0=="" ? "none" : $0)}
+		NR==3{printf "Save to: %s\\n", $0}
+		NR==4{printf "Log to: %s", $0}
+		NR==5 && $0!=""{printf "\\nWARNING: %s", $0}
+		END{printf "\"}\n"}' "$pidf"
 	else
 		printf '{"text":"", "tooltip":"Stopped"}\n'
 	fi
 
 elif [ "$1" == "toggle" ]; then
 	if [ -s "$pidf" ]; then
-		pid=$(awk 'NR==1' "$pidf")
-		kill "$pid"
+		vpid=$(awk 'NR==1' "$pidf")
+		apid=$(awk 'NR==2' "$pidf")
+		vidf=$(awk 'NR==3' "$pidf")
+		logf=$(awk 'NR==4' "$pidf")
+		stop_recording "$vpid" "$apid" "$vidf" "$logf"
 		printf "" > "$pidf"
 	else
 		mkdir -p "$HOME/Videos/Screencasts"
 		bf="$HOME/Videos/Screencasts/$(date +'%Y%m%dT%H%M%S')"
 		vidf="$bf.$VIDEOEXT"
+		rawvid="$bf.video.$VIDEOEXT"
+		audf="$bf.$AUDIOEXT"
 		logf="$bf.log"
 		if [ "$2" == "fullscreen" ]; then
-			wf-recorder "${wf_recorder_opts[@]}" --file "$vidf" 1>"$logf" 2>&1 &
+			wf-recorder "${wf_recorder_opts[@]}" --file "$rawvid" 1>>"$logf" 2>&1 &
 		elif [ "$2" == "region" ]; then
 			sleep 1
-			wf-recorder "${wf_recorder_opts[@]}" --geometry "$(slurp)" --file "$vidf" 1>"$logf" 2>&1 &
+			wf-recorder "${wf_recorder_opts[@]}" --geometry "$(slurp)" --file "$rawvid" 1>>"$logf" 2>&1 &
 		else
 			printf "Argument \$2='%s' not valid (fullscreen/region)" "$2"
 			exit
 		fi
-		pid=$(jobs -p | tail -n 1)
-		printf "%d\n%s\n%s" "$pid" "$vidf" "$logf" > "$pidf"
-		disown "$pid"
+		vpid=$!
+		disown "$vpid"
+		start_audio "$audf" "$logf"
+		[ -n "$audio_pid" ] && disown "$audio_pid"
+		warn=$(mic_warning)
+		[ -n "$warn" ] && printf "WARNING: %s\n" "$warn" >>"$logf"
+		printf "%s\n%s\n%s\n%s\n%s" "$vpid" "$audio_pid" "$vidf" "$logf" "$warn" > "$pidf"
 	fi
 	pkill -RTMIN+"$SIGNAL" waybar
 
