@@ -16,6 +16,19 @@ VIDEOEXT="mkv"
 # find available audio codecs with `ffmpeg -codecs`
 AUDIOEXT="mka"
 AUDIO_CODEC="flac"
+# Low storage mode: 1 = record at reduced resolution and framerate.
+# Scaling runs on the GPU inside the VAAPI encoder, so this shrinks the file
+# without adding CPU load. Audio settings are not affected.
+LOWRES=0
+LOWRES_WIDTH=1280
+LOWRES_FPS=15
+
+if [ "$LOWRES" == "1" ]; then
+	# --filter replaces wf-recorder's default filter string, so format and
+	# range have to be repeated here. min() avoids upscaling small regions.
+	wf_recorder_opts+=(--framerate "$LOWRES_FPS")
+	wf_recorder_opts+=(--filter "scale_vaapi=format=nv12:w=min(iw\,$LOWRES_WIDTH):h=-2:out_range=full")
+fi
 
 # Record the default sink monitor and the default source into two separate
 # stereo tracks. Sets audio_pid, or leaves it empty if no device was found.
@@ -34,6 +47,7 @@ start_audio() {
 		-thread_queue_size 1024 -f pulse -i "$src" \
 		-map 0:a -map 1:a -c:a "$AUDIO_CODEC" \
 		-metadata:s:a:0 title=System -metadata:s:a:1 title=Microphone \
+		-cluster_time_limit 1000 -flush_packets 1 \
 		"$audf" >>"$logf" 2>&1 &
 	audio_pid=$!
 }
