@@ -39,6 +39,12 @@ trust_level = "trusted"
 [projects."/home/tobias/Dropbox/wichtig/Events/obsidian/Generell/woman"]
 trust_level = "trusted"
 
+[projects."/home/tobias/Dropbox/wichtig/Events/obsidian/Generell/mental"]
+trust_level = "trusted"
+
+[projects."/home/tobias/Videos/Screencasts"]
+trust_level = "trusted"
+
 [notice.model_migrations]
 "gpt-5.3-codex" = "gpt-5.4"
 
@@ -53,3 +59,6 @@ status_line = ["model-with-reasoning", "current-dir", "git-branch", "five-hour-l
 [mcp_servers.serena]
 command = "serena"
 args = ["start-mcp-server", "--context=codex", "--project-from-cwd"]
+
+[apps.asdk_app_6943b73823548191a9f9216c6790c453.tools."todoist_to_do_list_calendar.delete-object"]
+approval_mode = "approve"

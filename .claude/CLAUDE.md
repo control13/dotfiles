@@ -68,3 +68,9 @@ Before implementing, state:
 
 After implementing, simplify the result without changing behavior or tests. Remove speculative flexibility, unnecessary wrappers, helpers, files, and abstractions. Explain substantial deviations from the estimate.
 
+## PDF OCR
+
+- If a PDF is unreadable or has no usable text layer, use the installed local `ocrmypdf` tool.
+- Preserve the original and create a sibling named `<stem>_ocr.pdf`.
+- If an existing but unusable text layer blocks OCR, use `--redo-ocr`.
+- Tell the user the exact output path and ask before replacing the original PDF.

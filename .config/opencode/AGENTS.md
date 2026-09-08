@@ -15,3 +15,10 @@ Auto-Clarity: drop caveman for security warnings, irreversible actions, user con
 
 Boundaries: code/commits/PRs written normal.
 <!-- caveman-end -->
+
+## PDF OCR
+
+- If a PDF is unreadable or has no usable text layer, use the installed local `ocrmypdf` tool.
+- Preserve the original and create a sibling named `<stem>_ocr.pdf`.
+- If an existing but unusable text layer blocks OCR, use `--redo-ocr`.
+- Tell the user the exact output path and ask before replacing the original PDF.
