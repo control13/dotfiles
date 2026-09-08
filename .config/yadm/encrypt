@@ -3,3 +3,4 @@
 .ssh/id_*
 Documents/keyFiles/*.key
 Documents/keyFiles/*.pfx
+Dropbox/encrypted/cryfs.config
