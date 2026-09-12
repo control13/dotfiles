@@ -1,0 +1,118 @@
+#!/usr/bin/env python3
+"""Single write path from a work mail to Todoist.
+
+Accepts only the agreed fields. Descriptions, comments, attachments and
+invitations cannot be passed, so they cannot leak into Todoist. Every transfer
+is recorded locally with its message id, so repeating a mail does not create a
+second task.
+"""
+import argparse
+import json
+import subprocess
+import sys
+from datetime import datetime, timezone
+from pathlib import Path
+
+LOG = Path.home() / ".local/share/mail-todoist/transfers.jsonl"
+
+
+def read_log():
+    if not LOG.exists():
+        return []
+    return [json.loads(line) for line in LOG.read_text(encoding="utf-8").splitlines() if line.strip()]
+
+
+def already_transferred(message_id):
+    for entry in read_log():
+        if entry["message_id"] == message_id:
+            return entry
+    return None
+
+
+def td(args):
+    # Returns (ok, parsed json or raw text).
+    run = subprocess.run(["td"] + args, capture_output=True, text=True)
+    if run.returncode != 0:
+        return False, (run.stderr or run.stdout).strip()
+    try:
+        return True, json.loads(run.stdout)
+    except json.JSONDecodeError:
+        return False, run.stdout.strip()
+
+
+def find_by_title(title):
+    # Used after a failed or interrupted write: did the task land anyway?
+    ok, data = td(["task", "list", "--filter", f"search: {title}", "--json"])
+    if not ok:
+        return None
+    return [t for t in data.get("results", []) if t.get("content") == title]
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        prog="mail-todoist",
+        description="Transfer one agreed task from a work mail to Todoist.")
+    parser.add_argument("--message-id", required=True, help="Message id of the source mail")
+    parser.add_argument("--title", required=True, help="Agreed task title")
+    parser.add_argument("--due", help="Due date, YYYY-MM-DD")
+    parser.add_argument("--duration", help="Duration, e.g. 30m or 1h")
+    parser.add_argument("--project", help="Target project name")
+    parser.add_argument("--priority", choices=["p1", "p2", "p3", "p4"])
+    parser.add_argument("--labels", help="Comma-separated labels")
+    parser.add_argument("--check", action="store_true",
+                        help="Only report what is known about this message id")
+    args = parser.parse_args()
+
+    if not args.title.strip():
+        print("Title is empty.")
+        return 1
+    if "\n" in args.title:
+        print("Title must be a single line — mail text must not be smuggled in as a title.")
+        return 1
+
+    known = already_transferred(args.message_id)
+    if known:
+        print(f"Already transferred on {known['created_at']} as task {known['task_id']}: {known['title']}")
+        return 0
+    if args.check:
+        existing = find_by_title(args.title)
+        if existing:
+            print(f"Not in the log, but Todoist already holds: {existing[0]['id']}")
+            return 0
+        print("Not transferred yet.")
+        return 0
+
+    cmd = ["task", "add", args.title, "--json"]
+    for flag, value in (("--due", args.due), ("--duration", args.duration),
+                        ("--project", args.project), ("--priority", args.priority),
+                        ("--labels", args.labels)):
+        if value:
+            cmd += [flag, value]
+
+    ok, result = td(cmd)
+    if not ok:
+        print(f"Todoist write failed: {result}")
+        existing = find_by_title(args.title)
+        if existing is None:
+            print("Could not check the target list either — verify by hand before retrying.")
+        elif existing:
+            print(f"A task with this title does exist: {existing[0]['id']}. Do not create it again.")
+        else:
+            print("No task with this title exists, so nothing was created.")
+        return 1
+
+    task_id = result.get("id")
+    LOG.parent.mkdir(parents=True, exist_ok=True)
+    with LOG.open("a", encoding="utf-8") as fh:
+        fh.write(json.dumps({
+            "message_id": args.message_id,
+            "title": args.title,
+            "task_id": task_id,
+            "created_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        }, ensure_ascii=False) + "\n")
+    print(f"Created task {task_id}: {args.title}")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

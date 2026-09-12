@@ -4,6 +4,16 @@
     "./plugins/caveman/plugin.js"
   ],
   "share": "disabled",
+  "tools": {
+    "todoist_*": false
+  },
+  "permission": {
+    "bash": {
+      "*": "allow",
+      "td *": "deny",
+      "td": "deny"
+    }
+  },
   "enabled_providers": [
     "gwdg"
   ],
