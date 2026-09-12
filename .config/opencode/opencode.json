@@ -3,6 +3,13 @@
   "plugin": [
     "./plugins/caveman/plugin.js"
   ],
+  "mcp": {
+    "todoist": {
+      "type": "remote",
+      "url": "https://ai.todoist.net/mcp",
+      "enabled": true
+    }
+  },
   "provider": {
     "gwdg": {
       "npm": "@ai-sdk/openai-compatible",
