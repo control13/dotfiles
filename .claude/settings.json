@@ -1,0 +1,58 @@
+{
+  "model": "opus",
+  "enabledPlugins": {
+    "pyright-lsp@claude-plugins-official": true,
+    "caveman@caveman": true,
+    "code-simplifier@claude-plugins-official": true,
+    "lua-lsp@claude-plugins-official": true,
+    "clangd-lsp@claude-plugins-official": true,
+    "kotlin-lsp@claude-plugins-official": true,
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "markitdown@pleaseai": true,
+    "developer-kit-python@developer-kit": true,
+    "bash-language-server@claude-code-lsps": true,
+    "markdown@han": true,
+    "latex-lsp@sci-lsp": true
+  },
+  "extraKnownMarketplaces": {
+    "caveman": {
+      "source": {
+        "source": "github",
+        "repo": "JuliusBrussee/caveman"
+      }
+    },
+    "pleaseai": {
+      "source": {
+        "source": "github",
+        "repo": "pleaseai/claude-code-plugins"
+      }
+    },
+    "developer-kit": {
+      "source": {
+        "source": "github",
+        "repo": "giuseppe-trisciuoglio/developer-kit"
+      }
+    },
+    "claude-code-lsps": {
+      "source": {
+        "source": "github",
+        "repo": "boostvolt/claude-code-lsps"
+      }
+    },
+    "han": {
+      "source": {
+        "source": "github",
+        "repo": "thebushidocollective/han"
+      }
+    },
+    "sci-lsp": {
+      "source": {
+        "source": "github",
+        "repo": "forkernels/sci-lsp"
+      }
+    }
+  },
+  "effortLevel": "high",
+  "tui": "fullscreen",
+  "agentPushNotifEnabled": true
+}

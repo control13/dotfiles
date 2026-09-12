@@ -1,7 +1,9 @@
 model = "gpt-5.6-sol"
 model_reasoning_effort = "xhigh"
 personality = "pragmatic"
+model_verbosity = "low"
 plan_mode_reasoning_effort = "xhigh"
+web_search = "live"
 
 [projects."/home/tobias/Downloads/whistle_test"]
 trust_level = "trusted"
@@ -48,6 +50,12 @@ trust_level = "trusted"
 [notice.model_migrations]
 "gpt-5.3-codex" = "gpt-5.4"
 
+[agents]
+max_concurrent_threads_per_session = 2
+
+[features]
+memories = true
+
 [tui]
 theme = "monokai-extended"
 status_line = ["model-with-reasoning", "current-dir", "git-branch", "five-hour-limit", "weekly-limit", "context-window-size", "used-tokens", "total-output-tokens", "context-remaining"]
@@ -55,6 +63,7 @@ status_line = ["model-with-reasoning", "current-dir", "git-branch", "five-hour-l
 [tui.model_availability_nux]
 "gpt-5.5" = 4
 "gpt-5.6-sol" = 4
+gpt-6-astra = 4
 
 [mcp_servers.serena]
 command = "serena"
@@ -62,3 +71,6 @@ args = ["start-mcp-server", "--context=codex", "--project-from-cwd"]
 
 [apps.asdk_app_6943b73823548191a9f9216c6790c453.tools."todoist_to_do_list_calendar.delete-object"]
 approval_mode = "approve"
+
+[plugins."google-calendar@openai-curated-remote"]
+enabled = true
