@@ -13,7 +13,7 @@
 
 ## Änderungen und Verlässlichkeit
 
-- Kleinste gut lesbare korrekte Lösung; vorhandene Projektmuster zuerst, dann Standardbibliothek, dann bereits genutzte Abhängigkeiten. Keine spekulativen Features, Abstraktionen oder Umbauten. Kleine Duplikation vor verfrühter Abstraktion. Im Code klare Namen statt Abkürzungen; Kommentare begründen, statt Offensichtliches zu beschreiben. Wenige Konzepte zählen mehr als wenige Zeichen.
+- Kleinste gut lesbare korrekte Lösung. Vorhandene Projektmuster und passende bereits genutzte Bibliotheken verwenden. Zusätzliche Abhängigkeiten vermeiden, wenn die Standardbibliothek eine ähnlich einfache und verlässliche Lösung bietet. Keine spekulativen Features, Abstraktionen oder Umbauten. Kleine Duplikation vor verfrühter Abstraktion. Im Code klare Namen statt Abkürzungen; Kommentare begründen, statt Offensichtliches zu beschreiben. Wenige Konzepte zählen mehr als wenige Zeichen.
 - Öffentliche Schnittstellen, Signaturen und Dateipfade erhalten, solange ihre Änderung nicht beauftragt ist. Keine unnötigen Umbenennungen oder Dateiverschiebungen.
 - Bei kleinen Codeaufträgen über drei Dateien oder 100 zusätzlichen Produktivzeilen den Umfang einmal prüfen und nötigen Mehrumfang kurz begründen. Keine harte Sperre oder Pflichtschätzung.
 - Geändertes Verhalten gezielt prüfen. Neue Tests für konkrete Risiken/Regressionen; keine Alibitests oder grundlosen Wiederholungen. An externen Grenzen prüfen, internen Invarianten vertrauen; Fehler sichtbar behandeln statt still schlucken. Bei wissenschaftlichem Code relevante Einheiten, Koordinatensysteme, Zeitstempel, Numerik, Zufallsstartwerte und die Grenze Simulation/Hardware prüfen.
@@ -28,7 +28,7 @@
 - Dateien ändern: gezielte Text- und Codeänderungen mit dem nativen Werkzeug — `Edit` in Claude Code, `apply_patch` in Codex, `edit` in OpenCode; neue Dateien mit dem zugehörigen Schreibwerkzeug. Für kleine Änderungen keine umständlichen `sed`- oder `echo`-Ketten und keine vollständig neu ausgeschriebenen Dateien.
 - Mechanische Serienänderungen, strukturierte Daten, erzeugte Dateien und Formatierung mit dem passenden Werkzeug oder einem kurzen Skript, wenn das einfacher und zuverlässiger ist. Zusammengehörige Änderungen bündeln, den entstandenen Diff gezielt prüfen, Dateien nicht unnötig ausgeben. Das sind Präferenzen, keine Skriptverbote; es zählt der Gesamtaufwand samt Fehlerkorrektur, nicht der Werkzeugname. Die Wahl nicht jedes Mal erläutern.
 - Suchen und Finden: `rg` für Text, `fd` für Dateien. Serena nur für Symbol- und Referenzsuche in großen oder fremden Codebasen, nicht für eine Handvoll Dateien.
-- Python: neue Projekte mit `uv` und `pyproject.toml`, Lockdatei eingecheckt. Bestandsprojekte mit `requirements.txt` bleiben so; Umstellung nur auf Auftrag. Formatieren und Linten mit `ruff`, nicht mit `black`. Typen prüfen mit `pyright`, kein `mypy`. Tests mit `pytest`.
+- Python: neue Projekte mit `uv` und `pyproject.toml`, Lockdatei eingecheckt. Einmalige Hilfsskripte ohne unnötiges Projektgerüst; zusätzliche Konfiguration nur bei konkretem Bedarf. Bestandsprojekte mit `requirements.txt` bleiben so; Umstellung nur auf Auftrag. Formatieren und Linten mit `ruff`, nicht mit `black`. Typen prüfen mit `pyright`, kein `mypy`. Tests mit `pytest`.
 - Typhinweise und Docstrings: Einzelskript bis etwa hundert Zeilen ohne Pflicht. Ab mehreren Dateien oder wiederverwendetem Code Typhinweise an öffentlichen Funktionen, Docstrings nur dort, wo Zweck oder Vertrag nicht aus Name und Signatur hervorgehen.
 - Dokumente nach Markdown mit markitdown; pandoc für übrige Quell- und für Zielformate. Zu unlesbaren PDF-Dateien siehe oben.
 
@@ -42,14 +42,14 @@ Abschluss kurz: Ergebnis und Fundort, wesentliche Prüfung, tatsächliche Blocka
 <!-- caveman-begin -->
 ## Caveman lite
 
-Antworte knapp, aber in vollständigen Sätzen. Alle fachliche Substanz bleibt, nur Füllwerk entfällt.
+Antworte knapp, aber in vollständigen Sätzen. Kürze Fülltext, niemals Unsicherheit, Bedingungen, Begründungen oder fachliche Substanz.
 
 Regeln:
 - Weg: Floskeln, Höflichkeitsformeln, Weichmacher, Wiederholungen, ungefragte Varianten.
 - Bleibt: Artikel, vollständige Sätze, begründende Nebensätze. Keine Telegrammfragmente.
 - Fachbegriffe exakt. Code, Befehle und Fehlermeldungen unverändert.
 - Nicht: "Gerne! Ich helfe dir dabei. Die Ursache liegt vermutlich darin, dass ..."
-- Sondern: "Ursache liegt in der Auth-Middleware: Die Ablaufprüfung nutzt `<` statt `<=`."
+- Sondern: "Die Ursache liegt vermutlich in der Auth-Middleware: Die Ablaufprüfung nutzt `<` statt `<=`."
 
 Stufe wechseln: `/caveman lite|full|ultra`. Aus: "stop caveman" oder "normal mode".
 
