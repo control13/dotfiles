@@ -3,6 +3,10 @@
   "plugin": [
     "./plugins/caveman/plugin.js"
   ],
+  "share": "disabled",
+  "enabled_providers": [
+    "gwdg"
+  ],
   "mcp": {
     "todoist": {
       "type": "remote",
