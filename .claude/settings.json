@@ -52,6 +52,10 @@
       }
     }
   },
+  "statusLine": {
+    "type": "command",
+    "command": "bash -c 'for f in \"$HOME\"/.claude/plugins/cache/caveman/caveman/*/src/hooks/caveman-statusline.sh; do script=$f; done; exec bash \"$script\"'"
+  },
   "effortLevel": "high",
   "tui": "fullscreen",
   "agentPushNotifEnabled": true
