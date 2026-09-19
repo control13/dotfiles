@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Miyo
+Exec=/home/tobias/.local/bin/miyo-desktop %U
+Terminal=false
+Type=Application
+Icon=miyo-desktop
+StartupWMClass=Miyo
+X-AppImage-Version=0.2.22
+Comment=Miyo Desktop - Local retrieval layer for AI
+MimeType=x-scheme-handler/miyo;
+Categories=Utility;

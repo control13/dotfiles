@@ -313,5 +313,5 @@ exec mattermost-desktop --enable-features=WaylandWindowDecorations --ozone-platf
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec env SSH_AUTH_SOCK=/run/user/1000/ssh-agent.socket keepassxc
 {% if yadm.hostname == "washburne" %}
-exec /home/tobias/Applications/Miyo.AppImage --no-sandbox
+exec /home/tobias/.local/bin/miyo-desktop
 {% endif %}

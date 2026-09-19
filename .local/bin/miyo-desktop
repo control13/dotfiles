@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# The Miyo auto-updater installs a new versioned AppImage and deletes the old one
+# without repointing Miyo.AppImage, leaving a dangling symlink that breaks the
+# sway autostart. Repoint the symlink to the newest AppImage, then launch.
+set -euo pipefail
+
+apps_dir="${HOME}/Applications"
+link="${apps_dir}/Miyo.AppImage"
+
+shopt -s nullglob
+images=("${apps_dir}"/Miyo-*-x86_64.AppImage)
+shopt -u nullglob
+
+if ((${#images[@]} == 0)); then
+    echo "miyo-desktop: no Miyo-*-x86_64.AppImage found in ${apps_dir}" >&2
+    exit 1
+fi
+
+newest=$(printf '%s\n' "${images[@]}" | sort -V | tail -n 1)
+
+if [[ "$(readlink -f "$link" 2>/dev/null || true)" != "${newest}" ]]; then
+    ln -sfn "${newest}" "${link}"
+    echo "miyo-desktop: repointed Miyo.AppImage -> $(basename "${newest}")" >&2
+fi
+
+exec "${link}" --no-sandbox "$@"
