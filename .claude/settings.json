@@ -1,5 +1,9 @@
 {
   "model": "opus",
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/statusline-command.sh"
+  },
   "enabledPlugins": {
     "pyright-lsp@claude-plugins-official": true,
     "caveman@caveman": true,
@@ -51,10 +55,6 @@
         "repo": "forkernels/sci-lsp"
       }
     }
-  },
-  "statusLine": {
-    "type": "command",
-    "command": "bash -c 'for f in \"$HOME\"/.claude/plugins/cache/caveman/caveman/*/src/hooks/caveman-statusline.sh; do script=$f; done; exec bash \"$script\"'"
   },
   "effortLevel": "high",
   "tui": "fullscreen",
