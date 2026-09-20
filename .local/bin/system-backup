@@ -1,0 +1,101 @@
+#!/usr/bin/env bash
+# Copy the system configuration worth restoring after a reinstall into Dropbox,
+# following ~/Dropbox/wichtig/Events/obsidian/Generell/organization/BackUp Strategie.md.
+#
+# Runs without root: every path below is world-readable. Files that are not
+# readable are reported at the end instead of aborting the run, so the backup
+# still completes when something turns root-only after a package update.
+#
+# Deliberately NOT backed up, because the target is a cloud-synced folder:
+#   /etc/NetworkManager/system-connections/  -- WLAN pre-shared keys in cleartext
+#   /etc/sudoers, /etc/sudoers.d/            -- sudo rules
+#   LUKS header                              -- unlocks the whole disk
+# Back those up separately onto an offline medium.
+set -euo pipefail
+
+readonly target=${SYSTEM_BACKUP_DIR:-$HOME/Dropbox/system_backup}
+readonly etc_dir=$target/etc
+readonly list_dir=$target/lists
+
+readonly paths=(
+    /etc/sysctl.d
+    /etc/pacman.conf
+    /etc/pacman.d/hooks
+    /etc/makepkg.conf
+    /etc/locale.gen
+    /etc/locale.conf
+    /etc/vconsole.conf
+    /etc/mkinitcpio.conf
+    /etc/mkinitcpio.d
+    /etc/modprobe.d
+    /etc/modules-load.d
+    /etc/default/grub
+    /etc/grub.d
+    /etc/udev/rules.d
+    /etc/systemd/system
+    /etc/fstab
+    /etc/crypttab
+    /etc/environment
+    /etc/hostname
+)
+
+skipped=()
+copied=0
+
+mkdir -p "$etc_dir" "$list_dir"
+
+for path in "${paths[@]}"; do
+    if [[ ! -e $path ]]; then
+        skipped+=("$path (absent)")
+        continue
+    fi
+    if [[ ! -r $path ]] || { [[ -d $path ]] && ! ls "$path" >/dev/null 2>&1; }; then
+        skipped+=("$path (needs root)")
+        continue
+    fi
+    destination=$etc_dir${path#/etc}
+    if [[ -d $path ]]; then
+        mkdir -p "$destination"
+        # --delete so files removed from /etc disappear from the backup too.
+        rsync -a --delete --no-owner --no-group "$path/" "$destination/"
+    else
+        mkdir -p "$(dirname "$destination")"
+        cp -a --no-preserve=ownership "$path" "$destination"
+    fi
+    copied=$((copied + 1))
+done
+
+yay -Qqen > "$list_dir/pkglist-repo.txt"
+yay -Qqem > "$list_dir/pkglist-aur.txt"
+yay -Qe > "$list_dir/pkglist-with-versions.txt"
+systemctl list-unit-files --state=enabled --no-pager > "$list_dir/systemd-enabled.txt"
+systemctl --user list-unit-files --state=enabled --no-pager > "$list_dir/systemd-user-enabled.txt"
+systemctl list-timers --all --no-pager > "$list_dir/systemd-timers.txt"
+cat /proc/cmdline > "$list_dir/kernel-cmdline.txt"
+lsblk -o NAME,SIZE,TYPE,FSTYPE,LABEL,UUID,MOUNTPOINT > "$list_dir/disk-layout.txt"
+# Exits non-zero without root because a few keys are unreadable; the rest is still written.
+sysctl -a 2>/dev/null > "$list_dir/sysctl-effective.txt" || true
+
+{
+    echo "# System backup"
+    echo
+    echo "- host: $(hostname)"
+    echo "- written: $(date --iso-8601=seconds)"
+    echo "- kernel: $(uname -r)"
+    echo "- by: ~/.local/bin/system-backup"
+    echo
+    echo "Ownership is not preserved -- everything belongs to $USER here."
+    echo "When restoring into /etc, set owner and mode by hand."
+    echo
+    echo "Not included (cloud-synced folder): NetworkManager keys, sudoers, LUKS header."
+    if ((${#skipped[@]})); then
+        echo
+        echo "Skipped in this run:"
+        printf -- '- %s\n' "${skipped[@]}"
+    fi
+} > "$target/README.md"
+
+echo "backed up $copied path(s) to $target"
+if ((${#skipped[@]})); then
+    printf 'skipped: %s\n' "${skipped[@]}"
+fi
