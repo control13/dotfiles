@@ -37,6 +37,7 @@ readonly paths=(
     /etc/crypttab
     /etc/environment
     /etc/hostname
+    /usr/local/etc
 )
 
 skipped=()
@@ -53,15 +54,29 @@ for path in "${paths[@]}"; do
         skipped+=("$path (needs root)")
         continue
     fi
-    destination=$etc_dir${path#/etc}
+    # Mirror the absolute path under the target, so /etc and /usr stay apart.
+    destination=$target$path
     if [[ -d $path ]]; then
         mkdir -p "$destination"
-        # --delete so files removed from /etc disappear from the backup too.
+        # --delete so files removed from the source disappear from the backup too.
         rsync -a --delete --no-owner --no-group "$path/" "$destination/"
     else
         mkdir -p "$(dirname "$destination")"
         cp -a --no-preserve=ownership "$path" "$destination"
     fi
+    copied=$((copied + 1))
+done
+
+# Hand-written scripts in /usr/local/bin. The compiled binaries sitting next to
+# them (MuJoCo, Mendeley) are reinstallable and would add ~450 MB to a synced
+# folder, so take only what is text -- which is exactly what was written by hand.
+# Wiped first, so a script deleted upstream also leaves the backup.
+rm -rf "$target/usr/local/bin"
+for script in /usr/local/bin/*; do
+    [[ -f $script ]] || continue
+    grep -Iq . "$script" 2>/dev/null || continue   # -I: skip binaries
+    mkdir -p "$target/usr/local/bin"
+    cp -a --no-preserve=ownership "$script" "$target/usr/local/bin/"
     copied=$((copied + 1))
 done
 
@@ -72,6 +87,21 @@ systemctl list-unit-files --state=enabled --no-pager > "$list_dir/systemd-enable
 systemctl --user list-unit-files --state=enabled --no-pager > "$list_dir/systemd-user-enabled.txt"
 systemctl list-timers --all --no-pager > "$list_dir/systemd-timers.txt"
 cat /proc/cmdline > "$list_dir/kernel-cmdline.txt"
+
+# What lives under /usr without belonging to a package -- the record of what was
+# installed there by hand. Restricted to /usr/local and /usr/bin on purpose: a
+# sweep of all of /usr returns ~37k paths, almost entirely GHC package
+# registrations and caches, which buries the handful of entries that matter.
+# LC_ALL=C for the sort: under de_DE.UTF-8 the same comparison takes 10s instead of 1s.
+{
+    find /usr/local -xdev \( -type f -o -type l \) -printf '%10s  %p\n' 2>/dev/null |
+        LC_ALL=C sort -k2
+    owned=$(mktemp)
+    pacman -Qlq | sed 's:/$::' | LC_ALL=C sort -u > "$owned"
+    find /usr/bin -maxdepth 1 \( -type f -o -type l \) 2>/dev/null | LC_ALL=C sort -u |
+        LC_ALL=C comm -23 - "$owned" | sed 's/^/           /'
+    rm -f "$owned"
+} > "$list_dir/usr-unowned.txt"
 lsblk -o NAME,SIZE,TYPE,FSTYPE,LABEL,UUID,MOUNTPOINT > "$list_dir/disk-layout.txt"
 # Exits non-zero without root because a few keys are unreadable; the rest is still written.
 sysctl -a 2>/dev/null > "$list_dir/sysctl-effective.txt" || true
