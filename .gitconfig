@@ -29,3 +29,5 @@
 	helper = /usr/lib/git-core/git-credential-libsecret
 [credential "https://gitea.naoserv.imn.htwk-leipzig.de"]
 	username = tobias.jagla
+[diff]
+	tool = kdiff3

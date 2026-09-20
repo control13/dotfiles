@@ -36,6 +36,8 @@
   "alwaysMinimize": true,
   "autoCheckForUpdates": true,
   "enableSentry": true,
-  "skippedVersions": [],
+  "skippedVersions": [
+    "6.2.3"
+  ],
   "useNativeTitleBar": false
 }
