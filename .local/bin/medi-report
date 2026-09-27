@@ -1,0 +1,3 @@
+#!/bin/sh
+# Wrapper to run medi-report via the project venv without polluting the system.
+exec "/home/tobias/programming/my_utils/mediAnalysis/.venv/bin/python" "/home/tobias/programming/my_utils/mediAnalysis/medi_report.py" "$@"

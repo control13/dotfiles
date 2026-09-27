@@ -1,0 +1,1 @@
+/home/tobias/programming/my_utils/coaching-transcribe/completions/coaching-transcribe.fish
