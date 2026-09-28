@@ -1,0 +1,14 @@
+[Unit]
+Description=Sotto speech-to-text daemon
+After=graphical-session.target pipewire.service
+Wants=pipewire.service
+PartOf=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/sotto daemon
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=graphical-session.target
