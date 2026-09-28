@@ -38,7 +38,6 @@ bindsym XF86Tools input type:touchpad events toggle enabled disabled
 {% if yadm.hostname == "washburne" %}
 output $laptop scale 1.8
 
-exec aw-watcher-media-player
 exec awatcher
 {% endif %}
 
@@ -302,6 +301,9 @@ bindsym $mod+r mode "resize"
 
     bindsym $mod+F1 exec ~/.config/sway/open_cheatsheet.bash
     bindsym $mod+Shift+w exec killall -SIGUSR1 waybar
+
+    # Zeithebel friction event: choose type in fuzzel (~/programming/my_utils/zeithebel)
+    bindsym $mod+F9 exec ~/.local/bin/zeithebel event
 
 include /etc/sway/config.d/*
 
