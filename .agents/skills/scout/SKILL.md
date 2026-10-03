@@ -6,9 +6,14 @@ description: Delegate a bounded, non-sensitive task to the external agy agent (G
 # Scout / worker (agy)
 
 ```
-llm-scout --caller <claude-code|codex|opencode> -C <workspace> "<concrete question>"
-llm-scout --write --caller <...> -C <git repo> "<exact change, files, constraints>"
+llm-scout --reason <reason> --caller <claude-code|codex|opencode> -C <workspace> "<concrete question>"
+llm-scout --write --reason mechanical_edit --caller <...> -C <git repo> "<exact change, files, constraints>"
 ```
+
+`--reason` (logged for statistics; pick the closest, default `other`):
+`repo_search` find files, functions, dependencies, code paths · `bulk_extract` extract/structure many
+similar items from large context · `log_analysis` search or pre-sort logs, errors, diagnostics output ·
+`mechanical_edit` clearly specified edits via `--write` · `other` anything else worth delegating.
 
 Research mode answers compactly: files with line ranges, findings, open points. Write mode edits
 files with agy's file tools, prints agy's change report and then `git status --short`. Both log

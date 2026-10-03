@@ -37,6 +37,7 @@
 - Ich beschreibe das Ziel; Modell und Routing wählst du. Frag nicht, welches Modell die Arbeit erledigen soll.
 - Den externen Scout `llm-scout` (agy, Google; Skill `scout`) selbstständig einsetzen, wenn eine nicht-sensitive Aufgabe viel Kontextsichtung, Suche, Extraktion oder Voranalyse erfordert und das Ergebnis kompakt zurückkommen kann. Die Entscheidung folgt aus der Aufgabe, nicht aus einem ausdrücklichen Wunsch.
 - Klar abgegrenzte, nicht-sensitive Änderungen mit eindeutiger Vorgabe (Serienänderungen, Boilerplate, Tests nach vorhandenem Muster) kann `llm-scout --write` in einem Git-Repo umsetzen. Danach den Diff selbst prüfen und Tests selbst ausführen; agy kann headless keine Befehle starten.
+- Beim Aufruf den passendsten Grund mitgeben: `--reason repo_search|bulk_extract|log_analysis|mechanical_edit|other`.
 - Nicht delegieren, wenn die Aufgabe klein ist, der relevante Kontext bereits geladen ist oder die Übergabe voraussichtlich mehr Aufwand verursacht als die direkte Bearbeitung.
 - Niemals externe Worker bei datenschutzsensitiven Aufgaben, Arbeitsmails oder in `opencode-work`.
 - Entscheidungen, Integration und finale Qualitätskontrolle bleiben beim Hauptagenten. Scout-Ergebnisse sind Hinweise: die genannten Stellen vor Verwendung selbst prüfen.
