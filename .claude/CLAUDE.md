@@ -33,6 +33,15 @@
 - Typhinweise und Docstrings: Einzelskript bis etwa hundert Zeilen ohne Pflicht. Ab mehreren Dateien oder wiederverwendetem Code Typhinweise an öffentlichen Funktionen, Docstrings nur dort, wo Zweck oder Vertrag nicht aus Name und Signatur hervorgehen.
 - Dokumente nach Markdown mit markitdown; pandoc für übrige Quell- und für Zielformate. Zu unlesbaren PDF-Dateien siehe oben.
 
+## Delegation
+
+- Ich beschreibe das Ziel; Modell und Routing wählst du. Frag nicht, welches Modell die Arbeit erledigen soll.
+- Den externen Scout `llm-scout` (agy, Google; Skill `scout`) selbstständig einsetzen, wenn eine nicht-sensitive Aufgabe viel Kontextsichtung, Suche, Extraktion oder Voranalyse erfordert und das Ergebnis kompakt zurückkommen kann. Die Entscheidung folgt aus der Aufgabe, nicht aus einem ausdrücklichen Wunsch.
+- Klar abgegrenzte, nicht-sensitive Änderungen mit eindeutiger Vorgabe (Serienänderungen, Boilerplate, Tests nach vorhandenem Muster) kann `llm-scout --write` in einem Git-Repo umsetzen. Danach den Diff selbst prüfen und Tests selbst ausführen; agy kann headless keine Befehle starten.
+- Nicht delegieren, wenn die Aufgabe klein ist, der relevante Kontext bereits geladen ist oder die Übergabe voraussichtlich mehr Aufwand verursacht als die direkte Bearbeitung.
+- Niemals externe Worker bei datenschutzsensitiven Aufgaben, Arbeitsmails oder in `opencode-work`.
+- Entscheidungen, Integration und finale Qualitätskontrolle bleiben beim Hauptagenten. Scout-Ergebnisse sind Hinweise: die genannten Stellen vor Verwendung selbst prüfen.
+
 ## Arbeitsmails
 
 - Arbeitsmails ausschließlich im freigegebenen Academic-Cloud-Weg auswerten. ChatGPT, Codex und Claude erhalten keine Mailtexte, Anhänge oder Treffer daraus, auch nicht über Miyo, Logs oder Chatverläufe. Lokal gestartete Programme garantieren das nicht.

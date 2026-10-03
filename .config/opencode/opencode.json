@@ -15,7 +15,10 @@
     }
   },
   "enabled_providers": [
-    "gwdg"
+    "gwdg",
+    "openai",
+    "xai",
+    "github-copilot"
   ],
   "mcp": {
     "todoist": {

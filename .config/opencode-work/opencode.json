@@ -1,0 +1,28 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "share": "disabled",
+  "enabled_providers": [
+    "gwdg"
+  ],
+  "model": "gwdg/qwen3.8-27b",
+  "small_model": "gwdg/qwen3-30b-a3b-instruct-2507",
+  "tools": {
+    "todoist_*": false
+  },
+  "permission": {
+    "webfetch": "deny",
+    "websearch": "deny",
+    "skill": {
+      "scout": "deny"
+    },
+    "bash": {
+      "*": "allow",
+      "td *": "deny",
+      "td": "deny",
+      "agy": "deny",
+      "agy *": "deny",
+      "*llm-scout*": "deny",
+      "*llm-routing scout*": "deny"
+    }
+  }
+}

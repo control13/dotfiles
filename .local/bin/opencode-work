@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# opencode-work: OpenCode restricted to the GWDG Academic Cloud provider (gwdg) for work mail
+# and other privacy-sensitive university data. Normal `opencode` is not affected.
+# Notes: ~/programming/my_utils/llm-routing/README.md
+set -euo pipefail
+
+# Reuse the one gwdg provider definition of the normal config instead of a drifting copy.
+gwdg_provider=$(jq -ce '{provider: {gwdg: .provider.gwdg}}' ~/.config/opencode/opencode.json)
+
+# The work config dir replaces ~/.config/opencode; it allows only gwdg (provider.use policy).
+export OPENCODE_CONFIG_DIR=~/.config/opencode-work
+export OPENCODE_DISABLE_PROJECT_CONFIG=1
+export OPENCODE_CONFIG_CONTENT=$gwdg_provider
+unset OPENCODE_CONFIG
+# Own database and state: work sessions must not be resumable from normal opencode, where
+# external providers are available. Stored credentials (OpenAI, xAI, Copilot) are not visible here.
+export XDG_DATA_HOME=~/.local/share/opencode-work
+export XDG_STATE_HOME=~/.local/state/opencode-work
+unset OPENAI_API_KEY XAI_API_KEY GITHUB_TOKEN GEMINI_API_KEY GOOGLE_API_KEY ANTHROPIC_API_KEY
+# llm-scout refuses to run when it sees this.
+export LLM_PRIVACY_MODE=work
+
+# --standalone: a private server with this environment, never the shared background service.
+case "${1-}" in
+  run | models | api) subcommand=$1; shift; exec opencode "$subcommand" --standalone "$@" ;;
+  -* | "") exec opencode --standalone "$@" ;;
+  # Other subcommands (debug, auth, ...) would talk to the shared service and ignore this setup.
+  *) echo "opencode-work: only the TUI, run, models and api are supported" >&2; exit 2 ;;
+esac

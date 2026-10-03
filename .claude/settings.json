@@ -58,5 +58,22 @@
   },
   "effortLevel": "high",
   "tui": "fullscreen",
-  "agentPushNotifEnabled": true
+  "agentPushNotifEnabled": true,
+  "hooks": {
+    "SessionStart": [
+      { "hooks": [{ "type": "command", "command": "$HOME/.local/bin/llm-routing claude-hook", "async": true }] }
+    ],
+    "SessionEnd": [
+      { "hooks": [{ "type": "command", "command": "$HOME/.local/bin/llm-routing claude-hook", "timeout": 5 }] }
+    ],
+    "SubagentStart": [
+      { "hooks": [{ "type": "command", "command": "$HOME/.local/bin/llm-routing claude-hook", "async": true }] }
+    ],
+    "SubagentStop": [
+      { "hooks": [{ "type": "command", "command": "$HOME/.local/bin/llm-routing claude-hook", "async": true }] }
+    ],
+    "PostModelSwitch": [
+      { "hooks": [{ "type": "command", "command": "$HOME/.local/bin/llm-routing claude-hook", "async": true }] }
+    ]
+  }
 }
