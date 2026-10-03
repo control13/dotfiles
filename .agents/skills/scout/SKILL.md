@@ -1,6 +1,6 @@
 ---
 name: scout
-description: Delegate a bounded, non-sensitive task to the external agy agent (Google Antigravity) - research (find relevant files/functions, trace call paths or dependencies, pre-sort error sites, sift many logs) or, with --write, a clearly specified edit in a git repo - and get a compact answer back. Use when reading or mechanical editing would cost more than the handoff; never for privacy-sensitive data, work mail, trivial lookups or decisions.
+description: Delegate a bounded, non-sensitive task to the external agy agent (Google Antigravity) - research (find relevant files/functions, trace call paths or dependencies, pre-sort error sites, sift many logs, search the web and read public pages or PDFs with sources) or, with --write, a clearly specified edit in a git repo - and get a compact answer back. Use when reading or mechanical editing would cost more than the handoff; never for privacy-sensitive data, work mail, trivial lookups or decisions.
 ---
 
 # Scout / worker (agy)
@@ -13,7 +13,12 @@ llm-scout --write --reason mechanical_edit --caller <...> -C <git repo> "<exact 
 `--reason` (logged for statistics; pick the closest, default `other`):
 `repo_search` find files, functions, dependencies, code paths · `bulk_extract` extract/structure many
 similar items from large context · `log_analysis` search or pre-sort logs, errors, diagnostics output ·
-`mechanical_edit` clearly specified edits via `--write` · `other` anything else worth delegating.
+`mechanical_edit` clearly specified edits via `--write` · `web_research` websites and online
+documents (PDFs), e.g. listings, official pages, brochures · `other` anything else worth delegating.
+
+Web research: `llm-scout --reason web_research "<question>"` without `-C` runs agy in an empty temp
+directory, so it sees no local files; it searches the web, reads pages/PDFs by URL and cites sources.
+The task text itself goes to Google: no personal data (income, documents, contacts), no note contents.
 
 Research mode answers compactly: files with line ranges, findings, open points. Write mode edits
 files with agy's file tools, prints agy's change report and then `git status --short`. Both log
@@ -21,6 +26,7 @@ metadata only to `~/.local/share/llm-routing/events.jsonl`.
 
 Use it when:
 - many files, logs or call paths must be read before a change, and the answer is checkable; or
+- several public web pages or PDFs must be searched and read, and the answer can be sourced; or
 - an edit is mechanical and fully specified (series of similar changes, boilerplate, tests after an
   existing pattern), so writing the instruction is cheaper than doing it.
 
