@@ -7,3 +7,10 @@ enabled = false
 [whisper]
 model = "large-v3-turbo"
 language = "de"
+# Previous-context hint: a natural sentence biases Whisper towards these
+# spellings more than a bare word list did (tested 2026-10-09).
+initial_prompt = "Ich diktiere Text für Claude, Claude Code und Codex."
+
+[text]
+# Misrecognitions of "Claude" seen with large-v3-turbo; whole words only.
+replacements = { "Claud" = "Claude", "Chlord" = "Claude", "Klaud" = "Claude", "Klod" = "Claude" }
