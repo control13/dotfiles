@@ -125,10 +125,13 @@ input * {
     # Find cursor
     bindsym $mod+period exec ~/.local/bin/wl-find-cursor -d 350
 
-    # Push-to-talk dictation: sotto daemon (mode=signal) toggles on each SIGUSR1,
-    # so press starts and release stops recording; text is typed at the cursor.
-    bindsym --no-repeat Insert exec systemctl --user kill -s USR1 sotto.service
-    bindsym --release Insert exec systemctl --user kill -s USR1 sotto.service
+    # Push-to-talk dictation via the voxtype daemon: press starts and release
+    # stops recording; text is typed at the cursor. With Shift the text goes to
+    # the clipboard instead (this takes Shift+Insert paste away from apps).
+    bindsym --no-repeat Insert exec voxtype record start
+    bindsym --release Insert exec voxtype record stop
+    bindsym --no-repeat Shift+Insert exec voxtype record start --clipboard
+    bindsym --release Shift+Insert exec voxtype record stop
 
     # Kill focused window
     bindsym $alt+F4 kill

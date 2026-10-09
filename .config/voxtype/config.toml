@@ -1,0 +1,9 @@
+# Overrides for /etc/voxtype/config.toml. Recording is driven by sway
+# keybindings (voxtype record start/stop), so the evdev hotkey stays off.
+
+[hotkey]
+enabled = false
+
+[whisper]
+model = "large-v3-turbo"
+language = "de"
