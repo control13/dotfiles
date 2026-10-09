@@ -8,9 +8,25 @@ enabled = false
 model = "large-v3-turbo"
 language = "de"
 # Previous-context hint: a natural sentence biases Whisper towards these
-# spellings more than a bare word list did (tested 2026-10-09).
-initial_prompt = "Ich diktiere Text für Claude, Claude Code und Codex."
+# spellings more than a bare word list did (tested 2026-10-09). Obsidian is
+# recognized without help; adding it here made other words worse.
+initial_prompt = "Ich diktiere Text für Claude, Claude Code, Codex und Todoist."
 
 [text]
 # Misrecognitions of "Claude" seen with large-v3-turbo; whole words only.
 replacements = { "Claud" = "Claude", "Chlord" = "Claude", "Klaud" = "Claude", "Klod" = "Claude" }
+
+[osd]
+enabled = true
+frontend = "gtk4"
+style = "default"
+layout = "orb"
+position = "top-center"
+width_px = 500
+height_px = 48
+margin_px = 24
+top_margin = 0.85
+opacity = 0.95
+waveform_window_secs = 3.0
+peak_decay_db_per_sec = 6.0
+waveform_gain = 10.0
