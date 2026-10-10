@@ -1,0 +1,14 @@
+#!/bin/sh
+# Toggle mute on the default source and mirror the state onto the raw internal
+# DMIC. The keyboard mic-mute LED follows only the DMIC's ALSA switch
+# ("Mic ACP LED", card Generic_1), but the default source is usually a virtual
+# node (internal_mic_highpass) or a USB mic, whose mute never reaches ALSA.
+set -eu
+
+internal_mic=alsa_input.pci-0000_c4_00.6.HiFi__Mic1__source
+
+pactl set-source-mute @DEFAULT_SOURCE@ toggle
+state=$(pactl get-source-mute @DEFAULT_SOURCE@ | awk '{print $2}')
+[ "$state" = yes ] && mute=1 || mute=0
+# The DMIC source may be absent (e.g. profile change); the toggle above already worked.
+pactl set-source-mute "$internal_mic" "$mute" 2>/dev/null || true
