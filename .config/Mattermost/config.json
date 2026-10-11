@@ -39,5 +39,7 @@
   "skippedVersions": [
     "6.2.3"
   ],
-  "useNativeTitleBar": false
+  "useNativeTitleBar": false,
+  "enableSessionAttributes": true,
+  "trustedEmbeddedMediaOrigins": []
 }

@@ -1,5 +1,62 @@
 {
   "model": "opus",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.local/bin/llm-routing claude-hook",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.local/bin/llm-routing claude-hook",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.local/bin/llm-routing claude-hook",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.local/bin/llm-routing claude-hook",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "PostModelSwitch": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.local/bin/llm-routing claude-hook",
+            "async": true
+          }
+        ]
+      }
+    ]
+  },
   "statusLine": {
     "type": "command",
     "command": "bash ~/.claude/statusline-command.sh"
@@ -16,7 +73,8 @@
     "developer-kit-python@developer-kit": true,
     "bash-language-server@claude-code-lsps": true,
     "markdown@han": true,
-    "latex-lsp@sci-lsp": true
+    "latex-lsp@sci-lsp": true,
+    "typescript-lsp@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "caveman": {
@@ -59,21 +117,37 @@
   "effortLevel": "high",
   "tui": "fullscreen",
   "agentPushNotifEnabled": true,
-  "hooks": {
-    "SessionStart": [
-      { "hooks": [{ "type": "command", "command": "$HOME/.local/bin/llm-routing claude-hook", "async": true }] }
+  "autoMode": {
+    "environment": [
+      "### Org-wide",
+      "**Organization**: None configured",
+      "**Cloud provider(s)**: None configured",
+      "**Repository visibility**: not queryable here via gh — assume private unless evidence shows otherwise; repo name/remote give no indication of public hosting intent beyond being on github.com",
+      "**Internal sharing / snippet hosting**: None configured — treat public paste/gist services as outside the trust boundary",
+      "**Secrets management**: None configured",
+      "**Default / protected branches**: not queryable here via gh — treat as unverified; do not assume push protection",
+      "**CI/CD deploy targets**: None configured",
+      "**Network posture**: None configured",
+      "**Host containment**: None configured — assume Claude Code runs on an ordinary developer machine (this project also deploys to a Raspberry Pi 4 on the home WLAN via rsync/ssh, a physical device, not a cloud identity)",
+      "**Source control**: The trusted repo (github.com/control13/bedroom-climate) and its remote(s) only",
+      "**Trusted internal domains**: None configured",
+      "**Trusted cloud buckets**: None configured",
+      "**Key internal services**: api.brightsky.dev and Sensor.Community API are used as read-only reference data sources (outdoor weather/particulate data), not trusted internal services",
+      "**Internal package registry**: None configured",
+      "**Sensitive data locations & audiences**: any file or store holding personal data, confidential business data, credentials, regulated data, or similarly sensitive material; preserve exact handles when known and share only with audiences cleared at the [named+specifics] bar",
+      "**Data retention / declassification**: None configured",
+      "**Sensitive remote targets**: any namespace, host, or container whose name carries `prod` or `production` as a whole word or name segment",
+      "**Protected deployment namespaces / environments**: None configured — fall back to the Sensitive remote targets heuristic",
+      "**Protected IaC scopes**: IAM, RBAC, networking, quota, and node-pool resources; anything whose name or tag carries `prod` or `production` as a whole word or name segment",
+      "### User-specific",
+      "**Primary use of Claude Code**: software development (this project: Raspberry Pi sensor/dashboard application)",
+      "**Trusted repo**: /home/tobias/programming/bedroom-climate and its remote github.com/control13/bedroom-climate (visibility unverified — treat as possibly public for publication scoping)",
+      "**Org-specific CLIs**: None configured — project-specific tooling in use: uv, ruff, pyright, pytest, rsync-based deploy.sh (no git/Docker on the Pi target)",
+      "Routine under /home/tobias/programming/bedroom-climate/ prefix: file edits, uv/pytest/ruff/pyright runs, and deploy.sh invocations are this project's normal workflow"
     ],
-    "SessionEnd": [
-      { "hooks": [{ "type": "command", "command": "$HOME/.local/bin/llm-routing claude-hook", "timeout": 5 }] }
-    ],
-    "SubagentStart": [
-      { "hooks": [{ "type": "command", "command": "$HOME/.local/bin/llm-routing claude-hook", "async": true }] }
-    ],
-    "SubagentStop": [
-      { "hooks": [{ "type": "command", "command": "$HOME/.local/bin/llm-routing claude-hook", "async": true }] }
-    ],
-    "PostModelSwitch": [
-      { "hooks": [{ "type": "command", "command": "$HOME/.local/bin/llm-routing claude-hook", "async": true }] }
+    "soft_deny": [
+      "$defaults",
+      "Bash(deploy/deploy.sh:*) — hardware/Pi deploy and service restart require Tobias's explicit go-ahead per CLAUDE.md"
     ]
   }
 }
