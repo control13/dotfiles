@@ -35,9 +35,17 @@ Use it when:
 - several public web pages or PDFs must be searched and read, and the answer can be sourced; or
 - an edit is mechanical and fully specified (series of similar changes, boilerplate, tests after an
   existing pattern), so writing the instruction is cheaper than doing it; or
+- a non-trivial analysis starts: run a scout in the background as a coarse map while you read
+  yourself, then compare; it finds places you would not have looked at; or
 - a non-trivial analysis, report, plan or code change is about to be finished: get a blind second
   opinion or a `review`, even when the context is already loaded. This is a quality step, not a
   time saver.
+
+Models and quota: the default is Gemini 3.8 Flash; its quota is ample (a dozen large calls used
+~3 % of the weekly limit), so use the scout freely. `--model claude-sonnet-5-5-high` was faster
+and more complete on a repo question, but one call costs ~6 % of the weekly Claude/GPT limit:
+use it only when precision matters. `agy -p /quota` shows what is left; every call also logs it as
+`quota_remaining`. Gemini Pro is not available headless.
 
 Do not use it for:
 - privacy-sensitive projects, work mail, personal data, credentials. External provider (Google).
@@ -62,7 +70,8 @@ Writing a research question:
 While it runs:
 - Output arrives only at the end; an empty output file does not mean it hangs. After `--timeout`
   (default 300 s) or a denied command, llm-scout asks agy once more, in the same conversation, to
-  answer with what it has (up to 120 s more). So a run ends after at most about 7 minutes; do not
+  answer with what it has (up to 120 s more). agy reports a timeout as SUCCESS with partial
+  text; llm-scout detects that and asks too. So a run ends after at most about 7 minutes; do not
   stop it earlier, and do not raise the timeout without reason.
 - A narrow question takes about 1 minute, a broad analysis or review 3–5 minutes. Prefer several
   narrow questions over one broad multi-topic task; name the scope of a review exactly.
