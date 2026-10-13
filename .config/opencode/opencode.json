@@ -5,13 +5,11 @@
   ],
   "share": "disabled",
   "tools": {
-    "todoist_*": false
+    "todoist_*": true
   },
   "permission": {
     "bash": {
-      "*": "allow",
-      "td *": "deny",
-      "td": "deny"
+      "*": "allow"
     }
   },
   "enabled_providers": [
