@@ -76,6 +76,8 @@ assign [app_id="at.yrlf.wl_mirror"] workspace $ws_pres
 for_window [app_id="io.github.Qalculate.qalculate-qt"] floating enable
 for_window [app_id="org.keepassxc.KeePassXC"] floating enable
 for_window [class="vlc"] fullscreen enable
+# VLC 3 runs under XWayland and inhibits only via D-Bus ScreenSaver, which nothing owns since idlehack is gone
+for_window [class="vlc"] inhibit_idle fullscreen
 for_window [class="gimp-3\.0"] fullscreen enable
 for_window [app_id="eu.betterbird.Betterbird" title="Write: .*"] floating enable
 for_window [window_type="dialog"] floating enable
