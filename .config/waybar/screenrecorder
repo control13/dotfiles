@@ -47,14 +47,17 @@ fi
 # that is how PipeWire marks an empty jack, so an unplugged headset input drops
 # out on its own and comes back the moment something is plugged in. Duplicate
 # node names are skipped too: replugging the dock can leave stale nodes behind,
-# and without this the same microphone would be recorded twice. The default
-# source comes first so its track is always the one right after System.
+# and without this the same microphone would be recorded twice. Bluetooth
+# headset mics are skipped: recording from one makes WirePlumber switch the
+# headset to its call profile, which drops playback (System) to 8-16 kHz mono.
+# The default source comes first so its track is always the one right after System.
 list_mic_sources() {
 	local default_src
 	default_src=$(pactl get-default-source 2>/dev/null)
 	pactl list sources 2>/dev/null | awk -v def="$default_src" '
 		function flush(   line) {
 			if (name != "" && mon == "n/a" && !(name in seen) &&
+				name !~ /^bluez_input\./ &&
 				(port == "" || avail[port] != 0)) {
 				seen[name] = 1
 				line = name "\t" desc "\t" mute
