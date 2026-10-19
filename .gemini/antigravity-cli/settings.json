@@ -47,7 +47,8 @@
       "command(git shortlog)",
       "command(git for-each-ref)",
       "command(sed)",
-      "command(awk)"
+      "command(awk)",
+      "write_file(/home/tobias/programming/)"
     ]
   },
   "trustedWorkspaces": [

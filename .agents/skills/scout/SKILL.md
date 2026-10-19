@@ -11,6 +11,20 @@ llm-scout --reason review --caller <...> -C <workspace> "<what to review: diff, 
 llm-scout --write --reason mechanical_edit --caller <...> -C <git repo> "<exact change, files, constraints>"
 ```
 
+Presets, one line each (reason and workspace are set; options still apply):
+
+```
+llm-scout map [DIR]                     # coarse map of a repo or folder
+llm-scout review-diff [RANGE]           # blind review of `git diff RANGE` (default HEAD)
+llm-scout summarize FILE|URL [FOCUS]    # summary of a document or web page
+llm-scout extract "WHAT" FILE...        # table of WHAT with file and line/page
+llm-scout --bg <anything above>         # detached; desktop notice when done
+llm-scout --result [JOB]                # answer of a job (exit 75 = still running)
+```
+
+Documents: anything outside the vault and outside mail is fine to summarize or extract. Vault
+files, mail and transcripts never go to the scout; the command refuses marked paths per file.
+
 `--reason` (logged for statistics; pick the closest, default `other`):
 `repo_search` find files, functions, dependencies, code paths · `bulk_extract` extract/structure many
 similar items from large context · `log_analysis` search or pre-sort logs, errors, diagnostics output ·
@@ -33,8 +47,11 @@ without an answer; it cannot run tests, builds or pipes.
 Use it when:
 - many files, logs or call paths must be read before a change, and the answer is checkable; or
 - several public web pages or PDFs must be searched and read, and the answer can be sourced; or
-- an edit is mechanical and fully specified (series of similar changes, boilerplate, tests after an
-  existing pattern), so writing the instruction is cheaper than doing it; or
+- an edit is large, mechanical and fully specified (roughly 50+ lines or several files: series of
+  similar changes, boilerplate, tests after an existing pattern). Subtle logic, security and small
+  edits stay with you: in the 2026-10-19 pilot agy got the logic right but skipped the test and
+  used abbreviated names, so the review cost about as much as writing it. `--write` works only
+  under `~/programming` (agy's write allowlist); or
 - a non-trivial analysis starts: run a scout in the background as a coarse map while you read
   yourself, then compare; it finds places you would not have looked at; or
 - a non-trivial analysis, report, plan or code change is about to be finished: get a blind second
@@ -44,7 +61,8 @@ Use it when:
 Models and quota: the default is Gemini 3.8 Flash; its quota is ample (a dozen large calls used
 ~3 % of the weekly limit), so use the scout freely. `--model claude-sonnet-5-5-high` was faster
 and more complete on a repo question, but one call costs ~6 % of the weekly Claude/GPT limit:
-use it only when precision matters. `agy -p /quota` shows what is left; every call also logs it as
+use it for important reviews and precision questions, about five to ten calls a week (a Flash
+review costs ~0.1–0.2 % of the Gemini week; measured 2026-10-19). `agy -p /quota` shows what is left; every call also logs it as
 `quota_remaining`. Gemini Pro is not available headless.
 
 Do not use it for:
@@ -76,7 +94,10 @@ While it runs:
 - A narrow question takes about 1 minute, a broad analysis or review 3–5 minutes. Prefer several
   narrow questions over one broad multi-topic task; name the scope of a review exactly.
 - Start longer runs in the background and keep working; foreground calls started together may
-  run one after another.
+  run one after another. Without a background feature of your own (Codex, OpenCode) use `--bg`.
+- For important reviews run Flash and `--model claude-sonnet-5-5-high` in parallel: Flash found
+  agy-specific bugs, Sonnet the security issues in the same commit.
+- Claude Code reminds you via a PostToolUse hook after ten reading tool calls without a scout.
 
 Afterwards:
 - Research answers are leads, not facts: open the named locations yourself before relying on them.
