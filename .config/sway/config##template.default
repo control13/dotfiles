@@ -41,8 +41,8 @@ output $laptop scale 1.8
 exec awatcher
 {% endif %}
 
-exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP SWAYSOCK DISPLAY
-exec systemctl --user start sway-session.target
+# Chained: parallel execs let session units start before WAYLAND_DISPLAY is imported.
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP SWAYSOCK DISPLAY && systemctl --user start sway-session.target
 exec shikane
 exec sway-audio-idle-inhibit
 
