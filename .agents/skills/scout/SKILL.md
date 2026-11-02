@@ -58,8 +58,12 @@ Use it when:
   opinion or a `review`, even when the context is already loaded. This is a quality step, not a
   time saver.
 
-Models and quota: the default is Gemini 3.8 Flash; its quota is ample (a dozen large calls used
-~3 % of the weekly limit), so use the scout freely. `--model claude-sonnet-5-5-high` was faster
+Models and quota: llm-scout picks the model by reason. `review` and `web_research` (including
+`review-diff` and `summarize URL`) run on Gemini 4 Argon, #1 on the Arena text leaderboard, with
+its own weekly bucket: one diff review costs ~1 % of it and found more precise issues than Flash
+(2026-10-22); below 5 % left llm-scout falls back to Flash. Everything else runs on Gemini 3.8
+Flash; its quota is ample (a dozen large calls used ~3 % of the weekly limit), so use the scout
+freely. Argon is slower (~40 s even for a trivial answer). `--model claude-sonnet-5-5-high` was faster
 and more complete on a repo question, but one call costs ~6 % of the weekly Claude/GPT limit:
 use it for important reviews and precision questions, about five to ten calls a week (a Flash
 review costs ~0.1–0.2 % of the Gemini week; measured 2026-10-19). `agy -p /quota` shows what is left; every call also logs it as
@@ -95,8 +99,9 @@ While it runs:
   narrow questions over one broad multi-topic task; name the scope of a review exactly.
 - Start longer runs in the background and keep working; foreground calls started together may
   run one after another. Without a background feature of your own (Codex, OpenCode) use `--bg`.
-- For important reviews run Flash and `--model claude-sonnet-5-5-high` in parallel: Flash found
-  agy-specific bugs, Sonnet the security issues in the same commit.
+- For important reviews run the default (Argon) and `--model claude-sonnet-5-5-high` in
+  parallel; earlier, Flash found agy-specific bugs and Sonnet the security issues in the same
+  commit.
 - Claude Code reminds you via a PostToolUse hook after ten reading tool calls without a scout.
 
 Afterwards:

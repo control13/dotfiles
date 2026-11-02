@@ -43,7 +43,7 @@
 - Beim Aufruf den passendsten Grund mitgeben: `--reason repo_search|bulk_extract|log_analysis|mechanical_edit|web_research|review|other`.
 - Scout-Läufe im Hintergrund starten (ohne eigene Hintergrundfunktion mit `--bg`, Ergebnis mit `llm-scout --result`) und währenddessen an anderen Teilen weiterarbeiten. Nicht delegieren, wenn das Formulieren des Auftrags länger dauert als die Aufgabe selbst.
 - Lange lokale Werkzeugläufe (Transkription, OCR, Konvertierung, Builds, Tests) ebenfalls im Hintergrund starten und parallel weiterarbeiten. Transkriptionen sowie Dokumente aus dem Vault oder aus Mails nie an den Scout geben.
-- Standardmodell ist Gemini Flash, sein Kontingent reicht reichlich. Für wichtige Reviews und Präzisionsfragen `--model claude-sonnet-5-5-high`, etwa fünf bis zehn Aufrufe pro Woche; Reststand mit `agy -p /quota`. Wichtige Reviews parallel mit Flash und Sonnet beauftragen; beide ergänzen sich.
+- `llm-scout` wählt das Modell selbst: Gemini 4 Argon (eigenes Wochenkontingent, stark bei Text) für `review` und `web_research`, sonst Gemini Flash; bei knappem Argon-Kontingent fällt es auf Flash zurück. Für wichtige Reviews und Präzisionsfragen zusätzlich `--model claude-sonnet-5-5-high`, etwa fünf bis zehn Aufrufe pro Woche; Reststand mit `agy -p /quota`. Wichtige Reviews parallel mit Argon und Sonnet beauftragen; beide ergänzen sich.
 - Niemals externe Worker bei datenschutzsensitiven Aufgaben, Arbeitsmails oder in `opencode-work`.
 - Entscheidungen, Integration und finale Qualitätskontrolle bleiben beim Hauptagenten. Scout-Ergebnisse sind Hinweise: die genannten Stellen vor Verwendung selbst prüfen.
 
