@@ -30,7 +30,6 @@ prepend_preloaders = [
     { mime = "application/subrip", run = "mediainfo" },
     # Office Documents
     { mime = "application/{openxmlformats-officedocument.*,oasis.opendocument.*,ms-*,msword}", run = "office" },
-    { url = "*.docx", run = "office" },
     # 3d objects
     { url = "*.{3mf,obj,pts,ply,stl,step,stp}", run = "f3d-preview" },
 ]
